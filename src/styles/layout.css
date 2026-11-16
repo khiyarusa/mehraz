@@ -124,6 +124,20 @@
 
 .page { display: flex; flex-direction: column; gap: clamp(20px, 2.6vw, 30px); }
 
+/* ---- guest shell --------------------------------------------------------
+   Welcome and onboarding are a single task, not a place inside the app. The
+   navigation is removed instead of being shown disabled, so there is nothing
+   to click that would only bounce the student back. */
+body.is-bare .sidebar,
+body.is-bare .topbar,
+body.is-bare .appfoot,
+body.is-bare .bottomnav { display: none !important; }
+body.is-bare .app { grid-template-columns: minmax(0, 1fr); }
+body.is-bare .main { min-height: 100vh; min-height: 100dvh; }
+body.is-bare .content { max-width: none; padding: 0; }
+body.is-bare .page { gap: 0; }
+body.is-bare .toast-host { inset-block-end: calc(24px + env(safe-area-inset-bottom, 0px)); }
+
 /* ---- grids --------------------------------------------------------------- */
 .grid { display: grid; gap: var(--sp-4); }
 .grid--stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }

@@ -1,6 +1,6 @@
 # MEHRAZ — Architecture
 
-Phase 01 foundation · version 1.0.0 · schema 1 · build `2026-11-15`
+PROMPT 01 foundation · PROMPT 02 visual layer · version 1.1.0 · schema 1 · build `2026-11-16`
 
 ---
 
@@ -14,14 +14,14 @@ end user, and no network traffic of any kind.
 The application is Persian-first and fully RTL. All student data stays in the
 browser on that device.
 
-**Phase 01 scope:** brand, shell, navigation, responsive layout, onboarding,
+**PROMPT 01 scope:** brand, shell, navigation, responsive layout, onboarding,
 local persistence, backup/restore, dashboard, library/book/lesson shells, exam
 engine, review surface, progress surface, settings, creator section, content
 contract, documentation.
 
-**Out of scope in phase 01 (and deliberately absent):** textbook content,
+**Out of scope in PROMPT 01 (and deliberately absent):** textbook content,
 lessons, exercises, exam questions, review schedules. The engines exist and are
-data-driven; the data arrives in phase 02.
+data-driven; the data arrives in PROMPT 03.
 
 ---
 
@@ -59,7 +59,7 @@ The build is a deterministic text concatenation:
    `tokens → layout → components → motion → responsive`.
 3. Replace `/*MEHRAZ:SCRIPTS*/` with `window.MEHRAZ_CONTENT = <catalog>;` followed
    by the scripts in dependency order:
-   `bootstrap → jalali → storage → state → content → backup → components →
+   `bootstrap → art → jalali → storage → state → content → backup → components →
    router → profile → dashboard → learning → examination → review → settings → app`.
 4. Replace `{{BUILD_STAMP}}`.
 5. Refuse to write the file if the output contains an external resource reference,
@@ -186,9 +186,9 @@ state to reconcile.
 3. **memory** — last resort; the UI shows a persistent warning and points at the
    backup button.
 
-`status()` exposes `{ driver, ok, probed, testedAt, error, notes }`; Settings can
-re-run the probe (`storage.recheck()`), and the sidebar always shows the active
-driver.
+`status()` exposes `{ driver, ok, probed, testedAt, error, notes, fallbackFrom }`.
+Diagnostics are console-only (`MEHRAZ.diag`, `MEHRAZ.storage.recheck()`); no
+storage UI is exposed to the student.
 
 Nothing is written until a probe succeeds, so the app never claims persistence it
 does not have.
@@ -212,9 +212,9 @@ Stable identifiers are the contract with progress data: lesson IDs are stored in
 `progress.lessons[<lessonId>]`, so a new textbook edition must introduce new IDs
 for materially changed lessons rather than overwrite the old ones.
 
-A **structural demo pack** (`content.demoPack()`) exists for engine testing. It
-is generated only when the developer switch in Settings is on, is clearly
-labelled «نمونهٔ ساختاری», and contains no subject facts.
+There is no demo pack, sample lesson or developer switch in the student build.
+Engine fixtures live only in `build/` (harness, QA pages) and are never embedded
+in `start.html`.
 
 ---
 
@@ -276,22 +276,22 @@ src/scripts/settings.js        settings, storage diagnostics, about
 src/scripts/app.js             assembly: boot, chrome, search, import flow, routes
 build/build.ps1                development build (PowerShell 5.1, no dependencies)
 build/harness-template.html    template for the dev-only responsive harness
-content/catalog.json           build-time content input (empty in phase 01)
-content/content-contract.json  JSON Schema for phase 02 content
+content/catalog.json           build-time content input (empty in PROMPT 01)
+content/content-contract.json  JSON Schema for PROMPT 03 content
 docs/                          engineering documentation
 project-guidelines/AGENTS.md   persistent project instructions
 ```
 
 ---
 
-## 13. Extension points reserved for phase 02
+## 13. Extension points reserved for PROMPT 03
 
 | Extension point | Where |
 | --- | --- |
 | Add books/lessons | `content/catalog.json` → rebuild |
 | Add question types | `examination.js` (`normalizeAnswer`, `isCorrect`, renderers) |
 | Add lesson block types | `learning.js` (`renderBlock`) |
-| Add interactive activities | `content.activities` + a renderer keyed by `component` |
+| Add interactive activities | `MEHRAZ.activities[<component>]` renderer + contract key |
 | Add review scheduling rules | `store.reviewItems` producers; the UI already renders due/upcoming |
 | Add a page | `M.views.<name>` + one `router.add()` entry |
 | Change theme tokens | `tokens.css` only |

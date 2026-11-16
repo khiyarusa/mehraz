@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    MEHRAZ — responsive (v2)
    Mobile-first refinements over the desktop baseline.
    ========================================================================== */
@@ -46,12 +46,14 @@
   .bottomnav__item {
     position: relative;
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-    min-height: 54px; border-radius: 18px;
+    min-height: 56px; border-radius: 18px;
     color: var(--txt-muted);
-    font-size: 9.5px; font-weight: var(--fw-medium);
-    transition: color var(--d-fast) var(--e-out), background var(--d-fast) var(--e-out), transform var(--d-fast) var(--e-out);
+    font-size: 10.5px; font-weight: var(--fw-medium);
+    transition: color var(--d-1) var(--e-standard), background var(--d-1) var(--e-standard), transform var(--d-1) var(--e-standard);
     -webkit-tap-highlight-color: transparent;
+    min-width: 0;
   }
+  .bottomnav__item > span:last-child { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .bottomnav__item:active { transform: scale(0.94); }
   .bottomnav__item.is-active { color: #fff; background-image: var(--grad-brand); box-shadow: var(--sh-brand); font-weight: var(--fw-semibold); }
   .bottomnav__item.is-active::before { display: none; }

@@ -8,7 +8,7 @@
 <meta name="description" content="مهراز — فضای یادگیری برای دانش‌آموزان: درس، تمرین، آزمون و مرور در یک برنامهٔ آرام و منظم.">
 <meta name="robots" content="noindex, nofollow">
 <title>مهراز | فضای یادگیری</title>
-<!-- MEHRAZ 2026-11-16 18:36 -->
+<!-- MEHRAZ 2026-11-16 20:42 -->
 <style>
 /* ==================== tokens.css ==================== */
 /* ==========================================================================
@@ -57,7 +57,7 @@
   --t-900: #0B1A2B;
   --t-700: #22364C;
   --t-500: #566A82;
-  --t-400: #7C8CA1;
+  --t-400: #63748A;   /* 4.78:1 on white — ≥ 4.5 for 10–11px labels */
 
   /* ---- legacy semantic aliases (used across the app) ------------------ */
   --bg: var(--paper);
@@ -167,15 +167,25 @@
   --tap: 44px;
 
   /* ---- motion ---------------------------------------------------------- */
+  /* Four durations, two curves. Everything in the product uses these. */
+  --d-1: 120ms;   /* state change: press, toggle, dot */
+  --d-2: 220ms;   /* small reveal: menu, tooltip, chip */
+  --d-3: 340ms;   /* context change: page, step, modal */
+  --d-4: 560ms;   /* data: progress fill, ring draw */
+
+  --e-standard: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --e-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* legacy aliases kept for existing rules */
   --d-instant: 90ms;
-  --d-fast: 150ms;
-  --d-base: 240ms;
-  --d-slow: 380ms;
-  --d-page: 460ms;
-  --d-hero: 900ms;
-  --e-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --d-fast: var(--d-1);
+  --d-base: var(--d-2);
+  --d-slow: var(--d-3);
+  --d-page: var(--d-3);
+  --d-hero: var(--d-4);
+  --e-out: var(--e-standard);
   --e-inout: cubic-bezier(0.4, 0, 0.2, 1);
-  --e-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --e-soft: var(--e-entrance);
 }
 
 /* ---- night theme ------------------------------------------------------- */
@@ -362,6 +372,20 @@
 .appfoot a:hover { color: var(--brand); }
 
 .page { display: flex; flex-direction: column; gap: clamp(20px, 2.6vw, 30px); }
+
+/* ---- guest shell --------------------------------------------------------
+   Welcome and onboarding are a single task, not a place inside the app. The
+   navigation is removed instead of being shown disabled, so there is nothing
+   to click that would only bounce the student back. */
+body.is-bare .sidebar,
+body.is-bare .topbar,
+body.is-bare .appfoot,
+body.is-bare .bottomnav { display: none !important; }
+body.is-bare .app { grid-template-columns: minmax(0, 1fr); }
+body.is-bare .main { min-height: 100vh; min-height: 100dvh; }
+body.is-bare .content { max-width: none; padding: 0; }
+body.is-bare .page { gap: 0; }
+body.is-bare .toast-host { inset-block-end: calc(24px + env(safe-area-inset-bottom, 0px)); }
 
 /* ---- grids --------------------------------------------------------------- */
 .grid { display: grid; gap: var(--sp-4); }
@@ -722,20 +746,25 @@ img { max-width: 100%; height: auto; }
 
 /* ---- empty state ------------------------------------------------------- */
 .empty {
+  position: relative; overflow: hidden;
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   text-align: center;
-  padding: clamp(24px, 4vw, 44px) clamp(16px, 3vw, 30px);
+  padding: clamp(28px, 4.4vw, 50px) clamp(18px, 3vw, 34px);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   background:
-    radial-gradient(90% 70% at 50% 0%, rgba(47,107,255,.06), transparent 62%),
+    radial-gradient(90% 70% at 50% 0%, rgba(47,107,255,.07), transparent 62%),
     var(--surface);
 }
-.empty--compact { padding: 22px 16px; gap: 7px; }
-.empty__art { margin-block-end: 2px; }
+.empty::before {
+  content: ""; position: absolute; inset-block-start: 0; inset-inline: 22%; height: 2px;
+  background: var(--grad-line); opacity: .9;
+}
+.empty--compact { padding: 24px 18px; gap: 7px; }
+.empty__art { margin-block-end: 4px; }
 .empty--compact .empty__art svg { width: 64px; height: 60px; }
 .empty__title { font-size: var(--fs-15); font-weight: var(--fw-bold); color: var(--txt-strong); }
-.empty__text { font-size: var(--fs-12); color: var(--txt-muted); line-height: 1.9; max-width: 44ch; }
+.empty__text { font-size: var(--fs-12); color: var(--txt-muted); line-height: 1.9; max-width: 46ch; }
 .empty__actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-block-start: 8px; }
 
 /* ---- forms ------------------------------------------------------------- */
@@ -1217,74 +1246,274 @@ img { max-width: 100%; height: auto; }
 .reviewrow__icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--surface-2); color: var(--txt-muted); flex: none; }
 .reviewrow--due .reviewrow__icon { background: var(--brand-soft); color: var(--brand); }
 
-/* ==================== motion.css ==================== */
 /* ==========================================================================
-   MEHRAZ — motion (v2)
-   One vocabulary: short distances, calm easing, meaning before decoration.
-   Every animation is optional; the product is complete without it.
+   ENTRY SURFACES — welcome and onboarding
+   These two screens are the whole product for the first minute. They get
+   their own composition instead of borrowing the dashboard shell.
    ========================================================================== */
 
-@keyframes mz-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-@keyframes mz-rise-lg { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.welcome {
+  position: relative; isolation: isolate; overflow: hidden;
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; flex-direction: column;
+  padding: clamp(20px, 3.4vw, 44px) clamp(18px, 5vw, 68px) clamp(20px, 3vw, 34px);
+  color: #fff;
+  background:
+    radial-gradient(90% 70% at 92% -12%, rgba(47, 107, 255, 0.34), transparent 58%),
+    radial-gradient(58% 50% at 4% 110%, rgba(30, 81, 214, 0.20), transparent 58%),
+    linear-gradient(158deg, #0B1A2B 0%, #071322 56%, #050E1A 100%);
+}
+.welcome::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.10) 1px, transparent 0);
+  background-size: 26px 26px;
+  mask-image: linear-gradient(240deg, #000 0%, transparent 58%);
+  -webkit-mask-image: linear-gradient(240deg, #000 0%, transparent 58%);
+  opacity: .85;
+}
+.welcome__top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.welcome__tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: var(--fs-11); color: rgba(255,255,255,.62);
+}
+.welcome__tag .dot { background: #6FE3C4; box-shadow: 0 0 0 4px rgba(111,227,196,.16); }
+.welcome__grid {
+  flex: 1 1 auto;
+  display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(260px, .96fr);
+  gap: clamp(20px, 4vw, 56px); align-items: center;
+  padding-block: clamp(26px, 6vh, 70px);
+}
+.welcome__copy { max-width: 42rem; }
+.welcome__kicker {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin-block-end: 18px;
+  font-size: var(--fs-12); font-weight: var(--fw-semibold); color: #A8C4FF;
+}
+.welcome__kicker::before { content: ""; width: 22px; height: 1px; background: currentColor; opacity: .7; }
+.welcome h1 {
+  color: #fff;
+  font-size: clamp(2.05rem, 5vw, 3.4rem);
+  font-weight: var(--fw-heavy);
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+.welcome h1 em { font-style: normal; color: #BFD6FF; }
+.welcome__sub {
+  margin-block-start: 16px;
+  font-size: var(--fs-14); line-height: 2.05;
+  color: rgba(255,255,255,.76); max-width: 44ch;
+}
+.welcome__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-block-start: 28px; }
+.welcome .btn--primary { --btn-bg: #fff; --btn-fg: #102338; --btn-bd: transparent; background-image: none; box-shadow: 0 18px 34px -20px rgba(0,0,0,.8); }
+.welcome .btn--primary:hover { --btn-bg: #EDF3FF; }
+.welcome__ghost { color: #fff; border-color: rgba(255,255,255,.26); }
+.welcome__ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.42); }
+
+.welcome__path {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px;
+  margin-block-start: 34px; padding-block-start: 18px;
+  border-block-start: 1px solid rgba(255,255,255,.12);
+  font-size: var(--fs-12); color: rgba(255,255,255,.66);
+}
+.welcome__path li { display: inline-flex; align-items: center; gap: 8px; }
+.welcome__num {
+  display: grid; place-items: center;
+  width: 21px; height: 21px; border-radius: 7px;
+  border: 1px solid rgba(168,196,255,.36); color: #A8C4FF;
+  font-family: var(--font-num); font-size: 10px; font-weight: 700;
+}
+
+.welcome__art { position: relative; display: grid; place-items: center; }
+.welcome__art .orbit { width: min(100%, 430px); height: auto; }
+.welcome__foot {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 8px 18px; font-size: var(--fs-11); color: rgba(255,255,255,.42);
+}
+.welcome__foot a { color: rgba(255,255,255,.62); }
+.welcome__foot a:hover { color: #fff; }
+
+/* ---- onboarding --------------------------------------------------------- */
+.onboard-wrap {
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(18px, 4vh, 48px) clamp(14px, 4vw, 40px);
+  background:
+    radial-gradient(900px 360px at 50% -8%, rgba(47,107,255,.12), transparent 62%),
+    var(--bg);
+}
+.onboard {
+  width: 100%; max-width: 600px; margin-inline: auto;
+  display: flex; flex-direction: column; gap: 18px;
+  padding-block: 4px 20px;
+}
+.onboard__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+.onboard__track { display: flex; align-items: flex-start; }
+.onboard__step {
+  position: relative; flex: 1 1 0;
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
+  font-size: 10.5px; color: var(--txt-faint); text-align: center;
+}
+.onboard__step::before {
+  content: ""; position: absolute; inset-block-start: 13px; inset-inline-start: 50%;
+  width: 100%; height: 2px; background: var(--surface-3);
+}
+.onboard__step:last-child::before { display: none; }
+.onboard__step.is-done::before { background: var(--brand-line); }
+.onboard__dot {
+  position: relative; z-index: 1;
+  display: grid; place-items: center;
+  width: 27px; height: 27px; border-radius: 50%;
+  background: var(--surface); border: 1.5px solid var(--border-strong);
+  font-family: var(--font-num); font-size: 11px; font-weight: 700; color: var(--txt-faint);
+  transition: background var(--d-2) var(--e-standard), border-color var(--d-2) var(--e-standard),
+    color var(--d-2) var(--e-standard), box-shadow var(--d-2) var(--e-standard);
+}
+.onboard__step.is-done .onboard__dot { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand); }
+.onboard__step.is-active .onboard__dot { background: var(--brand); border-color: var(--brand); color: #fff; box-shadow: 0 0 0 4px var(--brand-soft); }
+.onboard__step.is-active { color: var(--txt-strong); font-weight: var(--fw-semibold); }
+.onboard__label { max-width: 100%; }
+
+.onboard__card {
+  position: relative;
+  padding: clamp(22px, 3.4vw, 36px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-2xl);
+  box-shadow: var(--sh-3);
+}
+.onboard__card::before {
+  content: ""; position: absolute; inset-block-start: 0; inset-inline: 34px; height: 3px;
+  background: var(--grad-brand); border-radius: 0 0 4px 4px; opacity: .9;
+}
+.onboard__title { font-size: clamp(1.3rem, 2.8vw, 1.65rem); letter-spacing: -0.01em; }
+.onboard__text { margin-block-start: 8px; font-size: var(--fs-13); color: var(--txt-muted); line-height: 1.95; }
+.onboard__stage { margin-block-start: 22px; display: flex; flex-direction: column; gap: var(--sp-4); }
+.onboard__foot { display: flex; align-items: center; gap: 10px; margin-block-start: 26px; padding-block-start: 18px; border-block-start: 1px solid var(--line-2); }
+.onboard__foot .btn--primary { min-width: 132px; }
+.onboard__note { text-align: center; font-size: var(--fs-11); color: var(--txt-faint); }
+
+/* ---- creator ------------------------------------------------------------ */
+.creator-card { gap: 20px; }
+.creator__mark {
+  display: grid; place-items: center;
+  width: 86px; height: 86px; border-radius: 26px;
+  background: var(--grad-brand); color: #fff;
+  font-size: 1.7rem; font-weight: var(--fw-heavy);
+  box-shadow: var(--sh-brand);
+  flex: none;
+}
+.creator__name { font-size: var(--fs-24); font-weight: var(--fw-heavy); color: var(--txt-strong); line-height: 1.4; }
+.creator__role { font-size: var(--fs-13); color: var(--txt-muted); margin-block-start: 4px; }
+.creator__label { font-size: var(--fs-11); color: var(--txt-faint); }
+.creator__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1 1 220px; }
+
+@media (max-width: 900px) {
+  .welcome__grid { grid-template-columns: minmax(0, 1fr); padding-block: 26px 10px; }
+  .welcome__art { position: absolute; inset-block-start: -40px; inset-inline-start: -50px; width: 240px; height: 240px; opacity: .32; pointer-events: none; z-index: -1; }
+  .welcome__art .orbit { width: 240px; }
+  .welcome h1 { font-size: clamp(1.9rem, 8.4vw, 2.6rem); }
+}
+@media (max-width: 560px) {
+  .welcome { padding-inline: 18px; }
+  .welcome__sub { font-size: var(--fs-13); }
+  .welcome__actions .btn { flex: 1 1 auto; }
+  .welcome__path { gap: 6px 14px; font-size: var(--fs-11); }
+  .onboard__label { display: none; }
+  .onboard__card { border-radius: var(--r-xl); padding: 20px 16px 18px; }
+  .onboard__card::before { inset-inline: 22px; }
+  .onboard__foot { gap: 8px; }
+  .onboard__foot .btn { flex: 1 1 auto; }
+  .onboard__foot .btn--primary { min-width: 0; }
+}
+
+/* ==================== motion.css ==================== */
+/* ==========================================================================
+   MEHRAZ — motion (v3)
+   One vocabulary, four durations. Motion answers an action or introduces a
+   single new context; it never decorates a page that is already readable.
+   Only transform and opacity are animated, so Android paints stay cheap.
+   ========================================================================== */
+
+@keyframes mz-page-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes mz-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @keyframes mz-fade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes mz-scale { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: none; } }
-@keyframes mz-sheet { from { opacity: .5; transform: translateY(30px); } to { opacity: 1; transform: none; } }
-@keyframes mz-toast-in { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
-@keyframes mz-toast-out { to { opacity: 0; transform: translateY(10px) scale(.98); } }
+@keyframes mz-pop { from { opacity: 0; transform: translateY(8px) scale(.99); } to { opacity: 1; transform: none; } }
+@keyframes mz-sheet { from { opacity: .6; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes mz-toast-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes mz-toast-out { to { opacity: 0; transform: translateY(8px); } }
 @keyframes mz-shimmer { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
-@keyframes mz-dot { 0%, 100% { box-shadow: 0 0 0 0 rgba(15,157,138,.34); } 50% { box-shadow: 0 0 0 5px transparent; } }
 @keyframes mz-spin { to { transform: rotate(360deg); } }
 @keyframes mz-draw { to { stroke-dashoffset: 0; } }
-@keyframes mz-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes mz-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 @keyframes mz-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes mz-sheen { from { transform: translateX(-120%) skewX(-14deg); } to { transform: translateX(220%) skewX(-14deg); } }
+@keyframes mz-indicator { from { transform: scaleY(.2); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+@keyframes mz-step { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+@keyframes mz-step-back { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+@keyframes mz-check { 0% { transform: scale(.4); opacity: 0; } 60% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
 
-/* page entrance */
-.page { animation: mz-rise-lg var(--d-page) var(--e-soft) both; }
-.page > * { animation: mz-rise var(--d-slow) var(--e-soft) both; }
-.page > *:nth-child(1) { animation-delay: 30ms; }
-.page > *:nth-child(2) { animation-delay: 70ms; }
-.page > *:nth-child(3) { animation-delay: 110ms; }
-.page > *:nth-child(4) { animation-delay: 150ms; }
-.page > *:nth-child(5) { animation-delay: 180ms; }
-.page > *:nth-child(n+6) { animation-delay: 210ms; }
+/* ---- page context ------------------------------------------------------- */
+/* The new route fades in as one surface. Children are not staggered: a page
+   that assembles itself piece by piece reads as decoration, not navigation. */
+.page { animation: mz-page-in var(--d-3) var(--e-entrance) both; }
 
-.stagger > * { animation: mz-rise var(--d-slow) var(--e-soft) both; }
-.stagger > *:nth-child(1) { animation-delay: 40ms; }
-.stagger > *:nth-child(2) { animation-delay: 85ms; }
-.stagger > *:nth-child(3) { animation-delay: 130ms; }
-.stagger > *:nth-child(4) { animation-delay: 175ms; }
-.stagger > *:nth-child(5) { animation-delay: 220ms; }
-.stagger > *:nth-child(6) { animation-delay: 265ms; }
-.stagger > *:nth-child(n+7) { animation-delay: 300ms; }
+/* Lists may arrive together, with a short, bounded cascade. */
+.stagger > * { animation: mz-rise var(--d-2) var(--e-entrance) both; }
+.stagger > *:nth-child(1) { animation-delay: 20ms; }
+.stagger > *:nth-child(2) { animation-delay: 55ms; }
+.stagger > *:nth-child(3) { animation-delay: 90ms; }
+.stagger > *:nth-child(4) { animation-delay: 120ms; }
+.stagger > *:nth-child(5) { animation-delay: 150ms; }
+.stagger > *:nth-child(n+6) { animation-delay: 175ms; }
 
-.fade-in { animation: mz-fade var(--d-base) var(--e-out) both; }
-.rise-in { animation: mz-rise var(--d-slow) var(--e-soft) both; }
-.step-enter { animation: mz-rise var(--d-slow) var(--e-soft) both; }
+.fade-in { animation: mz-fade var(--d-2) var(--e-standard) both; }
+.rise-in { animation: mz-rise var(--d-2) var(--e-entrance) both; }
+.step-enter { animation: mz-step var(--d-3) var(--e-entrance) both; }
+.step-enter[data-dir="back"] { animation-name: mz-step-back; }
+.step-enter[data-dir="none"] { animation-name: none; }
 
-/* overlays */
-.overlay { animation: mz-fade var(--d-base) var(--e-out) both; }
-.overlay > .modal { animation: mz-scale var(--d-slow) var(--e-soft) both; }
-.overlay.is-closing { animation: mz-fade var(--d-fast) var(--e-out) reverse both; }
-.overlay > .bottomsheet { animation: mz-sheet var(--d-slow) var(--e-soft) both; }
+/* ---- navigation feedback ------------------------------------------------ */
+.navitem.is-active::before { animation: mz-indicator var(--d-3) var(--e-entrance) both; }
+.navitem__icon { transition: transform var(--d-2) var(--e-standard), opacity var(--d-1) var(--e-standard); }
+.navitem.is-active .navitem__icon { transform: translateY(-1px); }
 
-.toast { animation: mz-toast-in var(--d-slow) var(--e-soft) both; }
-.toast.is-leaving { animation: mz-toast-out var(--d-base) var(--e-out) both; }
+/* ---- overlays ----------------------------------------------------------- */
+.overlay { animation: mz-fade var(--d-2) var(--e-standard) both; }
+.overlay > .modal { animation: mz-pop var(--d-3) var(--e-entrance) both; }
+.overlay.is-closing { animation: mz-fade var(--d-1) var(--e-standard) reverse both; }
+.overlay > .bottomsheet { animation: mz-sheet var(--d-3) var(--e-entrance) both; }
 
-.bar-anim { transform-origin: right center; animation: mz-bar var(--d-hero) var(--e-soft) both; }
+.toast { animation: mz-toast-in var(--d-3) var(--e-entrance) both; }
+.toast.is-leaving { animation: mz-toast-out var(--d-2) var(--e-standard) both; }
+
+/* ---- data --------------------------------------------------------------- */
+.bar-anim { transform-origin: right center; animation: mz-bar var(--d-4) var(--e-entrance) both; }
+.progress__bar { transition: width var(--d-4) var(--e-entrance); }
+.ring__value, .orbit__arc { transition: stroke-dashoffset var(--d-4) var(--e-entrance); }
 .skeleton::after { animation-name: mz-shimmer; }
-.heat__cell { animation: mz-fade var(--d-base) var(--e-out) both; }
-.dot--pulse { animation-name: mz-dot; }
+.area__line { animation: mz-draw 1.1s var(--e-entrance) forwards; }
+.area__fill { animation: mz-fade var(--d-3) var(--e-standard) 260ms forwards; }
+.area__dot { animation: mz-fade var(--d-2) var(--e-standard) forwards; }
 .spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; border-top-color: transparent; animation: mz-spin .7s linear infinite; }
 
-/* primary button sheen */
+/* A finished lesson: the tick lands once, then stays still. */
+.is-done .lessonrow__status svg, .lessonrow.is-done .lessonrow__status svg { animation: mz-check var(--d-3) var(--e-entrance) both; }
+
+/* ---- primary button sheen (pointer devices only) ----------------------- */
+/* The sheen lives inside the button box. Without clipping, its translated
+   pseudo-element widens the document scroll area (measured: +82…+540 px). */
+.btn--primary { overflow: hidden; isolation: isolate; }
 .btn--primary::after {
-  content: ""; position: absolute; inset: 0; overflow: hidden; border-radius: inherit;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.26), transparent);
   transform: translateX(-120%) skewX(-14deg);
   pointer-events: none;
 }
-.btn--primary:hover::after { animation: mz-sheen .9s var(--e-out) 1; }
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary:hover::after { animation: mz-sheen .8s var(--e-standard) 1; }
+}
+@keyframes mz-sheen { from { transform: translateX(-120%) skewX(-14deg); } to { transform: translateX(220%) skewX(-14deg); } }
+.hero .btn--primary::after { display: none; }
 
 /* ---- branded boot sequence -------------------------------------------- */
 .boot {
@@ -1293,7 +1522,7 @@ img { max-width: 100%; height: auto; }
   background:
     radial-gradient(70% 50% at 50% 0%, rgba(47,107,255,.22), transparent 60%),
     linear-gradient(160deg, #0B1A2B 0%, #060F1B 100%);
-  transition: opacity .55s var(--e-out), visibility .55s;
+  transition: opacity .45s var(--e-standard), visibility .45s;
 }
 .boot.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .boot__inner { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 24px; text-align: center; }
@@ -1303,31 +1532,46 @@ img { max-width: 100%; height: auto; }
 .boot__ring circle {
   fill: none; stroke: rgba(127,166,255,.55); stroke-width: 1.4;
   stroke-dasharray: 260; stroke-dashoffset: 260;
-  animation: mz-draw 1.25s var(--e-soft) .1s forwards;
+  animation: mz-draw 1.1s var(--e-entrance) .1s forwards;
 }
 .boot__mark {
   display: grid; place-items: center; width: 58px; height: 58px; border-radius: 18px;
   background: linear-gradient(155deg, #5C8DFF, #2F6BFF 50%, #17347A);
   box-shadow: 0 18px 40px -18px rgba(47,107,255,.9), inset 0 1px 0 rgba(255,255,255,.3);
-  animation: mz-scale .8s var(--e-soft) both;
+  animation: mz-pop .7s var(--e-entrance) both;
 }
-.boot__word { font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1; animation: mz-rise .7s var(--e-soft) .2s both; }
-.boot__latin { font-family: var(--font-num); font-size: .48rem; letter-spacing: .4em; color: rgba(255,255,255,.45); text-transform: uppercase; margin-block-start: 7px; animation: mz-fade .7s var(--e-out) .35s both; }
-.boot__note { font-size: .72rem; color: rgba(255,255,255,.5); max-width: 26ch; line-height: 1.9; animation: mz-fade .7s var(--e-out) .55s both; }
+.boot__word { font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1; animation: mz-rise .6s var(--e-entrance) .15s both; }
+.boot__latin { font-family: var(--font-num); font-size: .48rem; letter-spacing: .4em; color: rgba(255,255,255,.45); text-transform: uppercase; margin-block-start: 7px; animation: mz-fade .6s var(--e-standard) .3s both; }
+.boot__note { font-size: .72rem; color: rgba(255,255,255,.5); max-width: 26ch; line-height: 1.9; animation: mz-fade .6s var(--e-standard) .45s both; }
 .boot__bar { width: 150px; height: 3px; border-radius: 999px; background: rgba(255,255,255,.12); overflow: hidden; }
-.boot__bar i { display: block; height: 100%; width: 100%; transform-origin: right center; background: linear-gradient(90deg, #2F6BFF, #BFD6FF); animation: mz-bar 1.15s var(--e-soft) .4s both; }
+.boot__bar i { display: block; height: 100%; width: 100%; transform-origin: right center; background: linear-gradient(90deg, #2F6BFF, #BFD6FF); animation: mz-bar 1s var(--e-entrance) .35s both; }
+
+/* ---- ambient art -------------------------------------------------------
+   The orbit is the only continuously moving element and it is purely
+   decorative; it stops for reduced motion and on low-power preferences. */
+.orbit__ring--a { transform-origin: 150px 150px; animation: mz-spin 120s linear infinite; }
+.orbit__ring--b { transform-origin: 150px 150px; animation: mz-spin 80s linear infinite reverse; }
+.orbit__dash { transform-origin: 150px 150px; animation: mz-spin 60s linear infinite; }
+.orbit__node { animation: mz-float 9s var(--e-inout) infinite; transform-origin: center; }
+.orbit__node:nth-of-type(2) { animation-delay: 1.1s; }
+.orbit__node:nth-of-type(3) { animation-delay: 2.2s; }
+.orbit__node:nth-of-type(4) { animation-delay: 3.3s; }
 
 /* ---- reduced motion ---------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
   .orbit__ring--a, .orbit__ring--b, .orbit__dash, .orbit__node { animation: none !important; }
+  .page, .stagger > *, .step-enter { opacity: 1 !important; transform: none !important; }
 }
-[data-motion="reduced"] *, [data-motion="reduced"] *::before, [data-motion="reduced"] *::after {
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
   animation-duration: 0.001ms !important;
   animation-iteration-count: 1 !important;
   animation-delay: 0ms !important;
@@ -1338,7 +1582,14 @@ img { max-width: 100%; height: auto; }
 [data-motion="reduced"] .orbit__ring--b,
 [data-motion="reduced"] .orbit__dash,
 [data-motion="reduced"] .orbit__node { animation: none !important; }
-[data-motion="reduced"] .page, [data-motion="reduced"] .page > * { animation: none !important; opacity: 1; transform: none; }
+[data-motion="reduced"] .page,
+[data-motion="reduced"] .stagger > *,
+[data-motion="reduced"] .step-enter { opacity: 1 !important; transform: none !important; }
+
+/* Coarse pointers should not inherit hover-only flourishes. */
+@media (hover: none) {
+  .card--link:hover, .subjectcard:hover, .gradecard:hover, .lessonrow:hover, .option:hover { transform: none; }
+}
 
 /* ==================== responsive.css ==================== */
 /* ==========================================================================
@@ -1389,12 +1640,14 @@ img { max-width: 100%; height: auto; }
   .bottomnav__item {
     position: relative;
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-    min-height: 54px; border-radius: 18px;
+    min-height: 56px; border-radius: 18px;
     color: var(--txt-muted);
-    font-size: 9.5px; font-weight: var(--fw-medium);
-    transition: color var(--d-fast) var(--e-out), background var(--d-fast) var(--e-out), transform var(--d-fast) var(--e-out);
+    font-size: 10.5px; font-weight: var(--fw-medium);
+    transition: color var(--d-1) var(--e-standard), background var(--d-1) var(--e-standard), transform var(--d-1) var(--e-standard);
     -webkit-tap-highlight-color: transparent;
+    min-width: 0;
   }
+  .bottomnav__item > span:last-child { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .bottomnav__item:active { transform: scale(0.94); }
   .bottomnav__item.is-active { color: #fff; background-image: var(--grad-brand); box-shadow: var(--sh-brand); font-weight: var(--fw-semibold); }
   .bottomnav__item.is-active::before { display: none; }
@@ -1547,7 +1800,6 @@ img { max-width: 100%; height: auto; }
     <div class="sidebar__spacer"></div>
     <div class="sidebar__footer">
       <div id="sidebar-profile"></div>
-      <a class="sidebar__link" href="#/about">دربارهٔ سازنده</a>
     </div>
   </aside>
 
@@ -1597,7 +1849,7 @@ img { max-width: 100%; height: auto; }
           <div class="menu__sep"></div>
           <button class="menu__item" type="button" role="menuitem" data-menu-go="#/about">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg>
-            دربارهٔ سازنده
+            درباره
           </button>
         </div>
       </div>
@@ -1607,7 +1859,7 @@ img { max-width: 100%; height: auto; }
 
     <footer class="appfoot">
       <span>مهراز</span>
-      <a href="#/about">دربارهٔ سازنده</a>
+      <span>فضای یادگیری دانش‌آموز</span>
     </footer>
   </div>
 </div>
@@ -1652,8 +1904,7 @@ img { max-width: 100%; height: auto; }
 window.MEHRAZ_CONTENT = {
   "schemaVersion": 1,
   "updatedAt": null,
-  "generator": "phase-01-empty-catalogue",
-  "note": "This file is the build-time content input. PROMPT 02 replaces it with validated, source-linked content. Phase 01 must ship with an empty books array.",
+  "generator": "prompt-01-empty-catalogue",
   "books": []
 };
 /* ==================== bootstrap.js ==================== */
@@ -1667,11 +1918,11 @@ window.MEHRAZ_CONTENT = {
 
   var M = (window.MEHRAZ = window.MEHRAZ || {});
 
-  M.version = '1.0.0';
+  M.version = '1.1.0';
   M.schemaVersion = 1;
   M.build = {
-    id: 'prompt-01',
-    stamp: '2026-11-15',
+    id: 'qa-pass-2026-11-16',
+    stamp: '2026-11-16',
     channel: 'standalone'
   };
   M.config = {
@@ -2734,6 +2985,61 @@ window.MEHRAZ_CONTENT = {
     }
   }
 
+  function readLocal() {
+    try {
+      var raw = window.localStorage.getItem(cfg.storageKey);
+      if (!raw) return null;
+      var parsed = M.util.safeParse(raw);
+      return parsed.ok ? parsed.value : null;
+    } catch (err) {
+      M.diag.record('note', 'localStorage read failed: ' + err.message);
+      return null;
+    }
+  }
+
+  function stampOf(value) {
+    var t = value && value.meta && value.meta.updatedAt ? Date.parse(value.meta.updatedAt) : 0;
+    return isNaN(t) ? 0 : t;
+  }
+
+  /* Both stores can hold a copy (IndexedDB normally, localStorage after a
+     fallback). The newer stamp wins, so a session that had to fall back is
+     never overwritten by the older IndexedDB record. */
+  function newest(a, b) {
+    if (!a) return b;
+    if (!b) return a;
+    return stampOf(b) > stampOf(a) ? b : a;
+  }
+
+  function mirror(value) {
+    try {
+      window.localStorage.setItem(cfg.storageKey, JSON.stringify(value));
+    } catch (err) {
+      /* the mirror is best effort; IndexedDB remains the source of truth */
+    }
+  }
+
+  /* A failed IndexedDB write is repaired on the spot: the same payload is
+     written to localStorage and the adapter switches over for the rest of the
+     session. Returning false here would tell the student their work was lost
+     while a perfectly good store was available. */
+  function writeLocal(value) {
+    try {
+      window.localStorage.setItem(cfg.storageKey, JSON.stringify(value));
+      if (info.driver !== 'localstorage') {
+        note('switched to localStorage after a failed IndexedDB write');
+        info.driver = 'localstorage';
+        info.fallbackFrom = 'indexeddb';
+      }
+      info.ok = true;
+      return true;
+    } catch (err) {
+      info.error = err;
+      M.diag.record('note', 'localStorage write failed: ' + err.message);
+      return false;
+    }
+  }
+
   var api = {
     init: function () {
       info.testedAt = M.util.nowISO();
@@ -2785,36 +3091,24 @@ window.MEHRAZ_CONTENT = {
         probed: info.probed,
         testedAt: info.testedAt,
         error: info.error ? String(info.error.message || info.error) : null,
-        notes: info.notes.slice()
+        notes: info.notes.slice(),
+        fallbackFrom: info.fallbackFrom || null
       };
-    },
-
-    label: function (driver) {
-      var d = driver || info.driver;
-      if (d === 'indexeddb') return 'IndexedDB';
-      if (d === 'localstorage') return 'localStorage';
-      return 'حافظه موقت';
     },
 
     get: function () {
       if (info.driver === 'indexeddb' && db) {
         return idbOp('readonly', function (store) {
           return store.get(cfg.storageKey);
+        }).then(function (value) {
+          return newest(value, readLocal());
         }).catch(function (err) {
           M.diag.record('note', 'read failed: ' + err.message);
-          return null;
+          return readLocal();
         });
       }
       if (info.driver === 'localstorage') {
-        try {
-          var raw = window.localStorage.getItem(cfg.storageKey);
-          if (!raw) return Promise.resolve(null);
-          var parsed = M.util.safeParse(raw);
-          return Promise.resolve(parsed.ok ? parsed.value : null);
-        } catch (err) {
-          M.diag.record('note', 'localStorage read failed: ' + err.message);
-          return Promise.resolve(null);
-        }
+        return Promise.resolve(readLocal());
       }
       return Promise.resolve(mem[cfg.storageKey] || null);
     },
@@ -2824,21 +3118,15 @@ window.MEHRAZ_CONTENT = {
         return idbOp('readwrite', function (store) {
           return store.put(value, cfg.storageKey);
         }).then(function () {
+          mirror(value);
           return true;
         }).catch(function (err) {
           M.diag.record('note', 'write failed: ' + err.message);
-          return false;
+          return writeLocal(value);
         });
       }
       if (info.driver === 'localstorage') {
-        try {
-          window.localStorage.setItem(cfg.storageKey, JSON.stringify(value));
-          return Promise.resolve(true);
-        } catch (err) {
-          info.error = err;
-          M.diag.record('note', 'localStorage write failed: ' + err.message);
-          return Promise.resolve(false);
-        }
+        return Promise.resolve(writeLocal(value));
       }
       mem[cfg.storageKey] = value;
       return Promise.resolve(false);
@@ -2849,6 +3137,7 @@ window.MEHRAZ_CONTENT = {
         return idbOp('readwrite', function (store) {
           return store.delete(cfg.storageKey);
         }).then(function () {
+          try { window.localStorage.removeItem(cfg.storageKey); } catch (err) { /* ignore */ }
           return true;
         }).catch(function () {
           return false;
@@ -2866,7 +3155,7 @@ window.MEHRAZ_CONTENT = {
       return Promise.resolve(true);
     },
 
-    /* Re-runs the probe chain (used by Settings > storage diagnostics). */
+    /* Re-runs the probe chain. Developer console only; there is no UI entry. */
     recheck: function () {
       db = null;
       info.driver = 'memory';
@@ -3043,6 +3332,11 @@ window.MEHRAZ_CONTENT = {
     /* Mutate state in one place, then persist. */
     update: function (mutator, reason) {
       if (typeof mutator === 'function') mutator(store.state);
+      // Every write path shares the same cap; several mutators used to append
+      // to activity without trimming it.
+      if (Array.isArray(store.state.activity) && store.state.activity.length > ACTIVITY_CAP) {
+        store.state.activity = store.state.activity.slice(-ACTIVITY_CAP);
+      }
       store.state.meta.updatedAt = util.nowISO();
       store.schedule(reason);
       return store.state;
@@ -3263,11 +3557,14 @@ window.MEHRAZ_CONTENT = {
       return days;
     },
 
-    stats: function (catalogLessons) {
+    stats: function (lessonIds) {
+      var known = Array.isArray(lessonIds) ? lessonIds : null;
       var lessons = store.state.progress.lessons;
       var done = 0;
       Object.keys(lessons).forEach(function (id) {
-        if (lessons[id] && lessons[id].status === 'done') done += 1;
+        if (!lessons[id] || lessons[id].status !== 'done') return;
+        if (known && known.indexOf(id) === -1) return;
+        done += 1;
       });
       var attempts = store.state.exams.attempts;
       var scored = attempts.filter(function (a) {
@@ -3280,7 +3577,7 @@ window.MEHRAZ_CONTENT = {
         }, 0);
         avg = sum / scored.length;
       }
-      var totalLessons = catalogLessons || 0;
+      var totalLessons = known ? known.length : 0;
       return {
         lessonsDone: done,
         lessonsTotal: totalLessons,
@@ -3290,8 +3587,7 @@ window.MEHRAZ_CONTENT = {
         reviewDue: store.dueReviewItems().length,
         reviewTotal: store.state.review.items.filter(function (i) {
           return i.status !== 'done';
-        }).length,
-        knowledgeItems: done + (attempts.length ? 1 : 0)
+        }).length
       };
     },
 
@@ -3332,10 +3628,9 @@ window.MEHRAZ_CONTENT = {
 /* ==================== content.js ==================== */
 /* ==========================================================================
    MEHRAZ — content engine
-   Phase 01 ships the contract and the renderer, never the educational content.
-   The catalogue is embedded at build time (window.MEHRAZ_CONTENT) or left
-   empty; content is added only from validated sources, never as sample data.
-   only behind the developer switch in Settings and contains no subject facts.
+   The catalogue is embedded at build time (window.MEHRAZ_CONTENT). PROMPT 01
+   ships the contract and the renderer, never the educational content; content
+   is added only from validated sources, never as sample data.
    ========================================================================== */
 (function (window) {
   'use strict';
@@ -3374,7 +3669,7 @@ window.MEHRAZ_CONTENT = {
   var EMPTY_CATALOG = {
     schemaVersion: 1,
     updatedAt: null,
-    generator: 'phase-01',
+    generator: 'prompt-01',
     books: []
   };
 
@@ -3578,6 +3873,25 @@ window.MEHRAZ_CONTENT = {
       return content.lessonIndex().length;
     },
 
+    /* Lesson ids that belong to the student's own shelf. Counts must use this
+       set, otherwise "3 of 360" mixes the student's shelf with the catalogue. */
+    lessonIdsFor: function (grade, track) {
+      return content
+        .lessonIndex()
+        .filter(function (row) {
+          if (grade && row.book.grade !== grade) return false;
+          if (track !== undefined && track !== null && row.book.track !== track) return false;
+          return true;
+        })
+        .map(function (row) {
+          return row.lesson.id;
+        });
+    },
+
+    lessonCountFor: function (grade, track) {
+      return content.lessonIdsFor(grade, track).length;
+    },
+
     bookProgress: function (book) {
       var total = 0;
       var done = 0;
@@ -3731,7 +4045,7 @@ window.MEHRAZ_CONTENT = {
       app: {
         name: 'MEHRAZ',
         version: M.version,
-        build: M.build.id,
+        channel: M.build.channel,
         locale: 'fa-IR',
         timezoneOffset: new Date().getTimezoneOffset()
       },
@@ -3814,14 +4128,20 @@ window.MEHRAZ_CONTENT = {
       errors.push('فایل پشتیبان خالی است.');
       return result;
     }
-    if (text.length > MAX_BYTES) {
+    var bytes = 0;
+    try {
+      bytes = new Blob([text]).size;
+    } catch (err) {
+      bytes = text.length;
+    }
+    if (bytes > MAX_BYTES) {
       errors.push('حجم فایل پشتیبان بیش از حد مجاز است.');
       return result;
     }
 
     var parsed = util.safeParse(text);
     if (!parsed.ok) {
-      errors.push('ساختار JSON فایل پشتیبان معتبر نیست.');
+      errors.push('فایل پشتیبان قابل خواندن نیست.');
       return result;
     }
     var data = parsed.value;
@@ -4147,7 +4467,7 @@ window.MEHRAZ_CONTENT = {
       M.art.areaChart(values, { labels: labels, height: 120 }) +
       '<figcaption class="hint" style="margin-top:8px">' +
       (total
-        ? 'در این هفته ' + util.toFa(total) + ' رویداد یادگیری ثبت شده است.'
+        ? 'در این هفته ' + util.toFa(total) + ' فعالیت ثبت شده است.'
         : 'هنوز فعالیتی برای این هفته ثبت نشده است.') +
       '</figcaption></figure>'
     );
@@ -4359,6 +4679,8 @@ window.MEHRAZ_CONTENT = {
     var el = document.createElement('div');
     el.className = 'toast' + (opts.type ? ' toast--' + opts.type : '');
     el.setAttribute('role', opts.type === 'danger' ? 'alert' : 'status');
+    var ttl = opts.ttl === 0 ? 0 : opts.ttl || M.config.toastTTL;
+    var dismissLabel = opts.actionLabel || (ttl === 0 ? 'بستن' : '');
     el.innerHTML =
       '<span class="toast__icon">' +
       M.icon(opts.icon || (opts.type === 'danger' ? 'alert' : opts.type === 'warn' ? 'alert' : 'check'), 17) +
@@ -4366,12 +4688,11 @@ window.MEHRAZ_CONTENT = {
       '<span class="toast__text">' +
       esc(message) +
       '</span>' +
-      (opts.actionLabel
-        ? '<button class="toast__action" type="button">' + esc(opts.actionLabel) + '</button>'
+      (dismissLabel
+        ? '<button class="toast__action" type="button"' + (opts.actionLabel ? '' : ' data-dismiss="1"') + '>' + esc(dismissLabel) + '</button>'
         : '');
     host.appendChild(el);
 
-    var ttl = opts.ttl === 0 ? 0 : opts.ttl || M.config.toastTTL;
     var timer = null;
 
     function dismiss() {
@@ -4382,9 +4703,10 @@ window.MEHRAZ_CONTENT = {
       }, 220);
     }
 
-    if (opts.actionLabel && typeof opts.onAction === 'function') {
-      util.$('.toast__action', el).addEventListener('click', function () {
-        opts.onAction();
+    var actionEl = util.$('.toast__action', el);
+    if (actionEl) {
+      actionEl.addEventListener('click', function () {
+        if (opts.actionLabel && typeof opts.onAction === 'function') opts.onAction();
         dismiss();
       });
     }
@@ -4560,7 +4882,8 @@ window.MEHRAZ_CONTENT = {
 
       if (!found) {
         current = { path: pathOf(parsed.segments), route: null, params: {} };
-        viewEl.innerHTML = router.notFound();
+        document.body.classList.remove('is-bare');
+        viewEl.innerHTML = '<div class="page">' + router.notFound() + '</div>';
         router.applyChrome({ title: 'صفحه یافت نشد', nav: '' });
         return;
       }
@@ -4605,9 +4928,21 @@ window.MEHRAZ_CONTENT = {
       }
 
       var html = result.html || '';
+      if (current && typeof current.unmount === 'function') {
+        try {
+          current.unmount();
+        } catch (err) {
+          M.diag.record('error', err.message, { scope: 'unmount' });
+        }
+      }
+      current.unmount = typeof result.onUnmount === 'function' ? result.onUnmount : null;
       viewEl.innerHTML = '<div class="page">' + html + '</div>';
       router.applyChrome({ title: result.title || route.title || 'مهراز', nav: route.nav });
       M.ui.animateProgress(viewEl);
+
+      // Welcome and onboarding run without the app shell: nothing in the
+      // navigation would work before a profile exists.
+      document.body.classList.toggle('is-bare', result.bare === true);
 
       if (!opts.keepScroll) {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -4620,7 +4955,7 @@ window.MEHRAZ_CONTENT = {
         viewEl.focus();
       }
 
-      util.announce((result.title || route.title || '') + ' — بارگذاری شد');
+      util.announce(result.title || route.title || '');
 
       if (typeof result.onMount === 'function') {
         result.onMount(viewEl, current);
@@ -4656,18 +4991,14 @@ window.MEHRAZ_CONTENT = {
     },
 
     notFound: function () {
-      return (
-        '<div class="page">' +
-        M.ui.empty({
-          icon: 'search',
-          title: 'این نشانی وجود ندارد',
-          text: 'ممکن است پیوند قدیمی باشد یا این بخش هنوز ساخته نشده است.',
-          actions:
-            '<a class="btn btn--primary" href="#/dashboard">بازگشت به خانه</a>' +
-            '<a class="btn btn--ghost" href="#/library">کتابخانهٔ درسی</a>'
-        }) +
-        '</div>'
-      );
+      return M.ui.empty({
+        icon: 'search',
+        title: 'این نشانی وجود ندارد',
+        text: 'ممکن است پیوند قدیمی باشد یا این بخش هنوز ساخته نشده است.',
+        actions:
+          '<a class="btn btn--primary" href="#/dashboard">بازگشت به خانه</a>' +
+          '<a class="btn btn--ghost" href="#/library">کتابخانهٔ درسی</a>'
+      });
     }
   });
 })(window, document);
@@ -4724,31 +5055,38 @@ window.MEHRAZ_CONTENT = {
   /* ---- welcome ---------------------------------------------------------- */
   views.welcome = function () {
     var html =
-      '<section class="hero" style="min-height:min(600px,82vh);display:flex;align-items:center">' +
-      '<div class="hero__body" style="width:100%;align-items:center">' +
-      '<div class="hero__text">' +
-      '<div style="margin-bottom:22px">' + M.brand({ onDark: true }) + '</div>' +
-      '<h1 style="font-size:clamp(1.9rem,5.2vw,2.9rem);line-height:1.36">هر درس، یک قدم روشن‌تر</h1>' +
-      '<p class="hero__sub" style="font-size:var(--fs-14);max-width:42ch">' +
-      'مهراز فضایی آرام برای یادگیری است: درس‌ها را می‌خوانید، تمرین می‌کنید، آزمون می‌دهید و هر چند وقت یک‌بار مرور می‌کنید — همه در یک جا و به‌ترتیب.' +
+      '<div class="welcome">' +
+      '<header class="welcome__top">' +
+      M.brand({ onDark: true }) +
+      '<span class="welcome__tag"><span class="dot"></span>پایهٔ هفتم تا دوازدهم</span>' +
+      '</header>' +
+      '<div class="welcome__grid">' +
+      '<div class="welcome__copy">' +
+      '<p class="welcome__kicker">مسیر یادگیری دانش‌آموز</p>' +
+      '<h1>هر درس، یک قدم روشن‌تر</h1>' +
+      '<p class="welcome__sub">' +
+      'مهراز فضایی آرام برای یادگیری است: درس را می‌خوانید، تمرین می‌کنید، آزمون می‌دهید و هر چند وقت یک‌بار مرور می‌کنید. همه در یک مسیر و به‌ترتیب.' +
       '</p>' +
-      '<div class="hero__actions" style="margin-top:26px">' +
+      '<div class="welcome__actions">' +
       '<a class="btn btn--primary btn--lg" href="#/onboarding">شروع یادگیری' + M.icon('arrowStart', 18) + '</a>' +
-      '<button class="btn btn--ghost btn--lg hero__ghost" type="button" data-import>بازیابی پشتیبان</button>' +
+      '<button class="btn btn--ghost btn--lg welcome__ghost" type="button" data-import>بازیابی پشتیبان</button>' +
       '</div>' +
-      '<div class="row row--wrap" style="margin-top:26px;gap:18px;color:rgba(255,255,255,.72)">' +
-      '<span class="row" style="gap:7px;font-size:var(--fs-12)">' + M.icon('book', 15) + 'درس‌ها</span>' +
-      '<span class="row" style="gap:7px;font-size:var(--fs-12)">' + M.icon('edit', 15) + 'تمرین</span>' +
-      '<span class="row" style="gap:7px;font-size:var(--fs-12)">' + M.icon('exam', 15) + 'آزمون</span>' +
-      '<span class="row" style="gap:7px;font-size:var(--fs-12)">' + M.icon('review', 15) + 'مرور</span>' +
+      '<ol class="welcome__path">' +
+      '<li><span class="welcome__num">۱</span>درس را بخوان</li>' +
+      '<li><span class="welcome__num">۲</span>تمرین کن</li>' +
+      '<li><span class="welcome__num">۳</span>آزمون بده</li>' +
+      '<li><span class="welcome__num">۴</span>مرور کن</li>' +
+      '</ol>' +
       '</div>' +
+      '<div class="welcome__art">' + M.art.orbit({ pct: 0 }) + '</div>' +
       '</div>' +
-      '<div class="hero__art" style="min-height:300px">' + M.art.orbit({ pct: 0 }) + '</div>' +
-      '</div></section>';
+      '<footer class="welcome__foot"><span>مهراز</span><span>درس، تمرین، آزمون و مرور در یک جا</span></footer>' +
+      '</div>';
 
     return {
       title: 'خوش آمدید',
       nav: '',
+      bare: true,
       html: html,
       onMount: function (root) {
         var restore = util.$('[data-import]', root);
@@ -4778,13 +5116,29 @@ window.MEHRAZ_CONTENT = {
     var error = '';
     var host = null;
     var yearList = yearOptions();
+    var direction = 'fwd';
+
+    var STEP_LABEL = {
+      name: 'نام',
+      birth: 'تولد',
+      grade: 'پایه',
+      track: 'رشته',
+      confirm: 'تأیید'
+    };
 
     function currentStep() { return steps[index]; }
 
     function setError(msg) {
       error = msg || '';
-      render();
+      render('none');
       util.announce(error);
+      focusFirstProblem();
+    }
+
+    function focusFirstProblem() {
+      if (!host) return;
+      var target = util.$('#f-name', host) || util.$('#f-day', host) || util.$('[data-grade]', host) || util.$('[data-track]', host);
+      if (target && target.focus) target.focus();
     }
 
     function validName() {
@@ -4801,7 +5155,7 @@ window.MEHRAZ_CONTENT = {
       var iso = M.jalali.toISO(draft.jy, draft.jm, draft.jd);
       if (new Date(iso).getTime() > Date.now()) return 'تاریخ تولد نمی‌تواند در آینده باشد.';
       var age = M.jalali.ageYears(draft.jy, draft.jm, draft.jd);
-      if (age === null || age < 9 || age > 25) return 'سال تولد با پایهٔ تحصیلی هم‌خوان نیست؛ سال را بررسی کنید.';
+      if (age === null || age < 9 || age > 25) return 'سال تولد باید بین ۹ تا ۲۵ سال پیش باشد؛ سال را بررسی کنید.';
       return '';
     }
 
@@ -4950,36 +5304,45 @@ window.MEHRAZ_CONTENT = {
       };
     }
 
-    function render() {
+    function render(dir) {
+      if (dir) direction = dir;
       if (!host) return;
       var step = currentStep();
       var body = stepBody();
       var stepNumber = index + 1;
       var total = steps.length;
-      var dots = steps
-        .map(function (s, i) {
-          return '<span class="stepper__dot' + (i < index ? ' is-done' : i === index ? ' is-active' : '') + '"></span>';
-        })
-        .join('');
+      var track =
+        '<ol class="onboard__track" aria-label="مراحل ثبت‌نام">' +
+        steps
+          .map(function (s, i) {
+            var state = i < index ? ' is-done' : i === index ? ' is-active' : '';
+            return (
+              '<li class="onboard__step' + state + '"' + (i === index ? ' aria-current="step"' : '') + '>' +
+              '<span class="onboard__dot">' + (i < index ? M.icon('check', 12) : util.toFa(i + 1)) + '</span>' +
+              '<span class="onboard__label">' + esc(STEP_LABEL[s] || '') + '</span></li>'
+            );
+          })
+          .join('') +
+        '</ol>';
       var nextLabel = isEdit ? 'ذخیرهٔ تغییرات' : step === 'confirm' ? 'ورود به داشبورد' : 'ادامه';
       var showBack = isEdit ? index < steps.length - 1 : index > 0;
 
       host.innerHTML =
-        '<div class="onboard">' +
-        '<div class="row" style="justify-content:space-between">' + M.brand({ small: true }) +
+        '<div class="onboard-wrap"><div class="onboard">' +
+        '<div class="onboard__top">' + M.brand({ small: true }) +
         '<span class="chip chip--outline">گام ' + util.toFa(stepNumber) + ' از ' + util.toFa(total) + '</span></div>' +
-        '<div class="stepper" role="progressbar" aria-valuemin="1" aria-valuemax="' + total + '" aria-valuenow="' + stepNumber + '" aria-label="پیشرفت ثبت‌نام">' + dots + '</div>' +
-        '<div class="onboard__card step-enter" data-step="' + step + '">' +
+        track +
+        '<div class="onboard__card step-enter" data-step="' + step + '" data-dir="' + direction + '">' +
         '<h1 class="onboard__title">' + esc(body.title) + '</h1>' +
         '<p class="onboard__text">' + esc(body.text) + '</p>' +
-        '<div class="onboard__step">' + body.body + '</div>' +
+        '<div class="onboard__stage">' + body.body + '</div>' +
         '<div class="onboard__foot">' +
         (showBack ? '<button class="btn btn--quiet" type="button" data-back="1">' + M.icon('arrowEnd', 16) + 'قبلی</button>' : '') +
         '<button class="btn btn--primary push" type="button" data-next="1">' + esc(nextLabel) +
         M.icon(index === steps.length - 1 || isEdit ? 'check' : 'arrowStart', 17) + '</button>' +
         '</div></div>' +
-        (isEdit ? '' : '<p class="hint" style="text-align:center">هر زمان خواستید می‌توانید این اطلاعات را تغییر دهید.</p>') +
-        '</div>';
+        (isEdit ? '' : '<p class="onboard__note">هر زمان خواستید می‌توانید این اطلاعات را تغییر دهید.</p>') +
+        '</div></div>';
 
       bind();
     }
@@ -5049,7 +5412,7 @@ window.MEHRAZ_CONTENT = {
           steps = stepList(g);
           if (index > steps.length - 1) index = steps.length - 1;
           error = '';
-          render();
+          render('fwd');
         });
       });
 
@@ -5057,24 +5420,24 @@ window.MEHRAZ_CONTENT = {
         btn.addEventListener('click', function () {
           draft.track = btn.getAttribute('data-track');
           error = '';
-          render();
+          render('none');
         });
       });
 
       util.$$('[data-goto]', host).forEach(function (btn) {
         btn.addEventListener('click', function () {
           var i = steps.indexOf(btn.getAttribute('data-goto'));
-          if (i >= 0) { index = i; error = ''; render(); }
+          if (i >= 0) { index = i; error = ''; render('back'); }
         });
       });
     }
 
     function onBack() {
       error = '';
-      if (isEdit) { index = steps.length - 1; render(); return; }
+      if (isEdit) { index = steps.length - 1; render('back'); return; }
       if (index === 0) { M.router.go('#/welcome'); return; }
       index -= 1;
-      render();
+      render('back');
     }
 
     function save() {
@@ -5087,14 +5450,31 @@ window.MEHRAZ_CONTENT = {
       };
       var saved = M.store.saveProfile(profile);
       if (!saved) { setError('ذخیرهٔ اطلاعات ممکن نشد؛ ورودی‌ها را بررسی کنید.'); return; }
-      M.store.flush('profile.commit');
-      if (isEdit) {
-        M.ui.toast('اطلاعات شما به‌روزرسانی شد.', { type: 'ok' });
-        M.router.go('#/settings');
-      } else {
-        M.ui.toast('خوش آمدید، ' + saved.displayName + '.', { type: 'ok', icon: 'sparkles' });
-        M.router.go('#/dashboard');
+
+      // The success message waits for the real write. A toast is not evidence
+      // that anything reached the disk.
+      var nextBtn = util.$('[data-next]', host);
+      if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.setAttribute('aria-busy', 'true');
       }
+
+      M.store.flush('profile.commit').then(function (ok) {
+        if (!ok) {
+          M.ui.toast('ذخیرهٔ آخرین تغییر انجام نشد. لطفاً از اطلاعات خود نسخهٔ پشتیبان تهیه کنید.', {
+            type: 'warn',
+            ttl: 9000,
+            actionLabel: 'پشتیبان',
+            onAction: function () { M.router.go('#/settings'); }
+          });
+        } else if (isEdit) {
+          M.ui.toast('اطلاعات شما به‌روزرسانی شد.', { type: 'ok' });
+        } else {
+          M.ui.toast('خوش آمدید، ' + saved.displayName + '.', { type: 'ok', icon: 'sparkles' });
+        }
+        if (isEdit) M.router.go('#/settings');
+        else M.router.go('#/dashboard');
+      });
     }
 
     function onNext() {
@@ -5112,7 +5492,7 @@ window.MEHRAZ_CONTENT = {
       var currentProblem = validateStep();
       if (currentProblem) { setError(currentProblem); return; }
       error = '';
-      if (index < steps.length - 1) { index += 1; render(); return; }
+      if (index < steps.length - 1) { index += 1; render('fwd'); return; }
       save();
     }
 
@@ -5131,6 +5511,7 @@ window.MEHRAZ_CONTENT = {
       title: isEdit ? 'ویرایش پروفایل' : 'ثبت‌نام',
       nav: isEdit ? 'settings' : '',
       html: '<div data-onboard-host></div>',
+      bare: true,
       onMount: function (root) { ctrl.mount(root); }
     };
   };
@@ -5190,10 +5571,13 @@ window.MEHRAZ_CONTENT = {
 
   function firstLesson() {
     var profile = M.store.profile();
+    var track = profile.grade >= 10 ? profile.track : null;
     var index = M.content.lessonIndex();
     return (
       index.filter(function (row) {
-        return row.book.grade === profile.grade;
+        if (row.book.grade !== profile.grade) return false;
+        if (track && row.book.track && row.book.track !== track) return false;
+        return true;
       })[0] || null
     );
   }
@@ -5212,9 +5596,11 @@ window.MEHRAZ_CONTENT = {
       '</span></div>' +
       '<h1>' + esc(greeting()) + '، ' + esc(p.displayName) + '</h1>' +
       '<p class="hero__sub">' +
-      (stats.lessonsDone
-        ? 'مسیر شما در جریان است. آخرین قدمها ثبت شدهاند و ادامهٔ همین مسیر، کوتاهترین راه است.'
-        : 'یک درس بردارید و از همانجا شروع کنید؛ هرچه بخوانید، در همین مسیر میماند.') +
+      (M.content.lessonCount() === 0
+        ? 'کتابخانهٔ پایهٔ شما در حال آماده‌شدن است. تا آن زمان پایه‌های دیگر را ببینید و پروفایل خود را کامل کنید.'
+        : stats.lessonsDone
+        ? 'مسیر شما در جریان است. آخرین قدم ثبت شدهاند و ادامهٔ همین مسیر، کوتاه راه است.'
+        : 'یک درس بردارید و از همانجا شروع کنید؛ هرچه بخوانید، در همین مسیر می.') +
       '</p>' +
       '<div class="hero__meta">' +
       '<span class="chip chip--glass">پایهٔ ' + esc(M.content.gradeLabel(p.grade)) + '</span>' +
@@ -5242,7 +5628,7 @@ window.MEHRAZ_CONTENT = {
       return M.ui.empty({
         icon: 'book',
         title: 'هنوز درسی برای مطالعه نیست',
-        text: 'کتابهای این پایه هنوز به کتابخانه اضافه نشدهاند. میتوانید پایههای دیگر را ببینید یا پروفایل خود را کامل کنید.',
+        text: 'کتاب این پایه هنوز به کتابخانه اضافه نشدهاند. می پایههای دیگر را ببینید یا پروفایل خود را کامل کنید.',
         actions: '<a class="btn btn--ghost btn--sm" href="#/library?scope=all">همهٔ پایهها</a>'
       });
     }
@@ -5276,8 +5662,8 @@ window.MEHRAZ_CONTENT = {
         title: 'کتابخانهٔ این پایه خالی است',
         text: 'برای پایهٔ ' + M.content.gradeLabel(p.grade) +
           (track ? ' رشتهٔ ' + M.content.trackLabel(track) : '') +
-          ' هنوز کتابی ثبت نشده است. ساختار کتابخانه آماده است و کتابها بهتدریج اضافه میشوند.',
-        actions: '<a class="btn btn--ghost btn--sm" href="#/library?scope=all">دیدن ساختار کتابخانه</a>'
+          ' هنوز کتابی ثبت نشده است. کتاب‌های رسمی همین پایه به‌زودی اضافه می‌شوند.',
+        actions: '<a class="btn btn--ghost btn--sm" href="#/library?scope=all">دیدن همهٔ پایه‌ها</a>'
       });
     }
 
@@ -5311,7 +5697,7 @@ window.MEHRAZ_CONTENT = {
       '<section class="section"><div class="card card--pad">' +
       '<div class="row" style="margin-bottom:14px">' +
       '<div><div class="card__title">فعالیت هفته</div>' +
-      '<div class="hint">' + (total ? util.toFa(total) + ' رویداد در هفت روز گذشته' : 'هنوز رویدادی ثبت نشده') + '</div></div>' +
+      '<div class="hint">' + (total ? util.toFa(total) + ' فعالیت در هفت روز گذشته' : 'هنوز فعالیتی ثبت نشده') + '</div></div>' +
       '<span class="chip chip--outline push">۷ روز</span></div>' +
       M.ui.weekChart(week) +
       '</div></section>'
@@ -5329,8 +5715,8 @@ window.MEHRAZ_CONTENT = {
         icon: 'exam',
         compact: true,
         title: 'هنوز آزمونی ثبت نشده',
-        text: 'نتیجهٔ آزمونها پس از شرکت در آنها همینجا میآید.',
-        actions: '<a class="btn btn--ghost btn--sm" href="#/exam">آزمونها</a>'
+        text: 'نتیجهٔ آزمون پس از شرکت در آنها همینجا می.',
+        actions: '<a class="btn btn--ghost btn--sm" href="#/exam">آزمون</a>'
       });
     }
 
@@ -5349,7 +5735,7 @@ window.MEHRAZ_CONTENT = {
           '</div>'
         );
       }).join('') +
-      '<a class="btn btn--quiet btn--sm" href="#/exam" style="align-self:flex-start">همهٔ آزمونها' + M.icon('chevronEnd', 14) + '</a>' +
+      '<a class="btn btn--quiet btn--sm" href="#/exam" style="align-self:flex-start">همهٔ آزمون' + M.icon('chevronEnd', 14) + '</a>' +
       '</div>'
     );
   }
@@ -5362,7 +5748,7 @@ window.MEHRAZ_CONTENT = {
         icon: 'review',
         compact: true,
         title: 'مروری در انتظار نیست',
-        text: 'پس از خواندن درسها و آزمونها، مرورهای بعدی خودشان اینجا ظاهر میشوند.'
+        text: 'وقتی مروری برای شما برنامه‌ریزی شود، همین‌جا دیده می‌شود.'
       });
     }
     return (
@@ -5402,14 +5788,15 @@ window.MEHRAZ_CONTENT = {
   }
 
   views.dashboard = function () {
-    var lessonsTotal = M.content.lessonCount();
-    var stats = M.store.stats(lessonsTotal);
+    var p = M.store.profile();
+    var shelf = M.content.lessonIdsFor(p.grade, p.grade >= 10 ? p.track : null);
+    var stats = M.store.stats(shelf);
     var next = lastLesson() || firstLesson();
     if (next) next.st = M.store.state.progress.lessons[next.lesson.id] || { status: 'not-started' };
 
     var band = M.ui.statBand([
-      { icon: 'check', label: 'درسهای خواندهشده', value: util.toFa(stats.lessonsDone), unit: 'درس', foot: stats.lessonsTotal ? 'از ' + util.toFa(stats.lessonsTotal) + ' درس' : 'کتابخانه خالی است' },
-      { icon: 'exam', label: 'آزمونها', value: util.toFa(stats.examsTaken), unit: 'آزمون', foot: stats.examsTaken ? 'میانگین ' + util.fmtPct(stats.averagePercent) : 'هنوز آزمونی نداده‌اید' },
+      { icon: 'check', label: 'درس خواندهشده', value: util.toFa(stats.lessonsDone), unit: 'درس', foot: stats.lessonsTotal ? 'از ' + util.toFa(stats.lessonsTotal) + ' درس' : 'کتابخانه خالی است' },
+      { icon: 'exam', label: 'آزمون', value: util.toFa(stats.examsTaken), unit: 'آزمون', foot: stats.examsTaken ? 'میانگین ' + util.fmtPct(stats.averagePercent) : 'هنوز آزمونی نداده‌اید' },
       { icon: 'target', label: 'میانگین نتایج', value: stats.examsTaken ? util.fmtPct(stats.averagePercent) : '—', foot: stats.examsTaken ? 'بر پایهٔ ' + util.toFa(stats.examsTaken) + ' آزمون' : 'پس از نخستین آزمون' },
       { icon: 'review', label: 'مرور در انتظار', value: util.toFa(stats.reviewDue), unit: 'مرور', foot: stats.reviewTotal ? 'از ' + util.toFa(stats.reviewTotal) : 'برنامهٔ مرور خالی است' }
     ]);
@@ -5434,7 +5821,7 @@ window.MEHRAZ_CONTENT = {
       '</div>';
 
     return {
-      title: 'خانه',
+      title: 'داشبورد',
       nav: 'dashboard',
       html: html,
       onMount: function (root) {
@@ -5564,6 +5951,9 @@ window.MEHRAZ_CONTENT = {
     var p = M.store.profile();
     var meta = M.content.gradeMeta[grade];
     var track = params.track && M.content.trackMeta[params.track] ? params.track : null;
+    // Opening a grade from the "all grades" list used to lose the student's
+    // track and show an empty page for their own grade.
+    if (!track && grade >= 10 && p.grade === grade && p.track) track = p.track;
 
     var head = M.ui.pageHead({
       eyebrow: meta.cycleLabel,
@@ -5571,7 +5961,7 @@ window.MEHRAZ_CONTENT = {
       sub:
         grade >= 10
           ? 'رشتهٔ تحصیلی را انتخاب کنید تا فهرست درس‌ها نمایش داده شود.'
-          : 'درس‌های این پایه در ساختار کتابخانه قرار می‌گیرند.',
+          : 'درس‌های این پایه در کتابخانه فهرست می‌شوند.',
       actions: '<a class="btn btn--ghost btn--sm" href="#/library?scope=all">' + M.icon('arrowEnd', 15) + 'همهٔ پایه‌ها</a>'
     });
 
@@ -5632,7 +6022,7 @@ window.MEHRAZ_CONTENT = {
       body = M.ui.empty({
         icon: 'book',
         title: 'هنوز کتابی برای این ' + (track ? 'رشته' : 'پایه') + ' ثبت نشده',
-        text: 'ساختار درس، فصل و درس‌ها آماده است. کتاب رسمی پس از اعتبارسنجی منبع به این بخش افزوده می‌شود.',
+        text: 'کتاب رسمی این پایه به‌زودی به کتابخانه اضافه می‌شود.',
         actions:
           grade === p.grade
             ? '<a class="btn btn--primary btn--sm" href="#/dashboard">بازگشت به داشبورد</a>'
@@ -5703,8 +6093,8 @@ window.MEHRAZ_CONTENT = {
         '<section class="section" style="margin-top:20px">' +
         M.ui.empty({
           icon: 'layers',
-          title: 'فصلی ثبت نشده است',
-          text: 'این کتاب در ساختار کتابخانه وجود دارد اما فصل و درسی برای آن تعریف نشده است.',
+          title: 'هنوز فصلی برای این کتاب ثبت نشده',
+          text: 'به‌زودی فصل‌ها و درس‌های رسمی این کتاب اضافه می‌شوند.',
           actions: '<a class="btn btn--ghost btn--sm" href="#/library">بازگشت به کتابخانه</a>'
         }) +
         '</section>'
@@ -6026,11 +6416,8 @@ window.MEHRAZ_CONTENT = {
         '<div class="section-ph">' +
         '<span class="section-ph__tag">' +
         M.icon('clock', 14) +
-        'در انتظار محتوا</span>' +
-        '<p class="hint" style="margin-bottom:10px">' +
-        esc('این بخش برای نمایش محتوای رسمی درس آماده است و در نسخهٔ محتوایی تکمیل می‌شود.') +
-        '</p>' +
-        M.ui.skeletonBlock(2) +
+        'به‌زودی</span>' +
+        '<p class="hint">این بخش با محتوای رسمی درس تکمیل می‌شود.</p>' +
         '</div>';
     }
     return (
@@ -6039,7 +6426,7 @@ window.MEHRAZ_CONTENT = {
       '<span class="lsection__idx">' + util.toFa(index + 1) + '</span>' +
       '<h2 class="lsection__title">' + esc(section.label) + '</h2>' +
       '<span class="chip ' + (section.hasContent ? 'chip--ok' : 'chip--outline') + ' push">' +
-      (section.hasContent ? 'آماده' : 'در راه') + '</span>' +
+      (section.hasContent ? 'آماده' : 'به‌زودی') + '</span>' +
       '</div>' +
       '<div class="lsection__body">' + body + '</div>' +
       '</section>'
@@ -6129,7 +6516,7 @@ window.MEHRAZ_CONTENT = {
       '<div class="hint">' +
       (done
         ? 'این درس در تاریخ ' + esc(M.jalali.formatISO(new Date(M.store.lessonState(lesson.id).completedAt).getTime())) + ' کامل شد.'
-        : 'با خواندن درس و زدن دکمهٔ «خوانده شد»، پیشرفت شما ذخیره می‌شود.') +
+        : 'وقتی درس را خواندید، دکمهٔ «خوانده‌شده» را بزنید تا در مسیر شما ثبت شود.') +
       '</div>' +
       '</aside>';
 
@@ -6165,7 +6552,7 @@ window.MEHRAZ_CONTENT = {
       '</div></nav>' +
       '</div>';
 
-    return {
+    var view = {
       title: lesson.title,
       nav: 'library',
       html: head + '<div class="lesson-layout" style="margin-top:20px">' + sections + toc + '</div>',
@@ -6175,13 +6562,22 @@ window.MEHRAZ_CONTENT = {
         var completeBtn = util.$('[data-complete]', root);
         if (completeBtn && !completeBtn.disabled) {
           completeBtn.addEventListener('click', function () {
-            M.store.completeLesson(lesson.id);
-            M.store.flush('lesson.complete');
             completeBtn.disabled = true;
-            completeBtn.className = 'btn btn--ghost btn--sm';
-            completeBtn.innerHTML = M.icon('check', 16) + 'این درس خوانده شده';
-            M.ui.toast('پیشرفت ذخیره شد؛ درس «' + lesson.title + '» کامل شد.', { type: 'ok', icon: 'sparkles' });
-            M.router.refresh();
+            M.store.completeLesson(lesson.id);
+            M.store.flush('lesson.complete').then(function (ok) {
+              if (!ok) {
+                completeBtn.disabled = false;
+                M.ui.toast('ذخیرهٔ آخرین تغییر انجام نشد. لطفاً از اطلاعات خود نسخهٔ پشتیبان تهیه کنید.', {
+                  type: 'warn',
+                  ttl: 9000,
+                  actionLabel: 'پشتیبان',
+                  onAction: function () { M.router.go('#/settings'); }
+                });
+                return;
+              }
+              M.ui.toast('درس «' + lesson.title + '» در مسیر شما ثبت شد.', { type: 'ok', icon: 'check' });
+              M.router.refresh();
+            });
           });
         }
 
@@ -6203,6 +6599,9 @@ window.MEHRAZ_CONTENT = {
           util.$$('[data-section]', root).forEach(function (sec) {
             observer.observe(sec);
           });
+          view.onUnmount = function () {
+            observer.disconnect();
+          };
         }
 
         util.$$('[data-toc]', root).forEach(function (link) {
@@ -6221,6 +6620,8 @@ window.MEHRAZ_CONTENT = {
         });
       }
     };
+
+    return view;
   };
 
   views.chapter = function (params) {
@@ -6255,7 +6656,10 @@ window.MEHRAZ_CONTENT = {
   function normalizeAnswer(q, value) {
     if (q.type === 'numeric') {
       if (value === '' || value === null || value === undefined) return null;
-      var num = Number(util.toEn(String(value)).replace(/[٫،,\s]/g, '.').replace(/\.(?=.*\.)/g, ''));
+      var raw = util.toEn(String(value)).trim();
+      // Grouping marks are not decimal points: «۱٬۲۰۰» and «1,200» mean 1200.
+      raw = raw.replace(/[٬,\s]/g, '').replace(/[٫،]/g, '.');
+      var num = Number(raw);
       return isNaN(num) ? null : num;
     }
     if (q.type === 'multi') return Array.isArray(value) ? value.slice().sort() : [];
@@ -6305,17 +6709,16 @@ window.MEHRAZ_CONTENT = {
       });
 
     var head = M.ui.pageHead({
-      eyebrow: 'آزمون',
       title: 'آزمون و سنجش',
-      sub: 'پس از افزودن محتوای درسی، آزمون‌های هر فصل در این بخش فهرست می‌شوند. نتیجه و پاسخ‌ها روی همین دستگاه ذخیره می‌شود.'
+      sub: 'آزمون‌های هر فصل همراه کتاب‌های رسمی در دسترس قرار می‌گیرند.'
     });
 
     var list;
     if (!rows.length) {
       list = M.ui.empty({
         icon: 'exam',
-        title: 'هنوز آزمونی تعریف نشده است',
-        text: 'موتور آزمون آماده است و چهار نوع پرسش را پشتیبانی می‌کند: چندگزینه‌ای، درست/نادرست، چندپاسخی و پاسخ عددی. پرسش‌ها همراه محتوای رسمی افزوده می‌شوند.',
+        title: 'هنوز آزمونی آماده نیست',
+        text: 'آزمون‌های فصل‌های کتاب‌های رسمی، همراه همان کتاب‌ها به این بخش اضافه می‌شوند.',
         actions: '<a class="btn btn--ghost btn--sm" href="#/library">کتابخانهٔ درسی</a>'
       });
     } else {
@@ -6324,14 +6727,13 @@ window.MEHRAZ_CONTENT = {
         rows
           .map(function (row) {
             var qs = M.content.questionsFor(row.exam);
-            var best = attempts
-              .filter(function (a) {
-                return a.examId === row.exam.id;
-              })
-              .reduce(function (acc, a) {
-                var pct = a.total ? (a.score / a.total) * 100 : 0;
-                return Math.max(acc, pct);
-              }, 0);
+            var mine = attempts.filter(function (a) {
+              return a.examId === row.exam.id;
+            });
+            var best = mine.reduce(function (acc, a) {
+              var pct = a.total ? (a.score / a.total) * 100 : 0;
+              return Math.max(acc, pct);
+            }, 0);
             return (
               '<a class="card card--pad card--link" href="#/exam/' +
               encodeURIComponent(row.exam.id) +
@@ -6345,7 +6747,7 @@ window.MEHRAZ_CONTENT = {
               ' • ' +
               util.toFa(qs.length) +
               ' پرسش</div></div>' +
-              (best ? '<span class="chip chip--brand">بهترین: ' + util.fmtPct(best) + '</span>' : '<span class="chip">شروع‌نشده</span>') +
+              (mine.length ? '<span class="chip chip--brand">بهترین: ' + util.fmtPct(best) + '</span>' : '<span class="chip">شروع‌نشده</span>') +
               M.icon('chevronEnd', 18) +
               '</div></a>'
             );
@@ -6414,7 +6816,7 @@ window.MEHRAZ_CONTENT = {
         html: M.ui.empty({
           icon: 'exam',
           title: 'پرسشی برای این آزمون ثبت نشده',
-          text: 'ساختار آزمون آماده است اما پرسش‌های آن هنوز افزوده نشده‌اند.'
+          text: 'پرسش‌های این آزمون هنوز اضافه نشده‌اند.'
         })
       };
     }
@@ -6456,14 +6858,15 @@ window.MEHRAZ_CONTENT = {
       '<div class="qnav" data-qnav></div>' +
       '</div>';
 
-    return {
+    var view = {
       title: exam.title,
       nav: 'exam',
       html: head,
       onMount: function (root) {
-        startRunner(root, exam, questions);
+        view.onUnmount = startRunner(root, exam, questions);
       }
     };
+    return view;
   };
 
   function startRunner(root, exam, questions) {
@@ -6707,7 +7110,15 @@ window.MEHRAZ_CONTENT = {
         detail: detail
       };
       M.store.addAttempt(attempt);
-      M.store.flush('exam.submit').then(function () {
+      M.store.flush('exam.submit').then(function (ok) {
+        if (!ok) {
+          M.ui.toast('ذخیرهٔ آخرین تغییر انجام نشد. لطفاً از اطلاعات خود نسخهٔ پشتیبان تهیه کنید.', {
+            type: 'warn',
+            ttl: 8000,
+            actionLabel: 'پشتیبان',
+            onAction: function () { M.router.go('#/settings'); }
+          });
+        }
         M.router.go('#/exam/' + encodeURIComponent(exam.id) + '/result/' + encodeURIComponent(attempt.id));
       });
     }
@@ -6715,6 +7126,13 @@ window.MEHRAZ_CONTENT = {
     renderQuestion();
     renderNav();
     updateCounters();
+
+    // The timer is the only thing this view owns; the router calls this before
+    // the next page replaces the DOM.
+    return function () {
+      finished = true;
+      window.clearInterval(timer);
+    };
   }
 
   /* ---- result ----------------------------------------------------------- */
@@ -7024,9 +7442,8 @@ window.MEHRAZ_CONTENT = {
     });
 
     var head = M.ui.pageHead({
-      eyebrow: 'مرور',
       title: 'برنامهٔ مرور',
-      sub: 'مرورها از پاسخ‌های ثبت‌شدهٔ شما ساخته می‌شوند. هر مرور به یک درس یا موضوع مشخص متصل است و تاریخ آن روی همین دستگاه ذخیره می‌شود.'
+      sub: 'مرور‌های شما، موضوع‌های نیازمند تمرین و تاریخچهٔ پاسخ‌ها در یک صفحه.'
     });
 
     var dueBlock = due.length
@@ -7036,7 +7453,7 @@ window.MEHRAZ_CONTENT = {
       : M.ui.empty({
           icon: 'review',
           title: 'برای امروز مروری نیست',
-          text: 'وقتی درس‌ها را بخوانید یا در آزمون‌ها پاسخ نادرست بدهید، مرورهای بعدی به‌صورت خودکار اینجا ساخته می‌شوند.'
+          text: 'وقتی مروری برای شما برنامه‌ریزی شود، همین‌جا دیده می‌شود.'
         });
 
     var upcomingBlock = upcoming.length
@@ -7159,8 +7576,8 @@ window.MEHRAZ_CONTENT = {
   /* ---- progress --------------------------------------------------------- */
   views.progress = function () {
     var p = M.store.profile();
-    var lessonsTotal = M.content.lessonCount();
-    var stats = M.store.stats(lessonsTotal);
+    var shelf = M.content.lessonIdsFor(p.grade, p.grade >= 10 ? p.track : null);
+    var stats = M.store.stats(shelf);
     var books = M.content.books({});
     var attempts = M.store
       .attempts()
@@ -7175,7 +7592,7 @@ window.MEHRAZ_CONTENT = {
       body = M.ui.empty({
         icon: 'progress',
         title: 'هنوز داده‌ای برای نمایش نیست',
-        text: 'پس از مطالعهٔ نخستین درس یا شرکت در یک آزمون، نمودارهای پیشرفت بر پایهٔ داده‌های واقعی شما ساخته می‌شوند.',
+        text: 'پس از مطالعهٔ نخستین درس یا شرکت در یک آزمون، نمودار پیشرفت بر پایهٔ داده‌های واقعی شما ساخته می‌شوند.',
         actions: '<a class="btn btn--primary btn--sm" href="#/library">شروع از کتابخانه</a>'
       });
     } else {
@@ -7291,9 +7708,8 @@ window.MEHRAZ_CONTENT = {
       nav: 'progress',
       html:
         M.ui.pageHead({
-          eyebrow: 'پیشرفت',
           title: 'مسیر من',
-          sub: 'همهٔ اعداد این صفحه از داده‌های ذخیره‌شدهٔ شما محاسبه می‌شوند.'
+          sub: 'هر عدد این صفحه از کار واقعی شما ساخته می‌شود.'
         }) + body,
       onMount: function (root) {
         M.ui.animateProgress(root);
@@ -7309,7 +7725,7 @@ window.MEHRAZ_CONTENT = {
       'exam.finished': 'یک آزمون ثبت شد',
       'review.done': 'یک مرور انجام شد'
     };
-    return labels[a.type] || 'رویداد یادگیری';
+    return labels[a.type] || 'فعالیت یادگیری';
   }
 })(window, document);
 
@@ -7341,6 +7757,14 @@ window.MEHRAZ_CONTENT = {
     );
   }
 
+  function segment(attr, value, current, label) {
+    var active = current === value;
+    return (
+      '<button class="segmented__item' + (active ? ' is-active' : '') + '" type="button" ' +
+      attr + '="' + value + '" role="tab" aria-selected="' + active + '">' + esc(label) + '</button>'
+    );
+  }
+
   views.settings = function () {
     var prefs = M.store.prefs();
 
@@ -7352,17 +7776,17 @@ window.MEHRAZ_CONTENT = {
         text: 'روشن برای روز، شبانه برای نور کم.',
         action:
           '<div class="segmented" role="tablist" aria-label="پوسته">' +
-          '<button class="segmented__item' + (prefs.theme === 'light' ? ' is-active' : '') + '" type="button" data-theme-set="light" role="tab" aria-selected="' + (prefs.theme === 'light') + '">روشن</button>' +
-          '<button class="segmented__item' + (prefs.theme === 'night' ? ' is-active' : '') + '" type="button" data-theme-set="night" role="tab" aria-selected="' + (prefs.theme === 'night') + '">شبانه</button>' +
+          segment('data-theme-set', 'light', prefs.theme, 'روشن') +
+          segment('data-theme-set', 'night', prefs.theme, 'شبانه') +
           '</div>'
       }) +
       M.ui.settingRow({
         title: 'حرکت',
-        text: 'اگر انیمیشن‌ها برایتان زیاد است، حالت کاهش‌یافته را انتخاب کنید.',
+        text: 'اگر انیمیشن‌ها حواستان را پرت می‌کند، حالت کاهش‌یافته را انتخاب کنید.',
         action:
           '<div class="segmented" role="tablist" aria-label="حرکت">' +
-          '<button class="segmented__item' + (prefs.motion === 'system' ? ' is-active' : '') + '" type="button" data-motion-set="system" role="tab" aria-selected="' + (prefs.motion === 'system') + '">کامل</button>' +
-          '<button class="segmented__item' + (prefs.motion === 'reduced' ? ' is-active' : '') + '" type="button" data-motion-set="reduced" role="tab" aria-selected="' + (prefs.motion === 'reduced') + '">کم</button>' +
+          segment('data-motion-set', 'system', prefs.motion, 'کامل') +
+          segment('data-motion-set', 'reduced', prefs.motion, 'کاهش‌یافته') +
           '</div>'
       }) +
       M.ui.settingRow({
@@ -7397,23 +7821,12 @@ window.MEHRAZ_CONTENT = {
       }) +
       '</div></section>';
 
-    var aboutSection =
-      '<section class="section">' + M.ui.sectionHead('برنامه') +
-      '<div class="card card--pad">' +
-      M.ui.settingRow({
-        title: 'دربارهٔ سازنده',
-        text: 'نام و راه‌های ارتباطی.',
-        action: '<a class="btn btn--ghost btn--sm" href="#/about">' + M.icon('user', 15) + 'مشاهده</a>'
-      }) +
-      '<div class="row" style="padding-top:14px;color:var(--txt-faint);font-size:var(--fs-11)">' +
-      '<span>نسخهٔ ' + util.toFa(M.version) + '</span><span class="push">مهراز</span></div>' +
-      '</div></section>';
-
     var html =
-      M.ui.pageHead({ eyebrow: 'تنظیمات', title: 'تنظیمات', sub: 'هرچه لازم دارید، در یک صفحه.' }) +
+      M.ui.pageHead({ title: 'تنظیمات', sub: 'پروفایل، ظاهر و فایل پشتیبان؛ هرچه لازم دارید، در یک صفحه.' }) +
       '<div class="stack" style="gap:24px">' +
       '<section class="section">' + M.ui.sectionHead('پروفایل') + profileCard() + '</section>' +
-      appearance + dataSection + dangerSection + aboutSection +
+      appearance + dataSection + dangerSection +
+      '<p class="hint" style="text-align:center">مهراز، نسخهٔ ' + util.toFa(M.version) + '</p>' +
       '</div>';
 
     return {
@@ -7455,10 +7868,10 @@ window.MEHRAZ_CONTENT = {
           exportBtn.addEventListener('click', function () {
             try {
               var info = M.backup.download();
-              M.ui.toast('فایل پشتیبان آماده شد: ' + info.name, { type: 'ok', ttl: 6000 });
+              M.ui.toast('فایل پشتیبان ساخته شد: ' + info.name, { type: 'ok', ttl: 7000 });
             } catch (err) {
               M.diag.record('error', err.message, { scope: 'backup.export' });
-              M.ui.toast('ساخت فایل پشتیبان ممکن نشد.', { type: 'danger', ttl: 6000 });
+              M.ui.toast('ساخت فایل پشتیبان ممکن نشد.', { type: 'danger', ttl: 7000 });
             }
           });
         }
@@ -7481,7 +7894,16 @@ window.MEHRAZ_CONTENT = {
               danger: true
             }).then(function (ok) {
               if (!ok) return;
-              M.store.clearUserData(false).then(function () {
+              clearBtn.disabled = true;
+              M.store.clearUserData(false).then(function (saved) {
+                if (!saved && M.storage.status().driver !== 'memory') {
+                  clearBtn.disabled = false;
+                  M.ui.toast('پاک‌کردن داده‌ها ذخیره نشد. دوباره تلاش کنید یا فایل پشتیبان بگیرید.', {
+                    type: 'warn',
+                    ttl: 9000
+                  });
+                  return;
+                }
                 M.ui.toast('داده‌ها پاک شد.', { type: 'ok' });
                 M.router.go('#/welcome');
               });
@@ -7495,13 +7917,14 @@ window.MEHRAZ_CONTENT = {
   /* ---- about ------------------------------------------------------------- */
   views.about = function () {
     var html =
-      M.ui.pageHead({ eyebrow: 'درباره', title: 'سازندهٔ مهراز', sub: 'این صفحه فقط به سازنده اختصاص دارد.' }) +
+      M.ui.pageHead({ title: 'سازندهٔ مهراز' }) +
       '<section class="section">' +
       '<div class="creator-card">' +
-      '<div style="display:grid;place-items:center;width:84px;height:84px;border-radius:26px;background:var(--grad-brand);color:#fff;font-size:1.7rem;font-weight:800;box-shadow:var(--sh-brand)">ا</div>' +
-      '<div style="min-width:0;flex:1 1 220px">' +
-      '<div style="font-size:var(--fs-20);font-weight:800;color:var(--txt-strong)">امین</div>' +
-      '<div class="card__text" style="margin-top:4px">طراح و سازندهٔ مهراز</div>' +
+      '<div class="creator__mark" aria-hidden="true">' + esc(M.ui.initials('امین')) + '</div>' +
+      '<div class="creator__body">' +
+      '<span class="creator__label">نام سازنده</span>' +
+      '<div class="creator__name">امین</div>' +
+      '<div class="creator__role">طراح و سازندهٔ مهراز</div>' +
       '</div>' +
       '<div class="creator-links">' +
       '<a class="linkbtn" href="https://t.me/Mozrd" target="_blank" rel="noopener noreferrer">' + M.icon('telegram', 18) +
@@ -7509,10 +7932,10 @@ window.MEHRAZ_CONTENT = {
       '<a class="linkbtn" href="https://rubika.ir/angosht0" target="_blank" rel="noopener noreferrer">' + M.icon('rubika', 18) +
       '<span>روبیکا <span dir="ltr" style="color:var(--txt-muted)">@angosht0</span></span></a>' +
       '</div></div>' +
-      '<p class="hint" style="margin-top:12px">برای گفتن نظر، پیشنهاد یا گزارش یک مشکل، از همین راه‌ها پیام بدهید.</p>' +
+      '<p class="hint" style="margin-top:14px">برای گفتن نظر، پیشنهاد یا گزارش یک مشکل، از همین راه‌ها پیام بدهید.</p>' +
       '</section>';
 
-    return { title: 'دربارهٔ سازنده', nav: '', html: html };
+    return { title: 'درباره', nav: 'about', html: html };
   };
 })(window, document);
 
@@ -7553,7 +7976,31 @@ window.MEHRAZ_CONTENT = {
     else root.removeAttribute('data-motion');
 
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', prefs.theme === 'night' ? '#0b1622' : '#ffffff');
+    if (meta) meta.setAttribute('content', prefs.theme === 'night' ? '#0b1622' : '#FAFBFE');
+    app.syncThemeButton();
+  };
+
+  /* The topbar button used to be decorative. It now flips the theme and shows
+     the icon of the mode the student will get. */
+  app.syncThemeButton = function () {
+    var btn = document.getElementById('theme-btn');
+    if (!btn) return;
+    var night = M.store.prefs().theme === 'night';
+    btn.innerHTML = M.icon(night ? 'sun' : 'moon', 20);
+    btn.setAttribute('aria-pressed', night ? 'true' : 'false');
+    btn.setAttribute('title', night ? 'حالت روز' : 'حالت شبانه');
+    btn.setAttribute('aria-label', night ? 'روشن کردن حالت روز' : 'روشن کردن حالت شبانه');
+  };
+
+  app.bindThemeButton = function () {
+    var btn = document.getElementById('theme-btn');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var next = M.store.prefs().theme === 'night' ? 'light' : 'night';
+      M.store.setPref('theme', next);
+      app.applyPrefs();
+      M.ui.toast(next === 'night' ? 'حالت شبانه فعال شد.' : 'حالت روز فعال شد.', { type: 'ok', ttl: 2400 });
+    });
   };
 
   /* ---- chrome ----------------------------------------------------------- */
@@ -7602,7 +8049,9 @@ window.MEHRAZ_CONTENT = {
         NAV.slice(5).map(function (i) {
           return navItem(i, false);
         }).join('') +
-        '<a class="sidebar__link" href="#/about">' + M.icon('user', 15) + 'دربارهٔ سازنده</a>';
+        '<a class="navitem" href="#/about" data-nav="about">' +
+        '<span class="navitem__icon">' + M.icon('info', 19) + '</span>' +
+        '<span>درباره</span></a>';
     }
 
     var bottom = document.getElementById('bottomnav');
@@ -7826,7 +8275,9 @@ window.MEHRAZ_CONTENT = {
   app.renderProfileChip = function () {
     var chip = document.getElementById('profile-chip');
     var p = M.store.profile();
-    if (!chip || !p) return;
+    if (!chip) return;
+    chip.hidden = !p;
+    if (!p) return;
     chip.innerHTML =
       M.ui.avatar(p.displayName, 'sm') +
       '<span class="profile-chip__text"><span class="profile-chip__name">' +
@@ -7852,7 +8303,7 @@ window.MEHRAZ_CONTENT = {
         '</div>' +
         '<div class="banner banner--info" style="margin-top:14px">' +
         M.icon('lock', 16) +
-        '<span>فایل فقط در همین دستگاه خوانده می‌شود و به هیچ جایی ارسال نمی‌شود.</span>' +
+        '<span>این فایل فقط برای بازیابی اطلاعات شما خوانده می‌شود.</span>' +
         '</div>' +
         '<div data-import-status></div>' +
         '</div>',
@@ -7870,7 +8321,7 @@ window.MEHRAZ_CONTENT = {
             '</div>' +
             '<div class="banner banner--info" style="margin-top:14px">' +
             M.icon('lock', 16) +
-            '<span>فایل فقط در همین دستگاه خوانده می‌شود و به هیچ جایی ارسال نمی‌شود.</span>' +
+            '<span>این فایل فقط برای بازیابی اطلاعات شما خوانده می‌شود.</span>' +
             '</div>' +
             '<div data-import-status></div>';
           bindInput();
@@ -7982,7 +8433,7 @@ window.MEHRAZ_CONTENT = {
           bodyHost.innerHTML =
             '<div class="banner banner--warn">' +
             M.icon('alert', 16) +
-            '<span>اطلاعات فعلی این دستگاه با محتوای پشتیبان جای‌گزین می‌شود. این کار قابل بازگشت نیست.</span></div>' +
+            '<span>اطلاعات فعلی با محتوای این پشتیبان جای‌گزین می‌شود. این کار قابل بازگشت نیست.</span></div>' +
             '<p class="hint" style="margin-top:12px">آیا مطمئن هستید؟</p>' +
             '<div class="row row--wrap" style="margin-top:8px;gap:8px">' +
             '<button class="btn btn--ghost btn--sm" type="button" data-back>بازگشت</button>' +
@@ -8032,12 +8483,42 @@ window.MEHRAZ_CONTENT = {
         M.store.ready = true;
       })
       .then(function () {
+        // A silent failure is worse than a warning. If a write does not land,
+        // say it once, in plain Persian, and point at the backup file.
+        M.store.subscribe(function (state, payload) {
+          if (!payload || payload.type !== 'persist') return;
+          if (payload.ok) {
+            app.warnedPersist = false;
+            return;
+          }
+          if (app.warnedPersist) return;
+          app.warnedPersist = true;
+          M.ui.toast('ذخیرهٔ آخرین تغییر انجام نشد. لطفاً از اطلاعات خود نسخهٔ پشتیبان تهیه کنید.', {
+            type: 'warn',
+            ttl: 9000,
+            actionLabel: 'پشتیبان',
+            onAction: function () {
+              M.router.go('#/settings');
+            }
+          });
+        });
+
+        // Closing the tab within the debounce window used to drop the last
+        // action. Flush as soon as the page is hidden.
+        window.addEventListener('pagehide', function () {
+          if (M.store.ready) M.store.flush('pagehide');
+        });
+        document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState === 'hidden' && M.store.ready) M.store.flush('hidden');
+        });
+
         M.content.init();
         app.applyPrefs();
         app.buildChrome();
         app.renderProfileChip();
         app.bindSearch();
         app.bindProfileMenu();
+        app.bindThemeButton();
         registerRoutes();
 
         M.router.start();
@@ -8105,7 +8586,7 @@ window.MEHRAZ_CONTENT = {
     });
     add({
       path: '#/dashboard',
-      title: 'خانه',
+      title: 'داشبورد',
       nav: 'dashboard',
       requiresProfile: true,
       view: guardless(M.views.dashboard)
@@ -8201,7 +8682,7 @@ window.MEHRAZ_CONTENT = {
       requiresProfile: true,
       view: guardless(M.views.settings)
     });
-    add({ path: '#/about', title: 'درباره', nav: '', view: guardless(M.views.about) });
+    add({ path: '#/about', title: 'درباره', nav: 'about', view: guardless(M.views.about) });
   }
 
   /* ---- go --------------------------------------------------------------- */

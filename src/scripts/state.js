@@ -161,6 +161,11 @@
     /* Mutate state in one place, then persist. */
     update: function (mutator, reason) {
       if (typeof mutator === 'function') mutator(store.state);
+      // Every write path shares the same cap; several mutators used to append
+      // to activity without trimming it.
+      if (Array.isArray(store.state.activity) && store.state.activity.length > ACTIVITY_CAP) {
+        store.state.activity = store.state.activity.slice(-ACTIVITY_CAP);
+      }
       store.state.meta.updatedAt = util.nowISO();
       store.schedule(reason);
       return store.state;
@@ -381,11 +386,14 @@
       return days;
     },
 
-    stats: function (catalogLessons) {
+    stats: function (lessonIds) {
+      var known = Array.isArray(lessonIds) ? lessonIds : null;
       var lessons = store.state.progress.lessons;
       var done = 0;
       Object.keys(lessons).forEach(function (id) {
-        if (lessons[id] && lessons[id].status === 'done') done += 1;
+        if (!lessons[id] || lessons[id].status !== 'done') return;
+        if (known && known.indexOf(id) === -1) return;
+        done += 1;
       });
       var attempts = store.state.exams.attempts;
       var scored = attempts.filter(function (a) {
@@ -398,7 +406,7 @@
         }, 0);
         avg = sum / scored.length;
       }
-      var totalLessons = catalogLessons || 0;
+      var totalLessons = known ? known.length : 0;
       return {
         lessonsDone: done,
         lessonsTotal: totalLessons,
@@ -408,8 +416,7 @@
         reviewDue: store.dueReviewItems().length,
         reviewTotal: store.state.review.items.filter(function (i) {
           return i.status !== 'done';
-        }).length,
-        knowledgeItems: done + (attempts.length ? 1 : 0)
+        }).length
       };
     },
 

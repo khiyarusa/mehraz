@@ -7,9 +7,9 @@ pulled out, from a local file, with no installation.**
 
 ## 1. Hard rules
 
-| Rule | Status in phase 01 |
+| Rule | Status in PROMPT 01 |
 | --- | --- |
-| Single entry file `start.html` | yes — 323.7 KB, self-contained |
+| Single entry file `start.html` | yes — 343.4 KB, self-contained |
 | No external CSS / JS / images / fonts | yes — all inlined |
 | No CDN, no Google Fonts, no icon package | yes |
 | No `fetch`, `XMLHttpRequest`, `import()` | yes — build fails if any appears |
@@ -63,7 +63,8 @@ not needed for any feature.
 2. In the running page,
    `performance.getEntriesByType('resource')` returned **an empty array** — the
    document issues zero sub-resource requests. Navigation type `navigate`,
-   transfer from disk, DOMContentLoaded 108 ms, load 114 ms.
+   transfer from disk, DOMContentLoaded 149 ms, load 151 ms (Chrome 148, this
+   build, 2026-11-16).
 3. DevTools → Network with the cache disabled shows a single request: the
    document itself.
 4. The application was exercised with a full flow (onboarding → lesson → exam →
@@ -86,8 +87,8 @@ of them.
 | Reality | Handling |
 | --- | --- |
 | `file://` pages have an opaque origin in several engines | No API that needs a secure context is used. No `crypto.subtle`, no `navigator.storage.persist()`, no service worker, no `history.pushState`, no `localStorage` assumption. |
-| Storage can be unavailable or throw `SecurityError` | Probe chain IndexedDB → localStorage → memory, each with a real write/read test. Memory mode shows a persistent warning and points at the backup button. |
-| Storage is per browser (and often per browser profile) | Documented to the user in Settings; backups are the only transfer mechanism across devices. |
+| Storage can be unavailable or throw `SecurityError` | Probe chain IndexedDB → localStorage → memory, each with a real write/read test. Memory mode shows one actionable warning and points at the backup button. |
+| Storage is per browser (and often per browser profile) | The interface says backups are the way to move data; it never names the storage layer. |
 | Some Android file managers open documents through `content://` URIs | The document depends on **no sibling file**; everything is inline, so the URI has nothing to break. Storage may fall back to memory there — the warning appears immediately. |
 | Clearing browser data deletes the record | The UI states this in Settings and offers export at any time. |
 | Two tabs of the same file share the record | Last write wins; each tab reads at boot. Not treated as a sync feature. |
@@ -103,23 +104,23 @@ of them.
 - A browser update, a policy, or an aggressive cleaner can clear the database
   without warning. Periodic backups are the only defence.
 - Maximum practical dataset: a single record of a few hundred KB is normal; the
-  browser quota (typically tens of MB per origin) is never approached by phase 01
+  browser quota (typically tens of MB per origin) is never approached by PROMPT 01
   data.
 
 ---
 
 ## 5. Size and performance budget
 
-| Budget | Limit | Actual (phase 01) |
+| Budget | Limit | Actual (pre-release build, 2026-11-16) |
 | --- | --- | --- |
-| Single file | 600 KB | 323.7 KB |
-| DOM nodes on dashboard | 700 | 392 |
+| Single file | 600 KB | 343.4 KB |
+| DOM nodes on dashboard | 700 | 401 |
 | JS heap after full flow | 24 MB | ~2–3 MB |
-| Cold open (file://) | 400 ms | 108 ms DOMContentLoaded / 114 ms load |
+| Cold open (file://) | 400 ms | 149 ms DOMContentLoaded / 151 ms load |
 | Sub-resource requests | 0 | 0 |
 | CSS animation on hidden nodes | none | none |
 
-Phase 02 adds content to the same file. The budget above is the gate: if lesson
+PROMPT 03 adds content to the same file. The budget above is the gate: if lesson
 content pushes the file past ~600 KB, assets must be reduced (SVG optimised,
 figures limited to what is pedagogically necessary) or content must be split into
 multiple standalone volumes — a decision that must be documented, not improvised.

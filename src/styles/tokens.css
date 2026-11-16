@@ -44,7 +44,7 @@
   --t-900: #0B1A2B;
   --t-700: #22364C;
   --t-500: #566A82;
-  --t-400: #7C8CA1;
+  --t-400: #63748A;   /* 4.78:1 on white — ≥ 4.5 for 10–11px labels */
 
   /* ---- legacy semantic aliases (used across the app) ------------------ */
   --bg: var(--paper);
@@ -154,15 +154,25 @@
   --tap: 44px;
 
   /* ---- motion ---------------------------------------------------------- */
+  /* Four durations, two curves. Everything in the product uses these. */
+  --d-1: 120ms;   /* state change: press, toggle, dot */
+  --d-2: 220ms;   /* small reveal: menu, tooltip, chip */
+  --d-3: 340ms;   /* context change: page, step, modal */
+  --d-4: 560ms;   /* data: progress fill, ring draw */
+
+  --e-standard: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --e-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* legacy aliases kept for existing rules */
   --d-instant: 90ms;
-  --d-fast: 150ms;
-  --d-base: 240ms;
-  --d-slow: 380ms;
-  --d-page: 460ms;
-  --d-hero: 900ms;
-  --e-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --d-fast: var(--d-1);
+  --d-base: var(--d-2);
+  --d-slow: var(--d-3);
+  --d-page: var(--d-3);
+  --d-hero: var(--d-4);
+  --e-out: var(--e-standard);
   --e-inout: cubic-bezier(0.4, 0, 0.2, 1);
-  --e-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --e-soft: var(--e-entrance);
 }
 
 /* ---- night theme ------------------------------------------------------- */

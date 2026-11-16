@@ -133,7 +133,8 @@
 
       if (!found) {
         current = { path: pathOf(parsed.segments), route: null, params: {} };
-        viewEl.innerHTML = router.notFound();
+        document.body.classList.remove('is-bare');
+        viewEl.innerHTML = '<div class="page">' + router.notFound() + '</div>';
         router.applyChrome({ title: 'صفحه یافت نشد', nav: '' });
         return;
       }
@@ -178,9 +179,21 @@
       }
 
       var html = result.html || '';
+      if (current && typeof current.unmount === 'function') {
+        try {
+          current.unmount();
+        } catch (err) {
+          M.diag.record('error', err.message, { scope: 'unmount' });
+        }
+      }
+      current.unmount = typeof result.onUnmount === 'function' ? result.onUnmount : null;
       viewEl.innerHTML = '<div class="page">' + html + '</div>';
       router.applyChrome({ title: result.title || route.title || 'مهراز', nav: route.nav });
       M.ui.animateProgress(viewEl);
+
+      // Welcome and onboarding run without the app shell: nothing in the
+      // navigation would work before a profile exists.
+      document.body.classList.toggle('is-bare', result.bare === true);
 
       if (!opts.keepScroll) {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -193,7 +206,7 @@
         viewEl.focus();
       }
 
-      util.announce((result.title || route.title || '') + ' — بارگذاری شد');
+      util.announce(result.title || route.title || '');
 
       if (typeof result.onMount === 'function') {
         result.onMount(viewEl, current);
@@ -229,18 +242,14 @@
     },
 
     notFound: function () {
-      return (
-        '<div class="page">' +
-        M.ui.empty({
-          icon: 'search',
-          title: 'این نشانی وجود ندارد',
-          text: 'ممکن است پیوند قدیمی باشد یا این بخش هنوز ساخته نشده است.',
-          actions:
-            '<a class="btn btn--primary" href="#/dashboard">بازگشت به خانه</a>' +
-            '<a class="btn btn--ghost" href="#/library">کتابخانهٔ درسی</a>'
-        }) +
-        '</div>'
-      );
+      return M.ui.empty({
+        icon: 'search',
+        title: 'این نشانی وجود ندارد',
+        text: 'ممکن است پیوند قدیمی باشد یا این بخش هنوز ساخته نشده است.',
+        actions:
+          '<a class="btn btn--primary" href="#/dashboard">بازگشت به خانه</a>' +
+          '<a class="btn btn--ghost" href="#/library">کتابخانهٔ درسی</a>'
+      });
     }
   });
 })(window, document);

@@ -49,31 +49,38 @@
   /* ---- welcome ---------------------------------------------------------- */
   views.welcome = function () {
     var html =
-      '<section class="hero" style="min-height:min(600px,82vh);display:flex;align-items:center">' +
-      '<div class="hero__body" style="width:100%;align-items:center">' +
-      '<div class="hero__text">' +
-      '<div style="margin-bottom:22px">' + M.brand({ onDark: true }) + '</div>' +
-      '<h1 style="font-size:clamp(1.9rem,5.2vw,2.9rem);line-height:1.36">هر درس، یک قدم روشن‌تر</h1>' +
-      '<p class="hero__sub" style="font-size:var(--fs-14);max-width:42ch">' +
-      'مهراز فضایی آرام برای یادگیری است: درس‌ها را می‌خوانید، تمرین می‌کنید، آزمون می‌دهید و هر چند وقت یک‌بار مرور می‌کنید — همه در یک جا و به‌ترتیب.' +
+      '<div class="welcome">' +
+      '<header class="welcome__top">' +
+      M.brand({ onDark: true }) +
+      '<span class="welcome__tag"><span class="dot"></span>پایهٔ هفتم تا دوازدهم</span>' +
+      '</header>' +
+      '<div class="welcome__grid">' +
+      '<div class="welcome__copy">' +
+      '<p class="welcome__kicker">مسیر یادگیری دانش‌آموز</p>' +
+      '<h1>هر درس، یک قدم روشن‌تر</h1>' +
+      '<p class="welcome__sub">' +
+      'مهراز فضایی آرام برای یادگیری است: درس را می‌خوانید، تمرین می‌کنید، آزمون می‌دهید و هر چند وقت یک‌بار مرور می‌کنید. همه در یک مسیر و به‌ترتیب.' +
       '</p>' +
-      '<div class="hero__actions" style="margin-top:26px">' +
+      '<div class="welcome__actions">' +
       '<a class="btn btn--primary btn--lg" href="#/onboarding">شروع یادگیری' + M.icon('arrowStart', 18) + '</a>' +
-      '<button class="btn btn--ghost btn--lg hero__ghost" type="button" data-import>بازیابی پشتیبان</button>' +
+      '<button class="btn btn--ghost btn--lg welcome__ghost" type="button" data-import>بازیابی پشتیبان</button>' +
       '</div>' +
-      '<div class="row row--wrap" style="margin-top:26px;gap:18px;color:rgba(255,255,255,.72)">' +
-      '<span class="row" style="gap:7px;font-size:var(--fs-12)">' + M.icon('book', 15) + 'درس‌ها</span>' +
-      '<span class="row" style="gap:7px;font-size:var(--fs-12)">' + M.icon('edit', 15) + 'تمرین</span>' +
-      '<span class="row" style="gap:7px;font-size:var(--fs-12)">' + M.icon('exam', 15) + 'آزمون</span>' +
-      '<span class="row" style="gap:7px;font-size:var(--fs-12)">' + M.icon('review', 15) + 'مرور</span>' +
+      '<ol class="welcome__path">' +
+      '<li><span class="welcome__num">۱</span>درس را بخوان</li>' +
+      '<li><span class="welcome__num">۲</span>تمرین کن</li>' +
+      '<li><span class="welcome__num">۳</span>آزمون بده</li>' +
+      '<li><span class="welcome__num">۴</span>مرور کن</li>' +
+      '</ol>' +
       '</div>' +
+      '<div class="welcome__art">' + M.art.orbit({ pct: 0 }) + '</div>' +
       '</div>' +
-      '<div class="hero__art" style="min-height:300px">' + M.art.orbit({ pct: 0 }) + '</div>' +
-      '</div></section>';
+      '<footer class="welcome__foot"><span>مهراز</span><span>درس، تمرین، آزمون و مرور در یک جا</span></footer>' +
+      '</div>';
 
     return {
       title: 'خوش آمدید',
       nav: '',
+      bare: true,
       html: html,
       onMount: function (root) {
         var restore = util.$('[data-import]', root);
@@ -103,13 +110,29 @@
     var error = '';
     var host = null;
     var yearList = yearOptions();
+    var direction = 'fwd';
+
+    var STEP_LABEL = {
+      name: 'نام',
+      birth: 'تولد',
+      grade: 'پایه',
+      track: 'رشته',
+      confirm: 'تأیید'
+    };
 
     function currentStep() { return steps[index]; }
 
     function setError(msg) {
       error = msg || '';
-      render();
+      render('none');
       util.announce(error);
+      focusFirstProblem();
+    }
+
+    function focusFirstProblem() {
+      if (!host) return;
+      var target = util.$('#f-name', host) || util.$('#f-day', host) || util.$('[data-grade]', host) || util.$('[data-track]', host);
+      if (target && target.focus) target.focus();
     }
 
     function validName() {
@@ -126,7 +149,7 @@
       var iso = M.jalali.toISO(draft.jy, draft.jm, draft.jd);
       if (new Date(iso).getTime() > Date.now()) return 'تاریخ تولد نمی‌تواند در آینده باشد.';
       var age = M.jalali.ageYears(draft.jy, draft.jm, draft.jd);
-      if (age === null || age < 9 || age > 25) return 'سال تولد با پایهٔ تحصیلی هم‌خوان نیست؛ سال را بررسی کنید.';
+      if (age === null || age < 9 || age > 25) return 'سال تولد باید بین ۹ تا ۲۵ سال پیش باشد؛ سال را بررسی کنید.';
       return '';
     }
 
@@ -275,36 +298,45 @@
       };
     }
 
-    function render() {
+    function render(dir) {
+      if (dir) direction = dir;
       if (!host) return;
       var step = currentStep();
       var body = stepBody();
       var stepNumber = index + 1;
       var total = steps.length;
-      var dots = steps
-        .map(function (s, i) {
-          return '<span class="stepper__dot' + (i < index ? ' is-done' : i === index ? ' is-active' : '') + '"></span>';
-        })
-        .join('');
+      var track =
+        '<ol class="onboard__track" aria-label="مراحل ثبت‌نام">' +
+        steps
+          .map(function (s, i) {
+            var state = i < index ? ' is-done' : i === index ? ' is-active' : '';
+            return (
+              '<li class="onboard__step' + state + '"' + (i === index ? ' aria-current="step"' : '') + '>' +
+              '<span class="onboard__dot">' + (i < index ? M.icon('check', 12) : util.toFa(i + 1)) + '</span>' +
+              '<span class="onboard__label">' + esc(STEP_LABEL[s] || '') + '</span></li>'
+            );
+          })
+          .join('') +
+        '</ol>';
       var nextLabel = isEdit ? 'ذخیرهٔ تغییرات' : step === 'confirm' ? 'ورود به داشبورد' : 'ادامه';
       var showBack = isEdit ? index < steps.length - 1 : index > 0;
 
       host.innerHTML =
-        '<div class="onboard">' +
-        '<div class="row" style="justify-content:space-between">' + M.brand({ small: true }) +
+        '<div class="onboard-wrap"><div class="onboard">' +
+        '<div class="onboard__top">' + M.brand({ small: true }) +
         '<span class="chip chip--outline">گام ' + util.toFa(stepNumber) + ' از ' + util.toFa(total) + '</span></div>' +
-        '<div class="stepper" role="progressbar" aria-valuemin="1" aria-valuemax="' + total + '" aria-valuenow="' + stepNumber + '" aria-label="پیشرفت ثبت‌نام">' + dots + '</div>' +
-        '<div class="onboard__card step-enter" data-step="' + step + '">' +
+        track +
+        '<div class="onboard__card step-enter" data-step="' + step + '" data-dir="' + direction + '">' +
         '<h1 class="onboard__title">' + esc(body.title) + '</h1>' +
         '<p class="onboard__text">' + esc(body.text) + '</p>' +
-        '<div class="onboard__step">' + body.body + '</div>' +
+        '<div class="onboard__stage">' + body.body + '</div>' +
         '<div class="onboard__foot">' +
         (showBack ? '<button class="btn btn--quiet" type="button" data-back="1">' + M.icon('arrowEnd', 16) + 'قبلی</button>' : '') +
         '<button class="btn btn--primary push" type="button" data-next="1">' + esc(nextLabel) +
         M.icon(index === steps.length - 1 || isEdit ? 'check' : 'arrowStart', 17) + '</button>' +
         '</div></div>' +
-        (isEdit ? '' : '<p class="hint" style="text-align:center">هر زمان خواستید می‌توانید این اطلاعات را تغییر دهید.</p>') +
-        '</div>';
+        (isEdit ? '' : '<p class="onboard__note">هر زمان خواستید می‌توانید این اطلاعات را تغییر دهید.</p>') +
+        '</div></div>';
 
       bind();
     }
@@ -374,7 +406,7 @@
           steps = stepList(g);
           if (index > steps.length - 1) index = steps.length - 1;
           error = '';
-          render();
+          render('fwd');
         });
       });
 
@@ -382,24 +414,24 @@
         btn.addEventListener('click', function () {
           draft.track = btn.getAttribute('data-track');
           error = '';
-          render();
+          render('none');
         });
       });
 
       util.$$('[data-goto]', host).forEach(function (btn) {
         btn.addEventListener('click', function () {
           var i = steps.indexOf(btn.getAttribute('data-goto'));
-          if (i >= 0) { index = i; error = ''; render(); }
+          if (i >= 0) { index = i; error = ''; render('back'); }
         });
       });
     }
 
     function onBack() {
       error = '';
-      if (isEdit) { index = steps.length - 1; render(); return; }
+      if (isEdit) { index = steps.length - 1; render('back'); return; }
       if (index === 0) { M.router.go('#/welcome'); return; }
       index -= 1;
-      render();
+      render('back');
     }
 
     function save() {
@@ -412,14 +444,31 @@
       };
       var saved = M.store.saveProfile(profile);
       if (!saved) { setError('ذخیرهٔ اطلاعات ممکن نشد؛ ورودی‌ها را بررسی کنید.'); return; }
-      M.store.flush('profile.commit');
-      if (isEdit) {
-        M.ui.toast('اطلاعات شما به‌روزرسانی شد.', { type: 'ok' });
-        M.router.go('#/settings');
-      } else {
-        M.ui.toast('خوش آمدید، ' + saved.displayName + '.', { type: 'ok', icon: 'sparkles' });
-        M.router.go('#/dashboard');
+
+      // The success message waits for the real write. A toast is not evidence
+      // that anything reached the disk.
+      var nextBtn = util.$('[data-next]', host);
+      if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.setAttribute('aria-busy', 'true');
       }
+
+      M.store.flush('profile.commit').then(function (ok) {
+        if (!ok) {
+          M.ui.toast('ذخیرهٔ آخرین تغییر انجام نشد. لطفاً از اطلاعات خود نسخهٔ پشتیبان تهیه کنید.', {
+            type: 'warn',
+            ttl: 9000,
+            actionLabel: 'پشتیبان',
+            onAction: function () { M.router.go('#/settings'); }
+          });
+        } else if (isEdit) {
+          M.ui.toast('اطلاعات شما به‌روزرسانی شد.', { type: 'ok' });
+        } else {
+          M.ui.toast('خوش آمدید، ' + saved.displayName + '.', { type: 'ok', icon: 'sparkles' });
+        }
+        if (isEdit) M.router.go('#/settings');
+        else M.router.go('#/dashboard');
+      });
     }
 
     function onNext() {
@@ -437,7 +486,7 @@
       var currentProblem = validateStep();
       if (currentProblem) { setError(currentProblem); return; }
       error = '';
-      if (index < steps.length - 1) { index += 1; render(); return; }
+      if (index < steps.length - 1) { index += 1; render('fwd'); return; }
       save();
     }
 
@@ -456,6 +505,7 @@
       title: isEdit ? 'ویرایش پروفایل' : 'ثبت‌نام',
       nav: isEdit ? 'settings' : '',
       html: '<div data-onboard-host></div>',
+      bare: true,
       onMount: function (root) { ctrl.mount(root); }
     };
   };

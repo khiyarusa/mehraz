@@ -2,10 +2,10 @@
 
 # مهراز
 
-**سامانهٔ یادگیری آفلاین برای دانش‌آموزان**
+**فضای یادگیری آفلاین برای دانش‌آموزان پایهٔ هفتم تا دوازدهم**
 
-مهراز یک وب‌سایت آموزشی است که در **یک فایل** جا می‌شود: `start.html` را باز
-می‌کنید و همه‌چیز آماده است. نه سرور، نه نصب، نه حساب کاربری و نه اینترنت.
+مهراز در یک فایل جا می‌شود: `start.html` را باز می‌کنید و همه‌چیز آماده است.
+نه سرور، نه نصب، نه حساب کاربری و نه اینترنت.
 
 </div>
 
@@ -13,36 +13,44 @@
 
 ## What this is
 
-MEHRAZ is a Persian-first, RTL, offline educational website distributed as a
-single self-contained HTML document. Open `start.html` and the whole application
-runs from `file://`: no server, no installation, no account, no network traffic.
-Student data never leaves the device.
+MEHRAZ is a Persian-first, RTL learning space shipped as a single
+self-contained HTML document. Opening `start.html` runs the whole application
+from `file://`; there is no server, no installation, no account and no network
+traffic. Student data stays on the device.
 
-**Phase 01 (this repository) is the foundation only** — brand, shell, routes,
-onboarding, local persistence, backup/restore, dashboard, library and lesson
-shells, an examination engine, review and progress surfaces, settings, and the
-content contract. It deliberately contains **no lessons, exercises or textbook
-facts**; the catalogue ships empty and phase 02 fills it.
+**Current state: pre-release quality pass.** The foundation (PROMPT 01) and the
+visual layer (PROMPT 02) are in place. The catalogue ships **empty by design** —
+no lesson, exercise, exam question or textbook fact is included. Official
+educational content is PROMPT 03 and is explicitly out of scope for this pass.
 
 <div dir="rtl">
 
-## چه چیزی ساخته شده است؟
+## نقشهٔ راه
 
-| بخش | وضعیت |
-| --- | --- |
-| هویت بصری و لوگو | آماده |
-| پوستهٔ سایت، ناوبری کناری و پایین، حالت موبایل و دسکتاپ | آماده |
-| ثبت‌نام دانش‌آموز با تقویم شمسی (اعتبارسنجی روز، ماه، سال کبیسه) | آماده |
-| داشبورد شخصی با آمار واقعی و حالت‌های خالی | آماده |
-| کتابخانه، پایه، رشته، کتاب، فصل و صفحهٔ درس | ساختار آماده (بدون محتوا) |
-| موتور آزمون: چهارگزینه‌ای، درست/نادرست، چندپاسخی، عددی | آماده |
-| مرور، موضوع‌های ضعیف و مسیر پیشرفت | آماده |
-| ذخیره‌سازی محلی + پشتیبان JSON و بازیابی | آماده |
-| تنظیمات، پوستهٔ شبانه، کاهش حرکت، حریم خصوصی | آماده |
-| محتوای درسی رسمی | فاز ۲ |
+| مرحله | موضوع | وضعیت |
+| --- | --- | --- |
+| PROMPT 01 | پایه و معماری اولیه | انجام‌شده |
+| PROMPT 02 | پالایش بصری و تجربهٔ ممتاز | انجام‌شده |
+| **پاس کیفیت پیش از انتشار** | رفع نقص، پاک‌سازی متن، تثبیت ذخیره‌سازی، مستندسازی | **این نسخه** |
+| PROMPT 03 | تولید کامل محتوای آموزشی | آغاز نشده |
+
+## چه چیزی آماده است؟
+
+| بخش | وضعیت | شاهد |
+| --- | --- | --- |
+| هویت بصری، لوگو، پوستهٔ روشن و شبانه | آماده | بازبینی چشمی روی ۳۶۰–۱۴۴۰ پیکسل |
+| پوستهٔ سایت، ناوبری کناری و پایین | آماده | پیمایش همهٔ مسیرها بدون خطا |
+| ثبت‌نام با تقویم شمسی و اعتبارسنجی | آماده | کبیسه، روز نامعتبر، سال خارج از بازه |
+| داشبورد با آمار واقعی و حالت‌های خالی | آماده | اعداد از رکوردهای ذخیره‌شده |
+| کتابخانه، پایه، رشته، کتاب، فصل، درس | ساختار آماده، بدون محتوا | کاتالوگ خالی |
+| موتور آزمون (چهار نوع پرسش) | آماده، بدون پرسش | فقط با محتوای رسمی فعال می‌شود |
+| مرور و مسیر پیشرفت | آماده، بدون قاعدهٔ زمان‌بندی | زمان‌بندی مرور در PROMPT 03 |
+| پشتیبان JSON و بازیابی | آماده | آزمون رفت‌وبرگشت کامل |
+| تنظیمات، کاهش حرکت، حریم خصوصی | آماده | — |
+| محتوای درسی رسمی | PROMPT 03 | — |
 
 > در این نسخه هیچ درس، تمرین یا مطلب درسی ساختگی وجود ندارد. جای هر بخش محتوایی،
-> یک حالت خالی با توضیح روشن نمایش داده می‌شود.
+> یک حالت خالی روشن و یک اقدام مشخص نمایش داده می‌شود.
 
 ## شروع
 
@@ -65,12 +73,12 @@ start.html                  ← تنها فایل مورد نیاز کاربر (
 src/
   shell.html                قالب سند، CSP، صفحهٔ بارگذاری
   styles/                   tokens · layout · components · motion · responsive
-  scripts/                  15 ماژول کلاسیک، بدون هیچ کتابخانهٔ بیرونی
+  scripts/                  ۱۶ ماژول کلاسیک، بدون هیچ کتابخانهٔ بیرونی
 build/
   build.ps1                 ساخت start.html با PowerShell 5.1 (بدون وابستگی)
   harness-template.html     محیط اندازه‌گیری واکنش‌گرا (فقط توسعه)
 content/
-  catalog.json              ورودی محتوا (در فاز ۱ خالی)
+  catalog.json              ورودی محتوا (در این مرحله خالی)
   content-contract.json     قرارداد محتوا (JSON Schema)
 docs/                       مستندات مهندسی
 project-guidelines/         دستورالعمل پروژه و مهارت قابل استفادهٔ مجدد
@@ -94,8 +102,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build/build.ps1
 | [`docs/DATA-SCHEMA.md`](docs/DATA-SCHEMA.md) | ساختار داده، نسخه‌بندی، قالب پشتیبان |
 | [`docs/OFFLINE-REQUIREMENTS.md`](docs/OFFLINE-REQUIREMENTS.md) | الزامات آفلاین، CSP، محدودیت‌های `file://` |
 | [`docs/QA-REPORT.md`](docs/QA-REPORT.md) | گزارش واقعی تست‌ها با PASS/FAIL/NOT TESTED |
+| [`docs/SKILL-USAGE.md`](docs/SKILL-USAGE.md) | مهارت‌های بررسی‌شده و میزان استفاده |
 | [`docs/ANDROID-GUIDE.md`](docs/ANDROID-GUIDE.md) | راهنمای فارسی باز کردن روی اندروید |
-| [`docs/PHASE-02-INTEGRATION.md`](docs/PHASE-02-INTEGRATION.md) | افزودن محتوای رسمی در فاز ۲ |
+| [`docs/PHASE-02-INTEGRATION.md`](docs/PHASE-02-INTEGRATION.md) | افزودن محتوای رسمی در PROMPT 03 |
+| [`docs/CONTENT-PIPELINE.md`](docs/CONTENT-PIPELINE.md) | وضعیت ممیزی منابع و خط‌لولهٔ محتوا |
 | [`project-guidelines/AGENTS.md`](project-guidelines/AGENTS.md) | قواعد الزامی پروژه |
 
 ## اصول فنی
@@ -104,7 +114,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build/build.ps1
 - **بدون شبکه**: هیچ CDN، فونت آنلاین، تصویر بیرونی، تحلیل‌گر یا تبلیغی وجود ندارد.
   سیاست امنیتی محتوا (CSP) با `connect-src 'none'` هر درخواست خارجی را می‌بندد.
 - **بدون وابستگی**: نه فریم‌ورک، نه بسته، نه مرحلهٔ نصب.
-- **حریم خصوصی**: اطلاعات در حافظهٔ مرورگر می‌ماند؛ پشتیبان‌گیری با فایل JSON.
+- **ذخیره‌سازی صادق**: IndexedDB، با localStorage به‌عنوان پشتیبان و یک آینهٔ
+  هم‌زمان؛ اگر هیچ‌کدام در دسترس نباشد، برنامه «ذخیره نشد» می‌گوید و پشتیبان
+  گرفتن را پیشنهاد می‌کند. هرگز ذخیرهٔ ناموفق را موفق اعلام نمی‌کند.
 - **فارسی و RTL**: تقویم شمسی، ارقام فارسی، نیم‌فاصله، چیدمان منطقی.
 
 ## محدودیت‌ها
@@ -112,6 +124,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build/build.ps1
 - داده‌ها به مرورگر و دستگاه گره خورده‌اند؛ انتقال بین دستگاه‌ها فقط با فایل پشتیبان.
 - پاک‌کردن داده‌های مرورگر، اطلاعات را حذف می‌کند.
 - ذخیره‌سازی مرورگر رمزنگاری نشده است.
+- شمارش/زمان‌بندی مرور در این نسخه فعال نیست؛ مرورها فقط نمایش داده می‌شوند.
 - تست روی دستگاه اندروید واقعی و با صفحه‌خوان انجام نشده است؛ گزارش QA این موارد را
   صریحاً «تست‌نشده» علامت زده است.
 
@@ -121,20 +134,23 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build/build.ps1
 
 ## English summary
 
-- **One file, zero dependencies.** `start.html` (≈324 KB) embeds all CSS, JS and
+- **One file, zero dependencies.** `start.html` (≈343 KB) embeds all CSS, JS and
   graphics; it opens from `file://` with no server, build step or install.
 - **Offline by construction.** No CDN, fonts, icons, analytics or APIs. The
   Content-Security-Policy sets `connect-src 'none'`; the build refuses to emit an
   artefact containing external references or network APIs.
 - **Persian-first RTL UI.** Jalali calendar with leap-year validation, Persian
-  digits, logical CSS properties, reduced-motion support, light and night themes.
-- **Local data only.** IndexedDB → localStorage → memory, chosen by a real
-  write/read probe. Versioned JSON backups with validation and double confirmation.
-- **Content-driven.** A JSON contract (`content/content-contract.json`) describes
-  books → chapters → lessons → sections, plus exams with four question types.
-  Phase 01 ships an empty catalogue by design.
+  digits, logical CSS properties, a four-step motion scale, reduced-motion
+  support, light and night themes.
+- **Honest persistence.** IndexedDB is primary, localStorage is the fallback and
+  an always-on mirror; every write is confirmed before the UI claims success.
+  Versioned JSON backups with validation and double confirmation.
+- **Content-driven, empty by design.** A JSON contract
+  (`content/content-contract.json`) describes books → chapters → lessons →
+  sections, plus exams with four question types. PROMPT 01 ships an empty
+  catalogue; PROMPT 03 fills it.
 - **Honest QA.** `docs/QA-REPORT.md` records what was executed and what was not
-  (no Android device, no screen reader, no browser restart).
+  (no physical Android device, no screen reader, no screenshot review).
 
 ### Build (development)
 
@@ -148,8 +164,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build/build.ps1
 
 **Amin** — Telegram [@Mozrd](https://t.me/Mozrd) · Rubika [@angosht0](https://rubika.ir/angosht0)
 
+Creator information lives only on the in-app «درباره» page and in this section.
+
 ## License
 
 No open-source licence has been granted yet. The code, the brand and the
 documentation are the author's work; reuse requires permission. Third-party names
-and any textbook material added in phase 02 remain subject to their own terms.
+and any textbook material added in PROMPT 03 remain subject to their own terms.

@@ -25,6 +25,14 @@
     );
   }
 
+  function segment(attr, value, current, label) {
+    var active = current === value;
+    return (
+      '<button class="segmented__item' + (active ? ' is-active' : '') + '" type="button" ' +
+      attr + '="' + value + '" role="tab" aria-selected="' + active + '">' + esc(label) + '</button>'
+    );
+  }
+
   views.settings = function () {
     var prefs = M.store.prefs();
 
@@ -36,17 +44,17 @@
         text: 'روشن برای روز، شبانه برای نور کم.',
         action:
           '<div class="segmented" role="tablist" aria-label="پوسته">' +
-          '<button class="segmented__item' + (prefs.theme === 'light' ? ' is-active' : '') + '" type="button" data-theme-set="light" role="tab" aria-selected="' + (prefs.theme === 'light') + '">روشن</button>' +
-          '<button class="segmented__item' + (prefs.theme === 'night' ? ' is-active' : '') + '" type="button" data-theme-set="night" role="tab" aria-selected="' + (prefs.theme === 'night') + '">شبانه</button>' +
+          segment('data-theme-set', 'light', prefs.theme, 'روشن') +
+          segment('data-theme-set', 'night', prefs.theme, 'شبانه') +
           '</div>'
       }) +
       M.ui.settingRow({
         title: 'حرکت',
-        text: 'اگر انیمیشن‌ها برایتان زیاد است، حالت کاهش‌یافته را انتخاب کنید.',
+        text: 'اگر انیمیشن‌ها حواستان را پرت می‌کند، حالت کاهش‌یافته را انتخاب کنید.',
         action:
           '<div class="segmented" role="tablist" aria-label="حرکت">' +
-          '<button class="segmented__item' + (prefs.motion === 'system' ? ' is-active' : '') + '" type="button" data-motion-set="system" role="tab" aria-selected="' + (prefs.motion === 'system') + '">کامل</button>' +
-          '<button class="segmented__item' + (prefs.motion === 'reduced' ? ' is-active' : '') + '" type="button" data-motion-set="reduced" role="tab" aria-selected="' + (prefs.motion === 'reduced') + '">کم</button>' +
+          segment('data-motion-set', 'system', prefs.motion, 'کامل') +
+          segment('data-motion-set', 'reduced', prefs.motion, 'کاهش‌یافته') +
           '</div>'
       }) +
       M.ui.settingRow({
@@ -81,23 +89,12 @@
       }) +
       '</div></section>';
 
-    var aboutSection =
-      '<section class="section">' + M.ui.sectionHead('برنامه') +
-      '<div class="card card--pad">' +
-      M.ui.settingRow({
-        title: 'دربارهٔ سازنده',
-        text: 'نام و راه‌های ارتباطی.',
-        action: '<a class="btn btn--ghost btn--sm" href="#/about">' + M.icon('user', 15) + 'مشاهده</a>'
-      }) +
-      '<div class="row" style="padding-top:14px;color:var(--txt-faint);font-size:var(--fs-11)">' +
-      '<span>نسخهٔ ' + util.toFa(M.version) + '</span><span class="push">مهراز</span></div>' +
-      '</div></section>';
-
     var html =
-      M.ui.pageHead({ eyebrow: 'تنظیمات', title: 'تنظیمات', sub: 'هرچه لازم دارید، در یک صفحه.' }) +
+      M.ui.pageHead({ title: 'تنظیمات', sub: 'پروفایل، ظاهر و فایل پشتیبان؛ هرچه لازم دارید، در یک صفحه.' }) +
       '<div class="stack" style="gap:24px">' +
       '<section class="section">' + M.ui.sectionHead('پروفایل') + profileCard() + '</section>' +
-      appearance + dataSection + dangerSection + aboutSection +
+      appearance + dataSection + dangerSection +
+      '<p class="hint" style="text-align:center">مهراز، نسخهٔ ' + util.toFa(M.version) + '</p>' +
       '</div>';
 
     return {
@@ -139,10 +136,10 @@
           exportBtn.addEventListener('click', function () {
             try {
               var info = M.backup.download();
-              M.ui.toast('فایل پشتیبان آماده شد: ' + info.name, { type: 'ok', ttl: 6000 });
+              M.ui.toast('فایل پشتیبان ساخته شد: ' + info.name, { type: 'ok', ttl: 7000 });
             } catch (err) {
               M.diag.record('error', err.message, { scope: 'backup.export' });
-              M.ui.toast('ساخت فایل پشتیبان ممکن نشد.', { type: 'danger', ttl: 6000 });
+              M.ui.toast('ساخت فایل پشتیبان ممکن نشد.', { type: 'danger', ttl: 7000 });
             }
           });
         }
@@ -165,7 +162,16 @@
               danger: true
             }).then(function (ok) {
               if (!ok) return;
-              M.store.clearUserData(false).then(function () {
+              clearBtn.disabled = true;
+              M.store.clearUserData(false).then(function (saved) {
+                if (!saved && M.storage.status().driver !== 'memory') {
+                  clearBtn.disabled = false;
+                  M.ui.toast('پاک‌کردن داده‌ها ذخیره نشد. دوباره تلاش کنید یا فایل پشتیبان بگیرید.', {
+                    type: 'warn',
+                    ttl: 9000
+                  });
+                  return;
+                }
                 M.ui.toast('داده‌ها پاک شد.', { type: 'ok' });
                 M.router.go('#/welcome');
               });
@@ -179,13 +185,14 @@
   /* ---- about ------------------------------------------------------------- */
   views.about = function () {
     var html =
-      M.ui.pageHead({ eyebrow: 'درباره', title: 'سازندهٔ مهراز', sub: 'این صفحه فقط به سازنده اختصاص دارد.' }) +
+      M.ui.pageHead({ title: 'سازندهٔ مهراز' }) +
       '<section class="section">' +
       '<div class="creator-card">' +
-      '<div style="display:grid;place-items:center;width:84px;height:84px;border-radius:26px;background:var(--grad-brand);color:#fff;font-size:1.7rem;font-weight:800;box-shadow:var(--sh-brand)">ا</div>' +
-      '<div style="min-width:0;flex:1 1 220px">' +
-      '<div style="font-size:var(--fs-20);font-weight:800;color:var(--txt-strong)">امین</div>' +
-      '<div class="card__text" style="margin-top:4px">طراح و سازندهٔ مهراز</div>' +
+      '<div class="creator__mark" aria-hidden="true">' + esc(M.ui.initials('امین')) + '</div>' +
+      '<div class="creator__body">' +
+      '<span class="creator__label">نام سازنده</span>' +
+      '<div class="creator__name">امین</div>' +
+      '<div class="creator__role">طراح و سازندهٔ مهراز</div>' +
       '</div>' +
       '<div class="creator-links">' +
       '<a class="linkbtn" href="https://t.me/Mozrd" target="_blank" rel="noopener noreferrer">' + M.icon('telegram', 18) +
@@ -193,9 +200,9 @@
       '<a class="linkbtn" href="https://rubika.ir/angosht0" target="_blank" rel="noopener noreferrer">' + M.icon('rubika', 18) +
       '<span>روبیکا <span dir="ltr" style="color:var(--txt-muted)">@angosht0</span></span></a>' +
       '</div></div>' +
-      '<p class="hint" style="margin-top:12px">برای گفتن نظر، پیشنهاد یا گزارش یک مشکل، از همین راه‌ها پیام بدهید.</p>' +
+      '<p class="hint" style="margin-top:14px">برای گفتن نظر، پیشنهاد یا گزارش یک مشکل، از همین راه‌ها پیام بدهید.</p>' +
       '</section>';
 
-    return { title: 'دربارهٔ سازنده', nav: '', html: html };
+    return { title: 'درباره', nav: 'about', html: html };
   };
 })(window, document);

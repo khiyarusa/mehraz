@@ -115,6 +115,9 @@
     var p = M.store.profile();
     var meta = M.content.gradeMeta[grade];
     var track = params.track && M.content.trackMeta[params.track] ? params.track : null;
+    // Opening a grade from the "all grades" list used to lose the student's
+    // track and show an empty page for their own grade.
+    if (!track && grade >= 10 && p.grade === grade && p.track) track = p.track;
 
     var head = M.ui.pageHead({
       eyebrow: meta.cycleLabel,
@@ -122,7 +125,7 @@
       sub:
         grade >= 10
           ? 'رشتهٔ تحصیلی را انتخاب کنید تا فهرست درس‌ها نمایش داده شود.'
-          : 'درس‌های این پایه در ساختار کتابخانه قرار می‌گیرند.',
+          : 'درس‌های این پایه در کتابخانه فهرست می‌شوند.',
       actions: '<a class="btn btn--ghost btn--sm" href="#/library?scope=all">' + M.icon('arrowEnd', 15) + 'همهٔ پایه‌ها</a>'
     });
 
@@ -183,7 +186,7 @@
       body = M.ui.empty({
         icon: 'book',
         title: 'هنوز کتابی برای این ' + (track ? 'رشته' : 'پایه') + ' ثبت نشده',
-        text: 'ساختار درس، فصل و درس‌ها آماده است. کتاب رسمی پس از اعتبارسنجی منبع به این بخش افزوده می‌شود.',
+        text: 'کتاب رسمی این پایه به‌زودی به کتابخانه اضافه می‌شود.',
         actions:
           grade === p.grade
             ? '<a class="btn btn--primary btn--sm" href="#/dashboard">بازگشت به داشبورد</a>'
@@ -254,8 +257,8 @@
         '<section class="section" style="margin-top:20px">' +
         M.ui.empty({
           icon: 'layers',
-          title: 'فصلی ثبت نشده است',
-          text: 'این کتاب در ساختار کتابخانه وجود دارد اما فصل و درسی برای آن تعریف نشده است.',
+          title: 'هنوز فصلی برای این کتاب ثبت نشده',
+          text: 'به‌زودی فصل‌ها و درس‌های رسمی این کتاب اضافه می‌شوند.',
           actions: '<a class="btn btn--ghost btn--sm" href="#/library">بازگشت به کتابخانه</a>'
         }) +
         '</section>'
@@ -577,11 +580,8 @@
         '<div class="section-ph">' +
         '<span class="section-ph__tag">' +
         M.icon('clock', 14) +
-        'در انتظار محتوا</span>' +
-        '<p class="hint" style="margin-bottom:10px">' +
-        esc('این بخش برای نمایش محتوای رسمی درس آماده است و در نسخهٔ محتوایی تکمیل می‌شود.') +
-        '</p>' +
-        M.ui.skeletonBlock(2) +
+        'به‌زودی</span>' +
+        '<p class="hint">این بخش با محتوای رسمی درس تکمیل می‌شود.</p>' +
         '</div>';
     }
     return (
@@ -590,7 +590,7 @@
       '<span class="lsection__idx">' + util.toFa(index + 1) + '</span>' +
       '<h2 class="lsection__title">' + esc(section.label) + '</h2>' +
       '<span class="chip ' + (section.hasContent ? 'chip--ok' : 'chip--outline') + ' push">' +
-      (section.hasContent ? 'آماده' : 'در راه') + '</span>' +
+      (section.hasContent ? 'آماده' : 'به‌زودی') + '</span>' +
       '</div>' +
       '<div class="lsection__body">' + body + '</div>' +
       '</section>'
@@ -680,7 +680,7 @@
       '<div class="hint">' +
       (done
         ? 'این درس در تاریخ ' + esc(M.jalali.formatISO(new Date(M.store.lessonState(lesson.id).completedAt).getTime())) + ' کامل شد.'
-        : 'با خواندن درس و زدن دکمهٔ «خوانده شد»، پیشرفت شما ذخیره می‌شود.') +
+        : 'وقتی درس را خواندید، دکمهٔ «خوانده‌شده» را بزنید تا در مسیر شما ثبت شود.') +
       '</div>' +
       '</aside>';
 
@@ -716,7 +716,7 @@
       '</div></nav>' +
       '</div>';
 
-    return {
+    var view = {
       title: lesson.title,
       nav: 'library',
       html: head + '<div class="lesson-layout" style="margin-top:20px">' + sections + toc + '</div>',
@@ -726,13 +726,22 @@
         var completeBtn = util.$('[data-complete]', root);
         if (completeBtn && !completeBtn.disabled) {
           completeBtn.addEventListener('click', function () {
-            M.store.completeLesson(lesson.id);
-            M.store.flush('lesson.complete');
             completeBtn.disabled = true;
-            completeBtn.className = 'btn btn--ghost btn--sm';
-            completeBtn.innerHTML = M.icon('check', 16) + 'این درس خوانده شده';
-            M.ui.toast('پیشرفت ذخیره شد؛ درس «' + lesson.title + '» کامل شد.', { type: 'ok', icon: 'sparkles' });
-            M.router.refresh();
+            M.store.completeLesson(lesson.id);
+            M.store.flush('lesson.complete').then(function (ok) {
+              if (!ok) {
+                completeBtn.disabled = false;
+                M.ui.toast('ذخیرهٔ آخرین تغییر انجام نشد. لطفاً از اطلاعات خود نسخهٔ پشتیبان تهیه کنید.', {
+                  type: 'warn',
+                  ttl: 9000,
+                  actionLabel: 'پشتیبان',
+                  onAction: function () { M.router.go('#/settings'); }
+                });
+                return;
+              }
+              M.ui.toast('درس «' + lesson.title + '» در مسیر شما ثبت شد.', { type: 'ok', icon: 'check' });
+              M.router.refresh();
+            });
           });
         }
 
@@ -754,6 +763,9 @@
           util.$$('[data-section]', root).forEach(function (sec) {
             observer.observe(sec);
           });
+          view.onUnmount = function () {
+            observer.disconnect();
+          };
         }
 
         util.$$('[data-toc]', root).forEach(function (link) {
@@ -772,6 +784,8 @@
         });
       }
     };
+
+    return view;
   };
 
   views.chapter = function (params) {

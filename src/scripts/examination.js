@@ -22,7 +22,10 @@
   function normalizeAnswer(q, value) {
     if (q.type === 'numeric') {
       if (value === '' || value === null || value === undefined) return null;
-      var num = Number(util.toEn(String(value)).replace(/[٫،,\s]/g, '.').replace(/\.(?=.*\.)/g, ''));
+      var raw = util.toEn(String(value)).trim();
+      // Grouping marks are not decimal points: «۱٬۲۰۰» and «1,200» mean 1200.
+      raw = raw.replace(/[٬,\s]/g, '').replace(/[٫،]/g, '.');
+      var num = Number(raw);
       return isNaN(num) ? null : num;
     }
     if (q.type === 'multi') return Array.isArray(value) ? value.slice().sort() : [];
@@ -72,17 +75,16 @@
       });
 
     var head = M.ui.pageHead({
-      eyebrow: 'آزمون',
       title: 'آزمون و سنجش',
-      sub: 'پس از افزودن محتوای درسی، آزمون‌های هر فصل در این بخش فهرست می‌شوند. نتیجه و پاسخ‌ها روی همین دستگاه ذخیره می‌شود.'
+      sub: 'آزمون‌های هر فصل همراه کتاب‌های رسمی در دسترس قرار می‌گیرند.'
     });
 
     var list;
     if (!rows.length) {
       list = M.ui.empty({
         icon: 'exam',
-        title: 'هنوز آزمونی تعریف نشده است',
-        text: 'موتور آزمون آماده است و چهار نوع پرسش را پشتیبانی می‌کند: چندگزینه‌ای، درست/نادرست، چندپاسخی و پاسخ عددی. پرسش‌ها همراه محتوای رسمی افزوده می‌شوند.',
+        title: 'هنوز آزمونی آماده نیست',
+        text: 'آزمون‌های فصل‌های کتاب‌های رسمی، همراه همان کتاب‌ها به این بخش اضافه می‌شوند.',
         actions: '<a class="btn btn--ghost btn--sm" href="#/library">کتابخانهٔ درسی</a>'
       });
     } else {
@@ -91,14 +93,13 @@
         rows
           .map(function (row) {
             var qs = M.content.questionsFor(row.exam);
-            var best = attempts
-              .filter(function (a) {
-                return a.examId === row.exam.id;
-              })
-              .reduce(function (acc, a) {
-                var pct = a.total ? (a.score / a.total) * 100 : 0;
-                return Math.max(acc, pct);
-              }, 0);
+            var mine = attempts.filter(function (a) {
+              return a.examId === row.exam.id;
+            });
+            var best = mine.reduce(function (acc, a) {
+              var pct = a.total ? (a.score / a.total) * 100 : 0;
+              return Math.max(acc, pct);
+            }, 0);
             return (
               '<a class="card card--pad card--link" href="#/exam/' +
               encodeURIComponent(row.exam.id) +
@@ -112,7 +113,7 @@
               ' • ' +
               util.toFa(qs.length) +
               ' پرسش</div></div>' +
-              (best ? '<span class="chip chip--brand">بهترین: ' + util.fmtPct(best) + '</span>' : '<span class="chip">شروع‌نشده</span>') +
+              (mine.length ? '<span class="chip chip--brand">بهترین: ' + util.fmtPct(best) + '</span>' : '<span class="chip">شروع‌نشده</span>') +
               M.icon('chevronEnd', 18) +
               '</div></a>'
             );
@@ -181,7 +182,7 @@
         html: M.ui.empty({
           icon: 'exam',
           title: 'پرسشی برای این آزمون ثبت نشده',
-          text: 'ساختار آزمون آماده است اما پرسش‌های آن هنوز افزوده نشده‌اند.'
+          text: 'پرسش‌های این آزمون هنوز اضافه نشده‌اند.'
         })
       };
     }
@@ -223,14 +224,15 @@
       '<div class="qnav" data-qnav></div>' +
       '</div>';
 
-    return {
+    var view = {
       title: exam.title,
       nav: 'exam',
       html: head,
       onMount: function (root) {
-        startRunner(root, exam, questions);
+        view.onUnmount = startRunner(root, exam, questions);
       }
     };
+    return view;
   };
 
   function startRunner(root, exam, questions) {
@@ -474,7 +476,15 @@
         detail: detail
       };
       M.store.addAttempt(attempt);
-      M.store.flush('exam.submit').then(function () {
+      M.store.flush('exam.submit').then(function (ok) {
+        if (!ok) {
+          M.ui.toast('ذخیرهٔ آخرین تغییر انجام نشد. لطفاً از اطلاعات خود نسخهٔ پشتیبان تهیه کنید.', {
+            type: 'warn',
+            ttl: 8000,
+            actionLabel: 'پشتیبان',
+            onAction: function () { M.router.go('#/settings'); }
+          });
+        }
         M.router.go('#/exam/' + encodeURIComponent(exam.id) + '/result/' + encodeURIComponent(attempt.id));
       });
     }
@@ -482,6 +492,13 @@
     renderQuestion();
     renderNav();
     updateCounters();
+
+    // The timer is the only thing this view owns; the router calls this before
+    // the next page replaces the DOM.
+    return function () {
+      finished = true;
+      window.clearInterval(timer);
+    };
   }
 
   /* ---- result ----------------------------------------------------------- */

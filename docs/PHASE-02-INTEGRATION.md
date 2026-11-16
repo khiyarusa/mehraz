@@ -1,9 +1,13 @@
-# MEHRAZ — Phase 02 Integration Guide
+# MEHRAZ — PROMPT 03 Integration Guide
 
-How to turn the phase 01 foundation into a content product **without rebuilding
+> **Filename note:** this file keeps the historical name
+> `PHASE-02-INTEGRATION.md` so existing links keep working. Its subject is the
+> **PROMPT 03 content phase**; there is no "phase 2" step in the roadmap.
+
+How to turn the PROMPT 01 foundation into a content product **without rebuilding
 the architecture**.
 
-Audience: the phase 02 agent or developer. Read `ARCHITECTURE.md` and
+Audience: the PROMPT 03 agent or developer. Read `ARCHITECTURE.md` and
 `DATA-SCHEMA.md` first.
 
 ---
@@ -136,7 +140,7 @@ all ten, so an empty one is a visible gap — fill them in this order of priorit
 }
 ```
 
-> The text above is **structure only**. Phase 02 replaces every ellipsis with
+> The text above is **structure only**. PROMPT 03 replaces every ellipsis with
 > verified content from the official book, with the page locator filled in.
 
 ### 2.2 Block types the renderer supports today
@@ -162,9 +166,9 @@ the five above.
   decide.
 - Never state a fact the source does not state. Where the book is silent, say so
   or omit.
-- Formulas: phase 01 has no math renderer. Either typeset them as inline SVG
+- Formulas: PROMPT 01 has no math renderer. Either typeset them as inline SVG
   (vector, no font dependency) or extend `renderBlock` with a `formula` type in
-  phase 02 — then document it here.
+  PROMPT 03 — then document it here.
 - Figures: SVG preferred. Keep each figure under ~40 KB. Compress raster to WebP
   and inline as a data URI only if small.
 
@@ -249,8 +253,8 @@ Quality gates for questions:
 
 ## 5. Review scheduling
 
-Phase 01 renders whatever the `review` store contains; it does not invent
-schedules. Phase 02 must create items when:
+PROMPT 01 renders whatever the `review` store contains; it does not invent
+schedules. PROMPT 03 must create items when:
 
 - a lesson is completed (first review), and
 - a question is answered incorrectly (topic review).
@@ -310,16 +314,17 @@ Never introduce runtime loading of separate JSON files. That would break the
 
 - One edition = one book id suffix (`-v1`, `-v2`). A new edition is a new book,
   not an edit of the old one.
-- If a lesson changes materially, give it a new id and keep the old object (marked
-  `verification.status: "retired"` if you add that value) so old progress still
-  resolves. If a lesson is only re-worded, keep the id.
+- If a lesson changes materially, give it a new id and keep the old object (the
+  contract enum is `draft | reviewed | verified`; adding `retired` requires a
+  change in `content/content-contract.json` **and** the validator) so old progress
+  still resolves. If a lesson is only re-worded, keep the id.
 - Chapter/lesson `order` is explicit — never rely on array position.
 - Record `source.edition` and `source.academicYear` on every book, and on any
   lesson whose page numbers could drift.
 
 ---
 
-## 8. QA gates before shipping phase 02
+## 8. QA gates before shipping PROMPT 03
 
 | Gate | Pass criterion |
 | --- | --- |
@@ -327,17 +332,17 @@ Never introduce runtime loading of separate JSON files. That would break the
 | Source traceability | 100 % of lessons have `source.reference`; 0 fabricated locators |
 | Answer keys | every question has a verified key and an explanation |
 | Offline | 0 resource requests; build gate passes |
-| Persistence | create → reload → progress intact (same test as phase 01) |
+| Persistence | create → reload → progress intact (same test as PROMPT 01) |
 | Backup | export → clear → import restores exactly the same counters |
 | Responsive | no horizontal overflow at 360 / 390 / 768 / 1024 / 1440 |
 | Long content | a lesson with 12 sections and 3 figures scrolls cleanly on a 360 px screen |
 | Accessibility | keyboard-only run through a lesson and an exam; focus visible everywhere |
 | Size | single file ≤ 600 KB (or an approved, documented split) |
-| No regression | all phase 01 routes still render; `MEHRAZ.diag.errors` is empty |
+| No regression | all PROMPT 01 routes still render; `MEHRAZ.diag.errors` is empty |
 
 ---
 
-## 9. What phase 02 must not do
+## 9. What PROMPT 03 must not do
 
 - Do not replace the router, state shape, storage adapter or design tokens.
 - Do not add a build step the end user has to run.
@@ -362,5 +367,5 @@ Never introduce runtime loading of separate JSON files. That would break the
 [ ] (optional) implement interactive components and register them
 [ ] validate the catalogue, run the build, run the QA gates
 [ ] update docs/QA-REPORT.md with real numbers
-[ ] do not touch the phase 01 shell unless a documented defect requires it
+[ ] do not touch the PROMPT 01 shell unless a documented defect requires it
 ```

@@ -1,9 +1,8 @@
 /* ==========================================================================
    MEHRAZ — content engine
-   Phase 01 ships the contract and the renderer, never the educational content.
-   The catalogue is embedded at build time (window.MEHRAZ_CONTENT) or left
-   empty; content is added only from validated sources, never as sample data.
-   only behind the developer switch in Settings and contains no subject facts.
+   The catalogue is embedded at build time (window.MEHRAZ_CONTENT). PROMPT 01
+   ships the contract and the renderer, never the educational content; content
+   is added only from validated sources, never as sample data.
    ========================================================================== */
 (function (window) {
   'use strict';
@@ -42,7 +41,7 @@
   var EMPTY_CATALOG = {
     schemaVersion: 1,
     updatedAt: null,
-    generator: 'phase-01',
+    generator: 'prompt-01',
     books: []
   };
 
@@ -244,6 +243,25 @@
 
     lessonCount: function () {
       return content.lessonIndex().length;
+    },
+
+    /* Lesson ids that belong to the student's own shelf. Counts must use this
+       set, otherwise "3 of 360" mixes the student's shelf with the catalogue. */
+    lessonIdsFor: function (grade, track) {
+      return content
+        .lessonIndex()
+        .filter(function (row) {
+          if (grade && row.book.grade !== grade) return false;
+          if (track !== undefined && track !== null && row.book.track !== track) return false;
+          return true;
+        })
+        .map(function (row) {
+          return row.lesson.id;
+        });
+    },
+
+    lessonCountFor: function (grade, track) {
+      return content.lessonIdsFor(grade, track).length;
     },
 
     bookProgress: function (book) {

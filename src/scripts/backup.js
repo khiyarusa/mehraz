@@ -32,7 +32,7 @@
       app: {
         name: 'MEHRAZ',
         version: M.version,
-        build: M.build.id,
+        channel: M.build.channel,
         locale: 'fa-IR',
         timezoneOffset: new Date().getTimezoneOffset()
       },
@@ -115,14 +115,20 @@
       errors.push('فایل پشتیبان خالی است.');
       return result;
     }
-    if (text.length > MAX_BYTES) {
+    var bytes = 0;
+    try {
+      bytes = new Blob([text]).size;
+    } catch (err) {
+      bytes = text.length;
+    }
+    if (bytes > MAX_BYTES) {
       errors.push('حجم فایل پشتیبان بیش از حد مجاز است.');
       return result;
     }
 
     var parsed = util.safeParse(text);
     if (!parsed.ok) {
-      errors.push('ساختار JSON فایل پشتیبان معتبر نیست.');
+      errors.push('فایل پشتیبان قابل خواندن نیست.');
       return result;
     }
     var data = parsed.value;

@@ -37,8 +37,10 @@ changes it.
 7. **CSP stays.** `default-src 'none'; script-src 'unsafe-inline'; style-src
    'unsafe-inline'; img-src data: blob:; font-src data:; connect-src 'none'; …`
    Do not weaken it to make an asset load.
-8. **No continuous animations** off-screen; respect `prefers-reduced-motion` and
-   the in-app motion setting.
+8. **Motion is optional.** Ambient art (the orbit) is the only continuous
+   animation, it is decorative, and it stops under `prefers-reduced-motion` and the
+   in-app «کاهش‌یافته» setting. Everything else animates only in response to an
+   action or a route change.
 
 ---
 
@@ -74,7 +76,9 @@ changes it.
 
 ## 5. Data and privacy
 
-- All student data stays local (IndexedDB → localStorage → memory, probed).
+- All student data stays local: IndexedDB is primary, localStorage is the fallback
+  and an always-on mirror. Every driver is trusted only after a real write/read
+  probe; the newer copy wins by `meta.updatedAt`.
 - No account, no password, no email, no analytics identifier, no telemetry.
 - No cookie. No external request carrying personal data (there is no request at
   all).
@@ -88,9 +92,9 @@ changes it.
 
 ## 6. Content sources
 
-- Phase 01 ships **no educational content**: no lessons, no facts, no formulas, no
+- PROMPT 01 ships **no educational content**: no lessons, no facts, no formulas, no
   exercises, no sample chapters. `content/catalog.json` stays `books: []`.
-- Phase 02 content must come from official textbooks for the stated academic year,
+- PROMPT 03 content must come from official textbooks for the stated academic year,
   with `source.reference` (page locator) on every lesson and `source.edition` on
   every book.
 - Do not invent sources, page numbers, ISBNs or publisher names. Unknown locator →
@@ -99,28 +103,35 @@ changes it.
   diagrams and write original prose.
 - A structurally invalid catalogue is rejected as a whole — fix the data, do not
   loosen the validator to make bad data pass.
-- The structural demo pack (Settings → ابزار توسعه) is for engine testing only. It
-  must stay labelled «نمونهٔ ساختاری» and must contain no subject facts.
+- There is no developer switch, demo pack or sample lesson in the student build.
+  Engine fixtures live only in `build/` and are never embedded in `start.html`.
 
 ---
 
 ## 7. Phase boundaries
 
-**Phase 01 (this delivery)** — brand, shell, navigation, responsive layout,
+**PROMPT 01 — foundation.** Brand, shell, navigation, responsive layout,
 onboarding, profile, persistence, backup/restore, dashboard, library/book/lesson
 shells, exam engine, review surface, progress, settings, about, content contract,
-docs, QA.
+docs, QA. Done.
 
-**Phase 02 (next)** — official textbook acquisition and validation, chapter
+**PROMPT 02 — visual refinement.** Design tokens revision 2, editorial layout,
+motion language, student-facing copy cleanup. Done.
+
+**Pre-release quality pass (current).** Defect repair, honest persistence, copy
+audit, documentation and release readiness. Not PROMPT 03: no textbook
+acquisition, no lesson production.
+
+**PROMPT 03 — content.** Official textbook acquisition and validation, chapter
 extraction, source-linked lessons, interactive activities, experiments, games,
-exam material, review scheduling rules.
+exam material, review scheduling rules. Not started.
 
 Rules:
 
-- Do not start phase 02 work without the owner's approval.
-- Do not invent content to fill phase 01 shells.
-- Do not rebuild the architecture in phase 02; extend the documented extension
-  points (`PHASE-02-INTEGRATION.md`).
+- Do not start PROMPT 03 work without the owner's approval.
+- Do not invent content to fill PROMPT 01 shells.
+- Do not rebuild the architecture in PROMPT 03; extend the documented extension
+  points (`docs/PHASE-02-INTEGRATION.md`, despite its historical filename).
 - Do not change the specification unilaterally. If something is impossible, say so
   with evidence and propose an alternative.
 
@@ -131,7 +142,9 @@ Rules:
 - Classic ES5-compatible IIFEs, one per file, attaching to `window.MEHRAZ`.
 - No globals other than `MEHRAZ` (and `MEHRAZ_CONTENT`, injected at build time).
 - View modules register `M.views.<name>(params, query) → { title, nav, html,
-  onMount }`. HTML is built as escaped strings; behaviour is bound in `onMount`.
+  onMount, onUnmount, bare }`. `bare` removes the app shell (welcome and
+  onboarding only); `onUnmount` is called before the next route replaces the DOM
+  and must release timers, observers and listeners.
 - State changes go through `M.store.update()` / the documented mutators; never
   mutate `store.state` from a view.
 - Every new string that a user can see is Persian and escaped.
@@ -182,12 +195,12 @@ reload test.
 - Empty states honest; numbers derived.
 - Persian text proofread, RTL correct, no clipping.
 - Docs updated (`ARCHITECTURE`, `DESIGN-SYSTEM`, `DATA-SCHEMA`,
-  `OFFLINE-REQUIREMENTS`, `QA-REPORT`, `ANDROID-GUIDE`, `PHASE-02-INTEGRATION`).
+  `OFFLINE-REQUIREMENTS`, `QA-REPORT`, `ANDROID-GUIDE`, `prompt-03-INTEGRATION`).
 - QA report reflects what was actually executed.
 
 ---
 
-## 12. Product voice (added in the v2 pass — binding)
+## 12. Product voice (PROMPT 02 — binding)
 
 The student interface must read like a well-made product, not a README.
 
@@ -211,7 +224,7 @@ the About page (`#/about`), never on the dashboard, welcome, lessons or navigati
 
 No fabricated educational content, ever. Empty means an explanatory empty state.
 
-## 13. Visual rules (v2)
+## 13. Visual rules (PROMPT 02)
 
 - Composition before decoration: every page has one focal element, not five equal cards.
 - Use the art system (`src/scripts/art.js`) for illustrations; never add an image file,

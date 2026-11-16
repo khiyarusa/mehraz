@@ -1,6 +1,6 @@
 # MEHRAZ — Content pipeline and source audit
 
-Status: **audit complete, production blocked on OCR**.
+Status: **source audit complete (PROMPT 03 input); content production blocked on OCR and is not part of the current pre-release quality pass.**
 Date: 2026-11-16 · target academic year on the portal: **1405–1406**.
 
 This document records what was actually verified against the official textbook

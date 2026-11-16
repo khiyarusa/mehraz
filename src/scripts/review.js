@@ -110,9 +110,8 @@
     });
 
     var head = M.ui.pageHead({
-      eyebrow: 'مرور',
       title: 'برنامهٔ مرور',
-      sub: 'مرورها از پاسخ‌های ثبت‌شدهٔ شما ساخته می‌شوند. هر مرور به یک درس یا موضوع مشخص متصل است و تاریخ آن روی همین دستگاه ذخیره می‌شود.'
+      sub: 'مرور‌های شما، موضوع‌های نیازمند تمرین و تاریخچهٔ پاسخ‌ها در یک صفحه.'
     });
 
     var dueBlock = due.length
@@ -122,7 +121,7 @@
       : M.ui.empty({
           icon: 'review',
           title: 'برای امروز مروری نیست',
-          text: 'وقتی درس‌ها را بخوانید یا در آزمون‌ها پاسخ نادرست بدهید، مرورهای بعدی به‌صورت خودکار اینجا ساخته می‌شوند.'
+          text: 'وقتی مروری برای شما برنامه‌ریزی شود، همین‌جا دیده می‌شود.'
         });
 
     var upcomingBlock = upcoming.length
@@ -245,8 +244,8 @@
   /* ---- progress --------------------------------------------------------- */
   views.progress = function () {
     var p = M.store.profile();
-    var lessonsTotal = M.content.lessonCount();
-    var stats = M.store.stats(lessonsTotal);
+    var shelf = M.content.lessonIdsFor(p.grade, p.grade >= 10 ? p.track : null);
+    var stats = M.store.stats(shelf);
     var books = M.content.books({});
     var attempts = M.store
       .attempts()
@@ -261,7 +260,7 @@
       body = M.ui.empty({
         icon: 'progress',
         title: 'هنوز داده‌ای برای نمایش نیست',
-        text: 'پس از مطالعهٔ نخستین درس یا شرکت در یک آزمون، نمودارهای پیشرفت بر پایهٔ داده‌های واقعی شما ساخته می‌شوند.',
+        text: 'پس از مطالعهٔ نخستین درس یا شرکت در یک آزمون، نمودار پیشرفت بر پایهٔ داده‌های واقعی شما ساخته می‌شوند.',
         actions: '<a class="btn btn--primary btn--sm" href="#/library">شروع از کتابخانه</a>'
       });
     } else {
@@ -377,9 +376,8 @@
       nav: 'progress',
       html:
         M.ui.pageHead({
-          eyebrow: 'پیشرفت',
           title: 'مسیر من',
-          sub: 'همهٔ اعداد این صفحه از داده‌های ذخیره‌شدهٔ شما محاسبه می‌شوند.'
+          sub: 'هر عدد این صفحه از کار واقعی شما ساخته می‌شود.'
         }) + body,
       onMount: function (root) {
         M.ui.animateProgress(root);
@@ -395,6 +393,6 @@
       'exam.finished': 'یک آزمون ثبت شد',
       'review.done': 'یک مرور انجام شد'
     };
-    return labels[a.type] || 'رویداد یادگیری';
+    return labels[a.type] || 'فعالیت یادگیری';
   }
 })(window, document);

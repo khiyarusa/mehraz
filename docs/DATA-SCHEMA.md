@@ -17,8 +17,14 @@ the backup document, and of the content catalogue (whose full JSON Schema is
 | localStorage (fallback) | key `mehraz:state`, JSON string |
 | memory (last resort) | process memory only, lost on close |
 
-The driver is chosen at boot by write/read probe (`storage.js`); the active
-driver is shown in the sidebar and in Settings → ذخیرهسازی.
+The driver is chosen at boot by write/read probe (`storage.js`). IndexedDB is
+primary; a failed IndexedDB write is repaired immediately by writing the same
+payload to localStorage and switching drivers for the session. Every successful
+IndexedDB write is also mirrored to localStorage; on read, the copy with the
+newer `meta.updatedAt` wins.
+
+Diagnostics are console-only (`MEHRAZ.diag`, `MEHRAZ.storage.status()`); there
+is no driver indicator in the student UI.
 
 Only one record is written. Unknown keys present in the stored record are
 preserved on write, so a future minor version cannot lose data written by this
@@ -45,8 +51,7 @@ one.
   },
   "prefs": {
     "theme": "light",              // light | night
-    "motion": "system",            // system | reduced
-    "devPreview": false            // structural demo pack, developer switch
+    "motion": "system"             // system | reduced
   },
   "progress": {
     "lessons": {
@@ -55,7 +60,7 @@ one.
         "openedAt": "2026-11-15T18:31:02.000Z",
         "lastOpenedAt": "2026-11-15T18:31:44.000Z",
         "completedAt": "2026-11-15T18:31:44.000Z",
-        "section": 0               // last section index, reserved for phase 02
+        "section": 0               // last section index, reserved for PROMPT 03
       }
     },
     "chapters": {}                 // reserved: chapterId -> { status, updatedAt }
@@ -99,7 +104,7 @@ one.
   "meta": {
     "createdAt": "2026-11-15T18:20:00.000Z",
     "updatedAt": "2026-11-15T18:31:44.000Z",
-    "appVersion": "1.0.0",
+    "appVersion": "1.1.0",
     "installId": "mz_mwi6..."
   }
 }
@@ -180,7 +185,7 @@ changed lessons; existing ids must keep resolving to the same pedagogical unit.
   "formatVersion": 1,
   "schemaVersion": 1,
   "exportedAt": "2026-11-15T18:32:59.109Z",
-  "app": { "name": "MEHRAZ", "version": "1.0.0", "build": "prompt-01",
+  "app": { "name": "MEHRAZ", "version": "1.1.0", "channel": "standalone",
            "locale": "fa-IR", "timezoneOffset": -210 },
   "summary": {
     "hasProfile": true, "displayName": "سارا محمدی", "grade": 10, "track": "math",
@@ -246,7 +251,7 @@ question{ id, type: mcq|truefalse|multi|numeric, prompt, options[], correct,
 | `numeric` | — (`answer` + `tolerance`) | number |
 
 Scoring is 1 point per question (a `points` field is accepted and displayed; the
-total is question count in phase 01). `multi` requires exact set equality;
+total is question count in PROMPT 01). `multi` requires exact set equality;
 `numeric` accepts `|given − answer| ≤ tolerance` after normalising Persian digits
 and `٫`.
 
@@ -261,7 +266,7 @@ Every content item may carry `source`:
 ```
 
 The runtime never fetches `url`; it exists for documentation and audit. Lessons
-also carry `verification.status` (`draft` / `reviewed` / `verified`) so phase 02
+also carry `verification.status` (`draft` / `reviewed` / `verified`) so PROMPT 03
 can ship progressively without pretending unfinished content is verified.
 
 ---
@@ -276,7 +281,7 @@ can ship progressively without pretending unfinished content is verified.
 | `exam.finished` | attempt recorded | `{ examId, score, total }` |
 | `review.done` | review item completed | `{ itemId }` |
 
-Only these five are produced in phase 01. The progress page renders them with
+Only these five are produced in PROMPT 01. The progress page renders them with
 human labels; an unknown type degrades to "رویداد یادگیری" rather than breaking.
 
 ---
@@ -287,7 +292,7 @@ human labels; an unknown type degrades to "رویداد یادگیری" rather t
   chosen display name.
 - No device fingerprint, no user agent, no IP (impossible offline anyway), no
   analytics identifiers, no advertising identifiers.
-- No free-text notes in phase 01 (reserved).
+- No free-text notes in PROMPT 01 (reserved).
 - No cookies: the app sets none.
 
 The only identifiers are `profile.id` and `meta.installId`, both random and only

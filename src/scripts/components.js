@@ -175,7 +175,7 @@
       M.art.areaChart(values, { labels: labels, height: 120 }) +
       '<figcaption class="hint" style="margin-top:8px">' +
       (total
-        ? 'در این هفته ' + util.toFa(total) + ' رویداد یادگیری ثبت شده است.'
+        ? 'در این هفته ' + util.toFa(total) + ' فعالیت ثبت شده است.'
         : 'هنوز فعالیتی برای این هفته ثبت نشده است.') +
       '</figcaption></figure>'
     );
@@ -387,6 +387,8 @@
     var el = document.createElement('div');
     el.className = 'toast' + (opts.type ? ' toast--' + opts.type : '');
     el.setAttribute('role', opts.type === 'danger' ? 'alert' : 'status');
+    var ttl = opts.ttl === 0 ? 0 : opts.ttl || M.config.toastTTL;
+    var dismissLabel = opts.actionLabel || (ttl === 0 ? 'بستن' : '');
     el.innerHTML =
       '<span class="toast__icon">' +
       M.icon(opts.icon || (opts.type === 'danger' ? 'alert' : opts.type === 'warn' ? 'alert' : 'check'), 17) +
@@ -394,12 +396,11 @@
       '<span class="toast__text">' +
       esc(message) +
       '</span>' +
-      (opts.actionLabel
-        ? '<button class="toast__action" type="button">' + esc(opts.actionLabel) + '</button>'
+      (dismissLabel
+        ? '<button class="toast__action" type="button"' + (opts.actionLabel ? '' : ' data-dismiss="1"') + '>' + esc(dismissLabel) + '</button>'
         : '');
     host.appendChild(el);
 
-    var ttl = opts.ttl === 0 ? 0 : opts.ttl || M.config.toastTTL;
     var timer = null;
 
     function dismiss() {
@@ -410,9 +411,10 @@
       }, 220);
     }
 
-    if (opts.actionLabel && typeof opts.onAction === 'function') {
-      util.$('.toast__action', el).addEventListener('click', function () {
-        opts.onAction();
+    var actionEl = util.$('.toast__action', el);
+    if (actionEl) {
+      actionEl.addEventListener('click', function () {
+        if (opts.actionLabel && typeof opts.onAction === 'function') opts.onAction();
         dismiss();
       });
     }

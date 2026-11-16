@@ -1,21 +1,21 @@
-# MEHRAZ — Design System (v2)
+# MEHRAZ — Design System (PROMPT 02 · tokens revision 2)
 
 Visual language: **editorial white, deep navy structure, one confident blue.**
-The goal of v2 was not "more decoration" — it was composition: every page should
-read as a designed spread, not a grid of identical boxes.
+The goal of the visual layer was not "more decoration" — it was composition:
+every page should read as a designed spread, not a grid of identical boxes.
 
 ---
 
-## 1. What changed from v1
+## 1. What changed from the foundation
 
-| Area | v1 | v2 |
+| Area | Foundation (PROMPT 01) | PROMPT 02 |
 | --- | --- | --- |
 | Palette | flat semantic aliases | ink scale + accent set with explicit roles, higher-contrast muted text, gradient hero |
 | Rhythm | one card style everywhere | five composition patterns: hero, stat band, continue card, subject card, editorial block |
 | Illustration | none (icons only) | generated SVG art system: orbit, monograms, rings, area charts, empty-state scenes |
 | Chrome | full-width mobile bar, storage chip in sidebar | floating pill navigation, student card in sidebar, scroll-aware topbar |
 | Type | 15/1.85 body, 28 display | display up to 2.55rem in the hero, 1.3 line-height titles, 10px overlines with tracking |
-| Motion | generic rise/fade | branded boot sequence, orbit drift, ring/area draw, sheen on primary, staggered entrance |
+| Motion | generic rise/fade | four-step duration scale, purposeful reveals, clipped sheen, reduced-motion parity |
 | Density | uniform padding | deliberate scale: 20–40px depending on the panel's role |
 
 ---
@@ -39,7 +39,7 @@ subject monograms so subjects differ without inventing new semantics.
 `--line #E4EAF3` hairline · `--line-2 #EEF2F8` internal divider.
 
 ### Text
-`--t-900 #0B1A2B` headings · `--t-500 #566A82` secondary · `--t-400 #7C8CA1` meta.
+`--t-900 #0B1A2B` headings · `--t-500 #566A82` secondary · `--t-400 #63748A` meta.
 
 ### Measured contrast (sRGB, WCAG 2.1)
 
@@ -47,7 +47,7 @@ subject monograms so subjects differ without inventing new semantics.
 | --- | --- |
 | Body text on paper | 16.9 : 1 |
 | Secondary `--t-500` on white | 5.56 : 1 |
-| Meta `--t-400` on white | 4.1 : 1 (used only ≥11px, non-essential) |
+| Meta `--t-400` on white | 4.78 : 1 (10–12px labels, non-essential) |
 | Section titles | 16.96 : 1 |
 | White on hero navy (avg. #0D1E33) | ≈15 : 1 |
 
@@ -57,9 +57,9 @@ Colour never carries meaning alone: every state also changes text, icon or borde
 
 ## 3. Type
 
-Stack unchanged and **no bundled webfont** (see v1 rationale: the Persian faces
-available on the build machine are proprietary and may not be redistributed;
-Vazirmatn stays first in the stack so a licensed copy can be dropped in later).
+Stack unchanged and **no bundled webfont** (the Persian faces available on the
+build machine are proprietary and may not be redistributed; Vazirmatn stays first
+in the stack so a licensed copy can be dropped in later).
 
 | Role | Size / weight | Notes |
 | --- | --- | --- |
@@ -70,7 +70,7 @@ Vazirmatn stays first in the stack so a licensed copy can be dropped in later).
 | Body | 0.9375rem / 400 | 1.85 line-height |
 | Reading body (lesson) | 0.875rem / 400 | 2.0 line-height |
 | Meta / caption | 0.6875rem / 400–600 | |
-| Overline | 0.625rem / 800 | 0.14em tracking, uppercase Latin |
+| Overline | 0.625rem / 800 | legacy `.eyebrow`; **not used in new surfaces** — the page title carries the hierarchy |
 
 Persian punctuation only (، ٫ ٪), ZWNJ in compounds, Persian digits via
 `util.toFa`. Numbers are tabular in stats and tables.
@@ -118,36 +118,42 @@ All artwork is inline SVG generated at runtime — no images, no icon fonts, no 
 Determinism matters: a subject keeps the same emblem on the dashboard, in the
 library and inside a book page, so the student learns to recognise it.
 
-`prefers-reduced-motion` and the in-app "کم" setting stop orbit rotation, node
-floating and dash drift; nothing depends on an animation to be readable.
+`prefers-reduced-motion` and the in-app «کاهش‌یافته» setting stop orbit rotation,
+node floating and dash drift; nothing depends on an animation to be readable.
 
 ---
 
 ## 7. Motion
 
+Four durations and two curves. Everything in the product uses them; there is no
+per-view timing.
+
 | Token | Value | Use |
 | --- | --- | --- |
-| `--d-fast` | 150ms | hover, colour |
-| `--d-base` | 240ms | small reveals |
-| `--d-slow` | 380ms | cards, accordion, toast |
-| `--d-page` | 460ms | page entrance |
-| `--d-hero` | 900ms | progress fill, chart draw |
+| `--d-1` | 120ms | press, toggle, nav feedback |
+| `--d-2` | 220ms | small reveal: menu, toast, list item |
+| `--d-3` | 340ms | context change: page, onboarding step, modal |
+| `--d-4` | 560ms | data: progress fill, ring draw |
 
-Easings: `--e-out cubic-bezier(.22,.61,.36,1)`, `--e-inout`, `--e-soft cubic-bezier(.16,1,.3,1)`.
+Easings: `--e-standard cubic-bezier(.2,.7,.3,1)` for state, `--e-entrance
+cubic-bezier(.16,1,.3,1)` for things that arrive.
 
 Signature moments:
 
 - **Boot** (≈1s): the mark scales in while a ring draws itself, the wordmark rises,
-  a 3px bar fills right-to-left, then the veil lifts. Skipped instantly under reduced motion.
-- **Page**: 22px rise + fade on the page, children stagger at 30–210ms.
-- **Rings**: `stroke-dashoffset` transition 1.1s `--e-soft` triggered on mount.
-- **Area chart**: line draws (stroke-dashoffset), fill and dots fade in sequence.
-- **Hero orbit**: 90s / 54s / 40s rotations at low opacity, nodes float ±6px.
-- **Primary button**: a single sheen sweep on hover (never looping).
+  a 3px bar fills right-to-left, then the veil lifts. Skipped under reduced motion.
+- **Page**: one 8px rise + fade for the whole surface (340ms). Children are **not**
+  staggered; a page that assembles piece by piece reads as decoration.
+- **Lists** (`.stagger`): max 6 items, 20–150ms, only where the items are peers.
+- **Onboarding**: the step card arrives from the start edge (14px) and from the
+  opposite edge when going back; re-rendering an error does not re-animate.
+- **Rings / bars**: `--d-4` draw on mount, triggered once by `animateProgress`.
+- **Nav**: the active rail scales in (340ms) instead of appearing instantly.
+- **Primary button**: one clipped sheen sweep on hover, pointer devices only.
 
-Rules: transform/opacity only, no layout animation, no infinite animation except
-the orbit (paused off-screen by CSS `content-visibility` where supported and by
-reduced motion), travel ≤ 22px, nothing essential depends on motion.
+Rules: transform/opacity only; travel ≤ 22px; no infinite animation except the
+ambient orbit; the `::after` sheen must stay inside the button box (an unclipped
+transform widened the document scroll area by up to 540px and was a real defect).
 
 ---
 

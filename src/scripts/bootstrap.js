@@ -8,11 +8,11 @@
 
   var M = (window.MEHRAZ = window.MEHRAZ || {});
 
-  M.version = '1.0.0';
+  M.version = '1.1.0';
   M.schemaVersion = 1;
   M.build = {
-    id: 'prompt-01',
-    stamp: '2026-11-15',
+    id: 'qa-pass-2026-11-16',
+    stamp: '2026-11-16',
     channel: 'standalone'
   };
   M.config = {

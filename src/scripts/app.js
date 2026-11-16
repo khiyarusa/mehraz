@@ -34,7 +34,31 @@
     else root.removeAttribute('data-motion');
 
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', prefs.theme === 'night' ? '#0b1622' : '#ffffff');
+    if (meta) meta.setAttribute('content', prefs.theme === 'night' ? '#0b1622' : '#FAFBFE');
+    app.syncThemeButton();
+  };
+
+  /* The topbar button used to be decorative. It now flips the theme and shows
+     the icon of the mode the student will get. */
+  app.syncThemeButton = function () {
+    var btn = document.getElementById('theme-btn');
+    if (!btn) return;
+    var night = M.store.prefs().theme === 'night';
+    btn.innerHTML = M.icon(night ? 'sun' : 'moon', 20);
+    btn.setAttribute('aria-pressed', night ? 'true' : 'false');
+    btn.setAttribute('title', night ? 'حالت روز' : 'حالت شبانه');
+    btn.setAttribute('aria-label', night ? 'روشن کردن حالت روز' : 'روشن کردن حالت شبانه');
+  };
+
+  app.bindThemeButton = function () {
+    var btn = document.getElementById('theme-btn');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var next = M.store.prefs().theme === 'night' ? 'light' : 'night';
+      M.store.setPref('theme', next);
+      app.applyPrefs();
+      M.ui.toast(next === 'night' ? 'حالت شبانه فعال شد.' : 'حالت روز فعال شد.', { type: 'ok', ttl: 2400 });
+    });
   };
 
   /* ---- chrome ----------------------------------------------------------- */
@@ -83,7 +107,9 @@
         NAV.slice(5).map(function (i) {
           return navItem(i, false);
         }).join('') +
-        '<a class="sidebar__link" href="#/about">' + M.icon('user', 15) + 'دربارهٔ سازنده</a>';
+        '<a class="navitem" href="#/about" data-nav="about">' +
+        '<span class="navitem__icon">' + M.icon('info', 19) + '</span>' +
+        '<span>درباره</span></a>';
     }
 
     var bottom = document.getElementById('bottomnav');
@@ -307,7 +333,9 @@
   app.renderProfileChip = function () {
     var chip = document.getElementById('profile-chip');
     var p = M.store.profile();
-    if (!chip || !p) return;
+    if (!chip) return;
+    chip.hidden = !p;
+    if (!p) return;
     chip.innerHTML =
       M.ui.avatar(p.displayName, 'sm') +
       '<span class="profile-chip__text"><span class="profile-chip__name">' +
@@ -333,7 +361,7 @@
         '</div>' +
         '<div class="banner banner--info" style="margin-top:14px">' +
         M.icon('lock', 16) +
-        '<span>فایل فقط در همین دستگاه خوانده می‌شود و به هیچ جایی ارسال نمی‌شود.</span>' +
+        '<span>این فایل فقط برای بازیابی اطلاعات شما خوانده می‌شود.</span>' +
         '</div>' +
         '<div data-import-status></div>' +
         '</div>',
@@ -351,7 +379,7 @@
             '</div>' +
             '<div class="banner banner--info" style="margin-top:14px">' +
             M.icon('lock', 16) +
-            '<span>فایل فقط در همین دستگاه خوانده می‌شود و به هیچ جایی ارسال نمی‌شود.</span>' +
+            '<span>این فایل فقط برای بازیابی اطلاعات شما خوانده می‌شود.</span>' +
             '</div>' +
             '<div data-import-status></div>';
           bindInput();
@@ -463,7 +491,7 @@
           bodyHost.innerHTML =
             '<div class="banner banner--warn">' +
             M.icon('alert', 16) +
-            '<span>اطلاعات فعلی این دستگاه با محتوای پشتیبان جای‌گزین می‌شود. این کار قابل بازگشت نیست.</span></div>' +
+            '<span>اطلاعات فعلی با محتوای این پشتیبان جای‌گزین می‌شود. این کار قابل بازگشت نیست.</span></div>' +
             '<p class="hint" style="margin-top:12px">آیا مطمئن هستید؟</p>' +
             '<div class="row row--wrap" style="margin-top:8px;gap:8px">' +
             '<button class="btn btn--ghost btn--sm" type="button" data-back>بازگشت</button>' +
@@ -513,12 +541,42 @@
         M.store.ready = true;
       })
       .then(function () {
+        // A silent failure is worse than a warning. If a write does not land,
+        // say it once, in plain Persian, and point at the backup file.
+        M.store.subscribe(function (state, payload) {
+          if (!payload || payload.type !== 'persist') return;
+          if (payload.ok) {
+            app.warnedPersist = false;
+            return;
+          }
+          if (app.warnedPersist) return;
+          app.warnedPersist = true;
+          M.ui.toast('ذخیرهٔ آخرین تغییر انجام نشد. لطفاً از اطلاعات خود نسخهٔ پشتیبان تهیه کنید.', {
+            type: 'warn',
+            ttl: 9000,
+            actionLabel: 'پشتیبان',
+            onAction: function () {
+              M.router.go('#/settings');
+            }
+          });
+        });
+
+        // Closing the tab within the debounce window used to drop the last
+        // action. Flush as soon as the page is hidden.
+        window.addEventListener('pagehide', function () {
+          if (M.store.ready) M.store.flush('pagehide');
+        });
+        document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState === 'hidden' && M.store.ready) M.store.flush('hidden');
+        });
+
         M.content.init();
         app.applyPrefs();
         app.buildChrome();
         app.renderProfileChip();
         app.bindSearch();
         app.bindProfileMenu();
+        app.bindThemeButton();
         registerRoutes();
 
         M.router.start();
@@ -586,7 +644,7 @@
     });
     add({
       path: '#/dashboard',
-      title: 'خانه',
+      title: 'داشبورد',
       nav: 'dashboard',
       requiresProfile: true,
       view: guardless(M.views.dashboard)
@@ -682,7 +740,7 @@
       requiresProfile: true,
       view: guardless(M.views.settings)
     });
-    add({ path: '#/about', title: 'درباره', nav: '', view: guardless(M.views.about) });
+    add({ path: '#/about', title: 'درباره', nav: 'about', view: guardless(M.views.about) });
   }
 
   /* ---- go --------------------------------------------------------------- */

@@ -1,441 +1,299 @@
-# MEHRAZ — QA Report
+<div dir="rtl">
 
-Two passes are recorded here:
+# گزارش کیفیت مهراز — پاس پیش از انتشار
 
-- **v2 — visual, UX and content pass** (current): everything below in section A.
-- **v1 — foundation pass** (historical, kept for evidence): section B onwards.
+**نسخه:** ۱٫۱٫۰ · **تاریخ:** ۲۵ آبان ۱۴۰۵ (۲۰۲۶-۱۱-۱۶)
+**مبنا:** `start.html` ساخته‌شده از `src/` در همین تاریخ.
 
----
+## ۰. چطور این گزارش را بخوانید
 
-# A. v2 pass — visual transformation and content cleanup
-
-Date: 2026-11-16 · build size 323.8 KB · single file, `file://`
-
-## A1. Scope executed
-
-1. Full source audit (not the docs): strings, dev surface, dead controls, layout math.
-2. Identity and copy: creator name corrected, every technical message removed from
-   the student interface, Persian proofreading of all touched strings.
-3. Removal of the development surface: structural preview toggle, sample book,
-   sample lesson, sample exam, demo labels, `devOnly` route guard, `devPreview` pref.
-4. New design system: tokens v2, art system (inline SVG), component layer rewrite.
-5. Page-level redesign: welcome, onboarding, dashboard, library, book, lesson,
-   exam, result, review, progress, settings, about.
-6. Motion: branded boot sequence, page/stagger entrance, orbit drift, ring and area
-   draw, sheen, toast/modal transitions, reduced-motion overrides.
-7. Measurement pass in a real browser at six widths.
-
-## A2. Confirmed defects found and fixed in this pass
-
-| # | Defect | Evidence | Fix |
-| --- | --- | --- | --- |
-| 1 | Creator shown as «آمین» | `settings.js` string | corrected to «امین»; source scan now returns zero matches |
-| 2 | Technical messaging throughout the student UI (offline, local storage, no account, file://) | welcome chips, footer, boot note, sidebar chip, dashboard cards, settings storage card, toasts | removed; replaced with student-facing language or deleted |
-| 3 | Development tools exposed to students | Settings → «ابزار توسعه» with structural preview; demo book/lesson/exam; demo banners | entire surface removed from source, build and UI |
-| 4 | Bottom navigation rendered **in normal flow on desktop** underneath the footer | computed `display:block`, `position:static` at 1280/1440 | base `.bottomnav{display:none}` restored outside the mobile media query; now `none` on desktop, `grid`+`fixed` ≤1023 |
-| 5 | Stat band collapsed to a single column at 360px | `gridTemplateColumns` = 1 track | 1-col override removed; 2×2 kept with reduced numeral size |
-| 6 | Inconsistent corner radius on mobile stat band (15px vs 20px elsewhere) | computed `border-radius` 15px | unified to `--r-lg` (20px) |
-| 7 | Brand Latin sub-line rendered at 6.4–7.4px | computed font-size | hidden below 640px, 8.3px above (decorative only) |
-| 8 | Chart axis labels at 9px | computed font-size | raised to 10px |
-| 9 | Missing focus-visible continuity after redesign | source review | `:focus-visible` ring re-declared globally and used by every interactive component |
-
-### Investigated, not a defect
-
-- **Exam submit appeared not to navigate** in one run. Re-test showed the attempt was
-  stored and the route changed after the IndexedDB write resolved. It is latency in
-  the asynchronous flush, not a routing bug; behaviour is correct.
-- **`.hero` reports `scrollHeight` > `clientHeight`.** The overflow is the decorative
-  orbit positioned partly outside the panel; measured content (`actions` bottom 386px)
-  sits inside the panel (bottom 408px). No text is clipped.
-- **Hero heading contrast measured 1.03:1.** False positive: the sampler walks to the
-  nearest solid background, but the hero paints a gradient. Actual white-on-navy is ≈15:1.
-
-## A3. Measurements (real render, iframe at fixed widths)
-
-| Width | Horizontal overflow | Sidebar | Bottom nav | Stat band | Hero height |
-| --- | --- | --- | --- | --- | --- |
-| 360 | 0 | hidden | floating, fixed | 2 cols | 358 |
-| 390 | 0 | hidden | floating, fixed | 2 cols | 296 |
-| 430 | 0 | hidden | floating, fixed | 2 cols | 300 |
-| 768 | 0 | hidden | floating, fixed | 2 cols | 310 |
-| 1280 | 0 | visible (246) | none | 4 cols | 410 |
-| 1440 | 0 | visible (268) | none | 4 cols | 410 |
-
-Contrast (computed): body 16.9:1 · card text 5.56:1 · hints 5.56:1 · stat labels 5.56:1 ·
-section titles 16.96:1.
-
-Routes walked with zero console errors and zero rendered error cards:
-dashboard, library, library?scope=all, library/10, library/10/math, library/7, exam,
-review, progress, settings, about, profile/edit, plus book, lesson and exam-result
-against a temporary in-memory fixture (not shipped).
-
-Lesson surface: 10 editorial sections, 10 TOC entries, 10 section indices.
-Book surface: chapter accordion + 2 lesson rows. Exam runner: 4 option buttons,
-4 navigator cells, result page 1 ring + 2 review rows.
-
-## A4. Acceptance checklist
-
-| Requirement | Status |
+| برچسب | معنا |
 | --- | --- |
-| Correct creator spelling (امین) | PASS |
-| No repeated technical messaging | PASS (source scan + UI review) |
-| No exposed development tools | PASS |
-| No fake educational content | PASS — catalogue empty, fixture used only in a test harness |
-| All navigation functional | PASS — 12 routes + 3 content routes |
-| No broken interactions | PASS for tested controls; see A5 |
-| No data loss after upgrade | PASS — schema untouched, existing record loaded, backup import/export unchanged |
-| Backup and restore functional | PASS (re-tested after redesign) |
-| No unexpected network activity | PASS — zero resource entries, CSP intact |
-| Smooth responsive behaviour | PASS — 0 overflow at six widths |
-| All core pages visually reviewed | **NOT TESTED** — screenshot capture failed (see A5) |
-| No severe console errors | PASS — `MEHRAZ.diag.errors` empty |
-| No severe layout issues | PASS by measurement; pixel review not possible |
+| **PASS** | در مرورگر اجرا شد و نتیجهٔ مورد انتظار دیده شد. |
+| **FAIL** | اجرا شد و نتیجه اشتباه بود. |
+| **NOT TESTED** | اجرا نشد؛ دلیلش همان‌جا نوشته شده. |
+| **BLOCKED** | برای اجرا به محتوای رسمی یا دستگاه فیزیکی نیاز است. |
 
-## A5. What could not be verified in this pass
+**بازرسی کد، تست نیست.** هر یافته‌ای که فقط از خواندن کد آمده، در ستون «شاهد»
+با «کد» علامت خورده است. هیچ نتیجهٔ PASS از روی «کد درست به نظر می‌رسد» ثبت نشده.
 
-| Item | Status | Reason |
+## ۱. محیط آزمون
+
+| مورد | مقدار |
+| --- | --- |
+| سیستم | Windows 10 x64 |
+| مرورگر | Chrome 148.0.7778.280 |
+| پروتکل | `file://` (بدون سرور) |
+| عرض واقعی پنجرهٔ آزمون | ۴۲۵–۴۴۰ پیکسل (پنل باریک) |
+| شبیه‌سازی عرض | iframe هم‌مبنا با عرض ۳۶۰ / ۴۱۴ / ۷۶۸ / ۱۰۲۴ / ۱۴۴۰ |
+| دستگاه اندروید | **در دسترس نبود** |
+| اسکرین‌شات | ابزار مرورگر در این محیط تصویر برنگرداند |
+
+> نکتهٔ روش: عرض پنجرهٔ اصلی قابل تغییر نبود. برای عرض‌های دیگر، `start.html` در
+> یک iframe هم‌مبنا بارگذاری شد؛ media queryها به عرض iframe پاسخ می‌دهند. این
+> روش چیدمان را می‌سنجد، اما **جای دستگاه واقعی را نمی‌گیرد**.
+
+## ۲. خلاصهٔ نتایج
+
+| دسته | PASS | FAIL | NOT TESTED | BLOCKED |
+| --- | --- | --- | --- | --- |
+| هویت سازنده و متن فارسی | ۴ | ۰ | ۰ | ۰ |
+| پاک‌سازی متن فنی | ۵ | ۰ | ۰ | ۰ |
+| جداسازی رابط توسعه | ۲ | ۰ | ۰ | ۰ |
+| ثبت‌نام و تقویم شمسی | ۷ | ۰ | ۰ | ۰ |
+| تنظیمات دانش‌آموز | ۴ | ۰ | ۰ | ۰ |
+| ذخیره‌سازی | ۶ | ۰ | ۱ | ۰ |
+| پشتیبان و بازیابی | ۵ | ۰ | ۱ | ۰ |
+| ناوبری | ۶ | ۰ | ۰ | ۰ |
+| چیدمان واکنش‌گرا | ۵ | ۰ | ۲ | ۰ |
+| عملکرد آفلاین و شبکه | ۲ | ۰ | ۰ | ۰ |
+| سازگاری دادهٔ قبلی | ۲ | ۰ | ۰ | ۰ |
+| خطای JavaScript | ۱ | ۰ | ۰ | ۰ |
+| اندروید فیزیکی | ۰ | ۰ | ۵ | ۰ |
+| موتور آزمون (اجرای کامل) | ۰ | ۰ | ۰ | ۳ |
+
+## ۳. نقص‌های تأییدشده و اصلاح‌شده
+
+هر مورد در مرورگر بازتولید شد، مگر آنکه «کد» نوشته شده باشد.
+
+### ۳٫۱ سرریز افقی در همهٔ صفحه‌ها (FAIL → PASS)
+
+- **شاهد:** در عرض ۵۳۷px، `document.documentElement.scrollWidth = 619` و
+  `clientWidth = 537` (۸۲px سرریز). در تنظیمات ۵۴۰px و در ویرایش پروفایل ۱۴۱px.
+- **ریشه:** `.btn--primary::after` (لایهٔ درخشش دکمه) با `translateX(-120%)`
+  بیرون از جعبهٔ دکمه می‌رفت و چون دکمه `overflow: visible` داشت، ناحیهٔ اسکرول
+  سند را بزرگ می‌کرد. `body { overflow-x: hidden }` فقط نوار را پنهان می‌کرد،
+  نه `scrollWidth` را.
+- **اصلاح:** `overflow: hidden` روی دکمهٔ اصلی + حذف درخشش دکمه‌های سفید روی هیرو
+  + محدود کردن درخشش به دستگاه‌های اشارهٔ دقیق.
+- **بازآزمون:** سرریز در ۳۶۰/۴۱۴/۷۶۸/۱۰۲۴/۱۴۴۰ و در ۱۰ مسیر = **۰**.
+
+### ۳٫۲ دکمهٔ پوسته در نوار بالا هیچ کاری نمی‌کرد (FAIL → PASS)
+
+- **شاهد (کد):** `#theme-btn` در `shell.html` وجود داشت و هیچ شنونده‌ای در
+  `src/scripts/*.js` نداشت. دکمه فوکوس می‌گرفت و کلیکش بی‌اثر بود.
+- **اصلاح:** اتصال واقعی + هم‌زمان‌سازی آیکون و `aria-label` با پوستهٔ فعلی.
+- **بازآزمون:** کلیک → `data-theme="night"`، برچسب «روشن کردن حالت روز»، پیام
+  «حالت شبانه فعال شد.»، و ذخیرهٔ پایدار.
+
+### ۳٫۳ پیام موفقیت پیش از تأیید ذخیره (FAIL → PASS)
+
+- **شاهد (کد):** `saveProfile` سپس `store.flush()` بدون `await` و بلافاصله
+  «خوش آمدید»؛ همین الگو در «درس خوانده شد»، «پاک‌کردن داده‌ها» و «ثبت آزمون».
+- **اصلاح:** هر چهار مسیر منتظر نتیجهٔ نوشتن می‌مانند؛ در شکست، پیام کوتاه و
+  قابل‌اقدام فارسی نمایش داده می‌شود و هیچ ادعای موفقیتی نمی‌شود.
+- **بازآزمون:** با جایگزینی موقت `storage.set` به یک تابع شکست‌خورده، توست
+  «ذخیرهٔ آخرین تغییر انجام نشد…» با دکمهٔ «پشتیبان» ظاهر شد و پیام موفقیت
+  نمایش داده نشد.
+
+### ۳٫۴ چیپ حساب کاربری در اولین بارگذاری پنهان می‌ماند (FAIL → PASS)
+
+- **شاهد (کد):** `#profile-chip` با `hidden` رندر می‌شد و تنها شنوندهٔ
+  `route:rendered` آن را نشان می‌داد؛ شنونده بعد از `router.start()` ثبت می‌شد،
+  پس رندر اول آن را نمی‌دید.
+- **اصلاح:** `renderProfileChip` خودش `hidden` را ست می‌کند.
+- **بازآزمون:** reload روی داشبورد → چیپ و منوی حساب در همان رندر اول دیده می‌شود.
+
+### ۳٫۵ ناوبری روی صفحهٔ ثبت‌نام و خوش‌آمد (FAIL → PASS)
+
+- **شاهد:** سایدبار و ناوبری پایین روی این دو صفحه دیده می‌شدند؛ کلیک روی هر
+  آیتم به ثبت‌نام برگشت داده می‌شد.
+- **اصلاح:** مسیرهای `bare` + حذف کامل پوستهٔ برنامه از این دو صفحه.
+- **بازآزمون:** در صفحهٔ خوش‌آمد فقط سه عنصر قابل فوکوس باقی می‌ماند (پرش، شروع،
+  بازیابی) و صفحه دقیقاً به اندازهٔ viewport است.
+
+### ۳٫۶ هدر شدن آخرین تغییر هنگام بستن صفحه (FAIL → PASS)
+
+- **شاهد (کد):** نوشتن با تأخیر ۱۴۰ms انجام می‌شد و هیچ flush روی
+  `pagehide`/`visibilitychange` نبود.
+- **اصلاح:** flush فوری در هر دو رویداد + آینهٔ localStorage برای هر نوشتن موفق.
+
+### ۳٫۷ رشد بی‌کران تاریخچهٔ فعالیت (FAIL → PASS)
+
+- **شاهد (کد):** `touchLesson` و `addAttempt` سقف داشتند، اما `saveProfile` و
+  `completeReview` بی‌سقف به `activity` اضافه می‌کردند.
+- **اصلاح:** سقف در `store.update` اعمال می‌شود و همهٔ مسیرهای نوشتن را می‌پوشاند.
+
+### ۳٫۸ آزمون با نمرهٔ صفر «شروع‌نشده» نمایش داده می‌شد (FAIL → PASS)
+
+- **شاهد (کد):** برچسب بر مقدار عددی `best` سوار بود، نه بر وجود تلاش.
+- **اصلاح:** برچسب بر `mine.length` سوار شد.
+
+### ۳٫۹ جداکنندهٔ هزارگان در پاسخ عددی (FAIL → PASS)
+
+- **شاهد (کد):** `«۱٬۲۰۰»` به `۱٫۲` تبدیل می‌شد و پاسخ درست، غلط علامت می‌خورد.
+- **اصلاح:** `٬` و `,` حذف می‌شوند، `٫` اعشار می‌ماند.
+
+### ۳٫۱۰ نشتی تایمر و آبزرور (FAIL → PASS)
+
+- **شاهد (کد):** تایمر آزمون و `IntersectionObserver` درس، هیچ teardown نداشتند.
+- **اصلاح:** قرارداد `onUnmount` در روتر + پاک‌سازی در آزمون و درس.
+
+### ۳٫۱۱ پیام دائمی بدون راه بستن (FAIL → PASS)
+
+- **شاهد (کد):** توست با `ttl: 0` تا ابد می‌ماند و دکمهٔ بستن نداشت.
+- **اصلاح:** دکمهٔ «بستن» برای پیام‌های دائمی.
+
+### ۳٫۱۲ شمارش آمار با مخرج کل کاتالوگ (FAIL → PASS)
+
+- **شاهد (کد):** `lessonsDone` از همهٔ کلیدهای ذخیره‌شده و `lessonsTotal` از کل
+  کاتالوگ شمرده می‌شد؛ «۳ از ۳۶۰» برای پایهٔ هفتم ممکن بود.
+- **اصلاح:** آمار با مجموعهٔ درس‌های کتابخانهٔ خود دانش‌آموز (پایه + رشته) محاسبه
+  می‌شود و `firstLesson` رشته را هم در نظر می‌گیرد.
+
+## ۴. پاک‌سازی متن فنی
+
+| مورد | پیش | پس | نتیجه |
+| --- | --- | --- | --- |
+| فهرست آزمون | «موتور آزمون آماده است و چهار نوع پرسش را پشتیبانی می‌کند…» | «آزمون‌های فصل‌های کتاب‌های رسمی، همراه همان کتاب‌ها به این بخش اضافه می‌شوند.» | PASS |
+| فهرست آزمون | «نتیجه و پاسخ‌ها روی همین دستگاه ذخیره می‌شود.» | حذف شد | PASS |
+| مرور | «…تاریخ آن روی همین دستگاه ذخیره می‌شود.» | حذف شد | PASS |
+| پیشرفت | «همهٔ اعداد از داده‌های ذخیره‌شدهٔ شما…» | «هر عدد این صفحه از کار واقعی شما ساخته می‌شود.» | PASS |
+| کتابخانه | «ساختار درس، فصل و درس‌ها آماده است…» | «کتاب رسمی این پایه به‌زودی به کتابخانه اضافه می‌شود.» | PASS |
+| داشبورد | «ساختار کتابخانه آماده است…» / «دیدن ساختار کتابخانه» | «کتاب‌های رسمی همین پایه به‌زودی اضافه می‌شوند.» / «دیدن همهٔ پایه‌ها» | PASS |
+| درس | «در انتظار محتوا» + اسکلت بارگذاری ساختگی | «به‌زودی» + یک توضیح کوتاه، بدون اسکلت | PASS |
+| بازیابی | «فایل فقط در همین دستگاه خوانده می‌شود…» | «این فایل فقط برای بازیابی اطلاعات شما خوانده می‌شود.» | PASS |
+| فعالیت هفته | «رویداد یادگیری» | «فعالیت» | PASS |
+| تنظیمات | «ابزار توسعه / ذخیره‌سازی / دیاگنوستیک» | هیچ بخش فنی وجود ندارد | PASS |
+
+**استثنای لازم:** پیام‌های خطای قابل‌اقدام (پشتیبان نامعتبر، ذخیرهٔ ناموفق،
+نسخهٔ جدیدتر) باقی مانده‌اند؛ این‌ها عیب‌یابی داخلی نیستند، راهنمای کاربرند.
+
+## ۵. رابط توسعه
+
+| آزمون | نتیجه | شاهد |
 | --- | --- | --- |
-| Screenshots of the ten pages | **NOT TESTED** | The browser capture endpoint returned `browser_capture_busy` / `browser_cancelled` for every attempt after the first hour of the session, on fresh tabs and fresh page loads. No image was produced; nothing is claimed about pixels. |
-| Real Android device | **NOT TESTED** | No device attached. |
-| Firefox / Safari | **NOT TESTED** | Single Chromium engine available. |
-| Screen reader (NVDA/TalkBack) | **NOT TESTED** | No assistive technology in this environment. |
-| Full browser process restart | **NOT TESTED** | The automation pane tears down storage when its last tab closes. |
-| Real touch targets | **NOT TESTED** | No coarse-pointer hardware; the CSS rule exists and was reviewed. |
+| پنل دیباگ / انتخاب کتاب نمونه / درس ساختگی | PASS | جست‌وجوی `debug`، `demo`، `devPreview`، «ابزار توسعه» در `src` = صفر |
+| مسیرهای فقط‌تست | PASS | ۱۸ مسیر ثبت‌شده، هیچ‌کدام تستی نیست |
+| ابزار QA جدا از محصول | PASS | `build/qa-harness.html` فقط در `build/` ساخته می‌شود و در `start.html` نیست |
 
-Honest summary: the redesign is verified by DOM structure, computed geometry,
-contrast maths and interaction tests. It is **not** verified by looking at pixels,
-because that instrument was unavailable. A human should open the file once and
-confirm the visual impression before this is called finished.
+## ۶. ثبت‌نام و تقویم شمسی
 
----
-## B. v1 pass — foundation (historical)
+| آزمون | نتیجه | شاهد |
+| --- | --- | --- |
+| گام‌ها با پایه تغییر می‌کنند | PASS | پایهٔ دهم → «گام ۳ از ۵» و گام رشته اضافه شد |
+| نام خالی رد می‌شود | PASS | «نام نمایشی را وارد کنید.» + فوکوس روی همان فیلد |
+| اسفند سال غیرکبیسه | PASS | ۱۳۹۴: روز ۳۱ به ۲۹ تنظیم شد |
+| اسفند سال کبیسه | PASS | ۱۳۹۵: ۳۰ روز |
+| سال خارج از بازه | PASS | فقط ۹ تا ۲۵ سال پیش قابل انتخاب است |
+| خلاصهٔ نهایی درست است | PASS | نام، تاریخ، پایه و رشته مطابق ورودی |
+| تاریخ ناموجود | PASS | `jalali.isValid` روز را رد می‌کند (کد + آزمون ۱۳۹۴) |
 
-Build: `2026-11-15 22:37` · artefact `start.html` 323.7 KB · 9 658 lines
-Status legend: **PASS** · **FAIL** · **NOT TESTED** · **BLOCKED**
+## ۷. ذخیره‌سازی
 
----
+| آزمون | نتیجه | شاهد |
+| --- | --- | --- |
+| ساخت پروفایل | PASS | پروفایل در IndexedDB نوشته شد (`driver: indexeddb`) |
+| بازخوانی پس از reload | PASS | نام، پایه، رشته و تاریخ تولد بازگشتند |
+| تغییر تنظیمات و بازخوانی | PASS | پوسته و حرکت در state ماندند |
+| شکست نوشتن | PASS | پیام هشدار، بدون ادعای موفقیت |
+| آینهٔ localStorage | PASS (کد) | هر نوشتن موفق IDB آینه می‌شود؛ خواندن نسخهٔ تازه‌تر را انتخاب می‌کند |
+| سقف فعالیت | PASS (کد) | در `store.update` اعمال می‌شود |
+| بستن کامل مرورگر و بازکردن دوباره | **NOT TESTED** | امکان بستن/اجرای مجدد مرورگر در این محیط نبود |
 
-## 1. Scope and method
+## ۸. پشتیبان و بازیابی
 
-Everything below was executed against the real artefact opened as
-`file:///F:/Save folder/My full Project/School/Full education/start.html` in a
-Chromium-based browser pane (Chrome engine, Windows). No local server was used at
-any point.
+| آزمون | نتیجه | شاهد |
+| --- | --- | --- |
+| خروجی JSON | PASS | ۱۹۰۳ بایت، `format: mehraz-backup` |
+| اعتبارسنجی فایل | PASS | `parse.ok = true`، بدون هشدار |
+| خلاصهٔ پیش از بازیابی | PASS | نام، پایه، رشته، تاریخ، تعداد درس/آزمون/مرور |
+| پاک‌کردن داده | PASS | `hasProfile = false`، پیشرفت خالی |
+| بازیابی کامل | PASS | نام، درس، مرور و فعالیت عیناً بازگشتند |
+| فایل نامعتبر | PASS (کد) | پیام‌های مشخص، بدون تغییر داده |
+| دانلود واقعی فایل در مرورگر | **NOT TESTED** | گفت‌وگوی ذخیرهٔ فایل در این پنل قابل کنترل نبود |
 
-Method:
+## ۹. ناوبری و رابط
 
-- Interactions driven through the actual UI (real clicks, real `change`/`input`
-  events, real file objects for import) — not by calling internal functions that
-  bypass the interface.
-- State and geometry read through the page's own APIs (`MEHRAZ.store`,
-  `performance.getEntriesByType`, `getBoundingClientRect`).
-- Responsive layout measured in a development harness that mounts the built
-  document in an `<iframe srcdoc>` at fixed widths (the harness is a dev artefact
-  and is not part of the product).
+| آزمون | نتیجه | شاهد |
+| --- | --- | --- |
+| فعال‌بودن آیتم درست در ۸ مسیر | PASS | داشبورد/کتابخانه/آزمون/مرور/پیشرفت/تنظیمات/درباره |
+| منوی حساب | PASS | ۴ آیتم: ویرایش پروفایل، مسیر من، تنظیمات، درباره |
+| جست‌وجوی موبایل | PASS | باز شدن، فوکوس خودکار، پیام حالت خالی، بستن با Escape |
+| دکمهٔ پوسته | PASS | تغییر پوسته + آیکون + پیام |
+| صفحهٔ درباره | PASS | «نام سازنده: امین»، تلگرام @Mozrd، روبیکا @angosht0 |
+| اطلاعات سازنده در جای دیگر | PASS | فوتر و ناوبری تکراری حذف شد؛ فقط «درباره» |
+| حالت‌های خالی | PASS | همهٔ صفحه‌ها بدون داده، پیام و اقدام مشخص دارند |
 
-## 2. Environment
+## ۱۰. چیدمان واکنش‌گرا
 
-| Item | Value |
+| عرض | مسیرهای آزمون‌شده | سرریز افقی | نتیجه |
+| --- | --- | --- | --- |
+| ۳۶۰ | ۱۰ مسیر | ۰ | PASS |
+| ۴۱۴ / ۴۴۰ | ۱۰ مسیر | ۰ | PASS |
+| ۷۶۸ | ۱۰ مسیر | ۰ | PASS |
+| ۱۰۲۴ | ۱۰ مسیر | ۰ | PASS |
+| ۱۴۴۰ | ۱۰ مسیر | ۰ | PASS |
+
+- سایدبار در ۱۰۲۴ و ۱۴۴۰ دیده می‌شود؛ در ۷۶۸ و کمتر، ناوبری پایین.
+- صفحهٔ خوش‌آمد در ۴۴۰ دقیقاً به اندازهٔ viewport است (بدون اسکرول عمودی).
+- **NOT TESTED:** بازبینی پیکسلی/اسکرین‌شات در همهٔ عرض‌ها؛ چیدمان خوش‌آمد و
+  ثبت‌نام در عرض دسکتاپ (این دو صفحه در iframe آزمون قابل بارگذاری نبودند).
+
+## ۱۱. اندروید
+
+| آزمون | نتیجه |
 | --- | --- |
-| OS | Windows |
-| Browser | Chromium-based pane (Chrome engine) |
-| Protocol | `file://` |
-| Viewport during UI tests | 425 × 731 CSS px (mobile-ish), plus 440 × 731 |
-| Desktop widths exercised | 1024, 1280, 1440 (in harness, inside the same engine) |
-| Storage driver in use | IndexedDB (`mehraz` / `kv` / `mehraz:state`), probe passed |
-| Build tooling | PowerShell 5.1 (Node and Python were non-functional in this environment) |
+| باز کردن `start.html` از مدیر فایل در Chrome اندروید | **NOT TESTED** |
+| پرتره / منظره | **NOT TESTED** |
+| اندازهٔ هدف لمسی روی دستگاه | **NOT TESTED** |
+| پیمایش با انگشت و کیبورد مجازی | **NOT TESTED** |
+| ذخیره‌سازی پس از بستن مرورگر | **NOT TESTED** |
 
-**Environment limitations, stated up front:** no Android device, no second engine
-(Firefox/Safari), no screen reader, no real browser process restart, no touch
-hardware. Items that depend on those are marked NOT TESTED, not "assumed pass".
+**هیچ ادعایی دربارهٔ سازگاری اندروید در این گزارش وجود ندارد.** آنچه سنجیده شد،
+فقط چیدمان در عرض‌های شبیه‌سازی‌شده است.
 
----
+## ۱۲. آفلاین و شبکه
 
-## 3. Summary
+| آزمون | نتیجه | شاهد |
+| --- | --- | --- |
+| درخواست شبکه در بارگذاری و پیمایش | PASS | `performance.getEntriesByType('resource').length = 0` |
+| منابع خارجی در فایل خروجی | PASS | بازرسی ساخت: صفر ارجاع خارجی، صفر `@import` |
+| CSP | PASS | `connect-src 'none'`، بدون نقض در کنسول |
 
-| Area | Items | PASS | FAIL | NOT TESTED |
-| --- | --- | --- | --- | --- |
-| Boot, shell, navigation | 8 | 8 | 0 | 0 |
-| Onboarding & profile | 14 | 14 | 0 | 0 |
-| Jalali calendar | 12 | 12 | 0 | 0 |
-| Dashboard & empty states | 7 | 7 | 0 | 0 |
-| Library / grade / book | 8 | 8 | 0 | 0 |
-| Lesson interface | 7 | 7 | 0 | 0 |
-| Exam engine | 12 | 12 | 0 | 0 |
-| Review & progress | 6 | 6 | 0 | 0 |
-| Settings & about | 10 | 10 | 0 | 0 |
-| Backup / restore | 11 | 11 | 0 | 0 |
-| Persistence | 4 | 3 | 0 | 1 |
-| Responsive | 7 | 7 | 0 | 0 |
-| Offline / network | 5 | 4 | 0 | 1 |
-| Accessibility | 9 | 6 | 0 | 3 |
-| Performance | 5 | 5 | 0 | 0 |
-| Android device | 1 | 0 | 0 | 1 |
+## ۱۳. سازگاری دادهٔ قبلی
 
-All executed items passed after the fixes listed in §12. There are no open FAIL
-items.
-
----
-
-## 4. Boot, shell, navigation — PASS
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 1 | Cold open of `start.html` renders the welcome page | PASS | `#view` populated, `MEHRAZ.store.ready === true`, `diag.errors === []` |
-| 2 | Boot splash disappears after boot | PASS | `#boot` removed from DOM |
-| 3 | First paint does not navigate (no stray history entry) | PASS | bare URL, dashboard/welcome rendered directly |
-| 4 | Sidebar renders 6 nav items + extra group + about link | PASS | 6 `.navitem` nodes at ≥1024 px |
-| 5 | Bottom navigation renders exactly 5 items below 1024 px | PASS | 5 `.bottomnav__item` nodes |
-| 6 | Active nav state follows the route | PASS | `aria-current="page"` on the matching item |
-| 7 | Unknown route renders the designed 404 | PASS | `#/nope` → "این نشانی وجود ندارد" |
-| 8 | Profile-required route without a profile redirects | PASS | `#/library/10` with empty storage → `#/onboarding` |
-
-## 5. Onboarding and profile — PASS
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 9 | Step 1 name validation: empty rejected | PASS | "نام نمایشی را وارد کنید." |
-| 10 | Name under 2 characters rejected | PASS | code path + manual check |
-| 11 | Name 40 characters accepted, longer blocked by `maxlength` | PASS | attribute + validation |
-| 12 | Grade 10+ shows the track step, 5 steps total | PASS | chip "گام ۳ از ۵" appears after choosing grade 10 |
-| 13 | Grades 7–9 never show the track step | PASS | grade 7 edit → no `[data-track]`, no track row in summary |
-| 14 | Track is required for grades 10–12 | PASS | advancing without a track shows "رشتهٔ تحصیلی را انتخاب کنید." |
-| 15 | Confirmation screen shows every collected value | PASS | name, "۱۲ مرداد ۱۳۹۰", "پایهٔ دهم", "ریاضی و فیزیک" |
-| 16 | Each summary row can be edited individually | PASS | "ویرایش" jumps to that step |
-| 17 | Confirming creates the profile and enters the dashboard | PASS | `#/dashboard`, greeting uses the name |
-| 18 | Profile survives reload | PASS | see §14 |
-| 19 | Editing the name from Settings persists | PASS | name updated, `#/settings` toast shown |
-| 20 | Edit mode saves without walking every step | PASS | "ذخیرهٔ تغییرات" validates all fields at once |
-| 21 | Revisiting the site skips onboarding | PASS | bare URL → dashboard when a profile exists |
-| 22 | No account, password or email field exists anywhere | PASS | code + UI inspection |
-
-## 6. Jalali calendar — PASS
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 23 | Gregorian → Jalali conversion | PASS | 2026-11-15 → 1405-08-24 (Sunday) |
-| 24 | Jalali → Gregorian for storage | PASS | 1389-03-15 → 2010-06-05 |
-| 25 | 31-day months (1–6) | PASS | `monthLength(1404, 11) = 31` |
-| 26 | 30-day months (7–11) | PASS | day list rebuilt to 30 options for Bahman |
-| 27 | Esfand in a common year = 29 days | PASS | 1392 and 1404 → 29; day list 29 options |
-| 28 | Esfand in a leap year = 30 days | PASS | 1403 → 30 |
-| 29 | Leap-year detection | PASS | 1403 leap, 1392/1404 common |
-| 30 | Impossible date rejected | PASS | day 30 cannot exist for Esfand 1404; assignment yields empty → "کامل انتخاب کنید" |
-| 31 | Day list rebuilds when month/year changes | PASS | 1392/12 → max 29; 1392/11 → max 30 |
-| 32 | Empty input rejected | PASS | "روز، ماه و سال تولد را کامل انتخاب کنید." |
-| 33 | Future dates impossible | PASS | year list is 1396…1380 (today−9 … today−25); `validBirth()` also rejects future dates defensively |
-| 34 | Age sanity (9–25 years) | PASS | 1390 → "۱۵ سال" on the dashboard |
-
-## 7. Dashboard and empty states — PASS
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 35 | Greeting uses the stored name and time of day | PASS | "شب بخیر، …" |
-| 36 | Date chip shows the Jalali date with weekday | PASS | "یکشنبه، ۲۴ آبان ۱۴۰۵" |
-| 37 | Statistics reflect real records only | PASS | 0 lessons / 0 exams with an empty record; 1 lesson / 2 exams / 50 % after the flow |
-| 38 | Empty states explain what will fill them | PASS | 4 distinct empty states, no invented data |
-| 39 | Continue-learning card picks the in-progress lesson | PASS | after opening a lesson the card shows it |
-| 40 | Recent exams list shows score and relative time | PASS | "۴/۴ ۱۰۰٪ ۸ دقیقه پیش" |
-| 41 | Week chart counts only real activity entries | PASS | "در این هفته ۶ رویداد یادگیری ثبت شده است." |
-
-## 8. Library, grade and book — PASS
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 42 | Six grades listed in two cycles | PASS | 6 `.gradecard`; "متوسطهٔ اول" / "متوسطهٔ دوم" |
-| 43 | High-school grades expose three tracks | PASS | 12 track chips total |
-| 44 | Grade 10 without a track asks for one | PASS | "رشته را انتخاب کنید", exactly one selector (duplicate fixed) |
-| 45 | Grade with no content shows an honest empty state | PASS | "هنوز کتابی برای این پایه ثبت نشده" |
-| 46 | No invented subject or lesson in phase 01 | PASS | catalogue ships `books: []`; only the dev demo pack can add content |
-| 47 | Book page lists chapters as accordions with progress | PASS | demo book: 1 chapter, 1 lesson, % کامل |
-| 48 | In-book search filters lessons | PASS | typing in the book search hides non-matching rows |
-| 49 | Subject route resolves to the book when unique | PASS | `#/subject/demo-subject` → book page |
-
-## 9. Lesson interface — PASS
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 50 | Ten sections always rendered | PASS | 10 `[data-section]` nodes |
-| 51 | TOC mirrors the sections | PASS | 10 `[data-toc]` links |
-| 52 | Empty sections show a designed placeholder | PASS | 10 `.section-ph` blocks, no fake text |
-| 53 | Scroll-spy highlights the section in view | PASS | "درآمد" active on load; updates on scroll |
-| 54 | Marking a lesson read persists | PASS | `isLessonDone === true` after reload |
-| 55 | Chapter navigation (prev/next) present when applicable | PASS | buttons render only when neighbours exist |
-| 56 | Demo content is unambiguously labelled | PASS | persistent amber banner + chip "نمونهٔ ساختاری" |
-
-## 10. Examination engine — PASS
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 57 | Four question types render | PASS | mcq, true/false, multi, numeric |
-| 58 | Single-choice selection updates state | PASS | `aria-pressed` toggles, navigator colour changes |
-| 59 | Multi-answer accumulates and deselects | PASS | two options selected, sorted array stored |
-| 60 | Numeric input accepts Persian digits | PASS | normalised before scoring |
-| 61 | Question navigator jumps and marks answered | PASS | `.is-answered` count matches |
-| 62 | Answered counter and progress bar update | PASS | "۴ پاسخ دادهشده" |
-| 63 | Submission asks for confirmation | PASS | dialog appears, cancel returns to the exam |
-| 64 | Unanswered questions are reported before submit | PASS | "… پرسش بیپاسخ مانده است" |
-| 65 | Scoring is exact | PASS | 4/4, 0/4 and 2/4 runs |
-| 66 | Result page lists every question with your answer and the key | PASS | 4 review rows |
-| 67 | "Wrong answers only" filter works | PASS | 4 rows → 2 visible, 0 correct rows visible |
-| 68 | Attempts appear in history and in the dashboard | PASS | list + table rows + progress page |
-
-## 11. Review and progress — PASS (data-dependent actions NOT TESTED)
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 69 | Review page renders without items | PASS | honest empty state for today, upcoming, completed |
-| 70 | Weak topics derived from wrong answers | PASS | "۴ پاسخ نادرست از ۸ پرسش — ۵۰٪" |
-| 71 | Wrong-answer history table | PASS | 4 rows with exam and relative time |
-| 72 | Progress page computes from records | PASS | 100 % lessons, 50 % average from 0 % and 100 % attempts |
-| 73 | Progress empty state when nothing exists | PASS | "هنوز دادهای برای نمایش نیست" |
-| 74 | "مرور شد" action | NOT TESTED | no review items exist in phase 01 by design; the handler is wired but unreachable without phase 02 data |
-
-## 12. Settings and about — PASS
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 75 | Profile card + edit entry | PASS | `#/profile/edit` |
-| 76 | Theme switch applies immediately | PASS | `data-theme="night"`, body background `rgb(11, 22, 34)` |
-| 77 | Motion preference applies | PASS | `data-motion="reduced"` collapses durations |
-| 78 | Reset appearance restores defaults | PASS | light + system |
-| 79 | Storage diagnostics show driver, probe result, timestamp | PASS | "IndexedDB — موفق" |
-| 80 | Re-run probe works | PASS | re-probes and refreshes |
-| 81 | Export produces a valid document | PASS | 4 890 B, `format: mehraz-backup` |
-| 82 | Clear data requires confirmation and returns to welcome | PASS | `#/welcome`, profile `null` |
-| 83 | About page shows creator name and both handles | PASS | "آمین", `@Mozrd`, `@angosht0` |
-| 84 | Creator details appear nowhere else | PASS | dashboard text has no `Mozrd` |
-
-## 13. Backup and restore — PASS
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 85 | Export document structure | PASS | format, formatVersion, schemaVersion, exportedAt, app, summary, payload |
-| 86 | Summary counts match the payload | PASS | 1 lesson, 2 attempts, 6 activity entries |
-| 87 | Download creates a Blob with the right name | PASS | `mehraz-backup-سارا-محمدی-1405-08-24.json`, 4 944 B |
-| 88 | Import preview before writing | PASS | 7 summary rows + warnings |
-| 89 | Import requires a second confirmation | PASS | separate "تأیید نهایی" step |
-| 90 | Restore replaces the record | PASS | renamed profile restored to "سارا محمدی" |
-| 91 | Restore reachable with no profile | PASS | welcome → "بازیابی از پشتیبان" → dashboard |
-| 92 | Non-backup file rejected | PASS | "این فایل، پشتیبان مهراز نیست." |
-| 93 | Malformed JSON rejected | PASS | "ساختار JSON فایل پشتیبان معتبر نیست." |
-| 94 | Newer schema rejected | PASS | "… از نسخهٔ فعلی برنامه جدیدتر است … بازیابی انجام نشد." |
-| 95 | Invalid grade rejected | PASS | "پایهٔ تحصیلی در پشتیبان معتبر نیست." |
-
-## 14. Persistence — PASS (with one NOT TESTED item)
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 96 | Write/read probe | PASS | `IndexedDB write / read-back probe passed` |
-| 97 | Profile + progress + attempts survive reload | PASS | after reload: profile "نگار رضایی", 1 lesson done, 2 attempts, prefs kept |
-| 98 | Same record visible from a second tab | PASS | new tab opened the dashboard with the same profile |
-| 99 | Full browser restart | **NOT TESTED** | the automation pane tears down its storage context when the last tab closes, so a true process restart could not be performed; IndexedDB semantics and the reload/new-tab results are the available evidence |
-
-## 15. Responsive — PASS
-
-Measured in the harness with `documentElement.scrollWidth − clientWidth` and a
-scan for elements crossing the viewport edges.
-
-| Requested width | Layout width | Horizontal overflow | Sidebar | Bottom nav |
-| --- | --- | --- | --- | --- |
-| 360 | 345 | 0 | hidden | shown |
-| 390 | 375 | 0 | hidden | shown |
-| 414 | 399 | 0 | hidden | shown |
-| 768 | 753 | 0 | hidden | shown |
-| 1024 | 1009 | 0 | shown | hidden |
-| 1280 | 1265 | 0 | shown | hidden |
-| 1440 | 1425 | 0 | shown | hidden |
-
-Additional: the mobile DOM at 390 px contains no element wider than the viewport
-except intentionally scrollable strips (tables, segmented control, charts), which
-are clipped by their own containers.
-
-## 16. Offline and network — PASS
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 100 | Zero sub-resource requests | PASS | `performance.getEntriesByType('resource')` → `[]` |
-| 101 | CSP present and restrictive | PASS | meta tag with `default-src 'none'`, `connect-src 'none'` |
-| 102 | No network API in the artefact | PASS | build gate + text search: no `fetch(`, no `XMLHttpRequest`, no `import(` |
-| 103 | Full flow works with no network use | PASS | every tested flow completed with no request |
-| 104 | Physical offline test on a device (airplane mode) | **NOT TESTED** | no device access; network independence is established by 100–103 |
-
-## 17. Accessibility — partial PASS
-
-| # | Test | Result | Evidence |
-| --- | --- | --- | --- |
-| 105 | Landmarks and skip link | PASS | `aside/header/main/nav/footer`, skip link first in tab order |
-| 106 | Every form control has a label | PASS | `<label for>` or `aria-label` on all inputs/selects |
-| 107 | Visible focus ring | PASS | `:focus-visible` 2 px brand outline |
-| 108 | Text contrast | PASS | 16.27:1 body, 4.76:1 muted, 14.59:1 night |
-| 109 | Dialog semantics, Escape, scroll lock, focus return | PASS | `role="dialog"`, `aria-modal`, Escape resolves, body unlocked |
-| 110 | Reduced motion honoured | PASS | OS media query + in-app attribute both collapse animations |
-| 111 | Charts have text alternatives | PASS | `role="img"` + caption with the total |
-| 112 | Screen reader pass (NVDA / TalkBack) | **NOT TESTED** | no screen reader available in this environment |
-| 113 | 44 px touch targets on real touch hardware | **NOT TESTED** | CSS rule exists under `@media (pointer: coarse)`; the test browser is a fine pointer, so it could not be exercised |
-
-## 18. Performance — PASS
-
-| Metric | Value |
+| آزمون | نتیجه |
 | --- | --- |
-| File size | 323.7 KB (single file, uncompressed) |
-| DOMContentLoaded | 108 ms |
-| Load | 114 ms |
-| DOM nodes (dashboard) | 392 |
-| JS heap after full flow | ~2–3 MB |
-| Sub-resource requests | 0 |
-| Network transfer | 0 bytes |
-| Screenshot-verified repaint | no layout thrash observed while scrolling the dashboard |
+| خواندن دادهٔ نسخهٔ ۱٫۰٫۰ (schema 1) | PASS — همان schema، بدون تبدیل |
+| پشتیبان قدیمی‌تر | PASS (کد) — هشدار و تبدیل سازگار |
+| دادهٔ جدیدتر از برنامه | PASS (کد) — نوشتن غیرفعال و پیام روشن |
 
-No continuous animation runs on off-screen content; the only infinite animations
-are the skeleton shimmer (only visible while a placeholder is on screen) and the
-storage status dot.
+## ۱۴. خطای JavaScript
 
-## 19. Defects found during QA and fixed
+| آزمون | نتیجه |
+| --- | --- |
+| خطا در بارگذاری، پیمایش ۱۰ مسیر، ثبت‌نام، بازیابی | PASS — صفر خطا در `MEHRAZ.diag.errors` |
 
-| # | Defect | Severity | Fix |
-| --- | --- | --- | --- |
-| 1 | First load rendered an empty `#view`: the hash redirect ran before the `hashchange` listener existed | blocker | boot renders the entry route directly, no navigation |
-| 2 | `[hidden]` was overridden by component `display` rules, so empty review badges and the profile chip were visible before a profile existed | major | global `[hidden] { display: none !important }` |
-| 3 | Grade cards in onboarding stacked vertically, wasting a screen each | major | row layout + two-column grid |
-| 4 | Changing a birth-date select re-rendered the step and dropped focus | major | only the day list is rebuilt |
-| 5 | Summary rows put the value and the edit button against each other | minor | dedicated edit variant of the row |
-| 6 | `futureData` stayed `true` after a later successful load, which would block every write after one future-version encounter | major | reset the flag at the start of `store.init()` |
-| 7 | Escape did not close a dialog if focus had left the panel | major | document-level capture handler |
-| 8 | Grade 10 page rendered the track selector twice | minor | one selector in the header, empty state without actions |
-| 9 | Build gate matched `openImport(` as a dynamic import | build | word-boundary lookbehind in the gate |
-| 10 | Decorative progress bars polluted the accessible name of subject cards ("… 100") | minor | `aria-hidden` + screen-reader percentage text |
-| 11 | Boot redirect resolved against the container URL inside `srcdoc`, navigating the dev harness into itself | dev | side-effect-free boot (also the correct product behaviour) |
+## ۱۵. موارد باقی‌مانده
 
-## 20. Known limitations and residual risks
+1. **بازبینی پیکسلی انجام نشده.** در این محیط ابزار اسکرین‌شات تصویر برنگرداند؛
+   همهٔ نتایج چیدمان از هندسهٔ DOM است. پیش از انتشار عمومی، یک بازبینی چشمی لازم است.
+2. **اندروید واقعی آزمون نشده.** تا آن زمان، «سازگار با اندروید» یک ادعای اثبات‌نشده است.
+3. **صفحه‌خوان آزمون نشده.**
+4. **Edge و Firefox آزمون نشده‌اند.**
+5. **زمان‌بندی مرور** در PROMPT 03 ساخته می‌شود؛ در این نسخه صفحهٔ مرور فقط
+   نمایش می‌دهد و آیتم جدید نمی‌سازد (متن صفحه هم دیگر وعدهٔ خودکار نمی‌دهد).
+6. **ارزش امتیاز پرسش‌ها** در محاسبهٔ نمره اعمال نمی‌شود؛ پیش از محتوای وزن‌دار
+   باید تعیین تکلیف شود.
+7. **خروج از آزمون نیمه‌تمام** بدون تأیید انجام می‌شود (پاسخ‌ها فقط در حافظهٔ صفحه‌اند).
+8. **دو جست‌وجو در دسکتاپ** (نوار بالا + دکمهٔ موبایل) وجود دارد؛ کار می‌کند اما یکی
+   از آن‌ها در دسکتاپ پنهان است و فقط در عرض کم دیده می‌شود.
 
-1. **Android untested.** The self-contained build removes the usual
-   `content://` failure mode (no sibling files are needed), but storage behaviour
-   on Android file managers is unverified. The Persian guide warns about it.
-2. **Browser restart untested** (see §14 item 99). IndexedDB is durable by
-   specification; the app additionally warns when it is not available at all.
-3. **Single engine.** Firefox and Safari were not exercised. The code avoids APIs
-   known to be restricted on `file://`, and every risky capability is probed
-   rather than assumed, but this is not a substitute for testing.
-4. **Screen readers untested.** Markup follows standard patterns (landmarks,
-   labels, live regions, `aria-pressed`), but no assistive technology pass was run.
-5. **Real touch targets untested**; the coarse-pointer rules are unexercised here.
-6. **Storage is unencrypted** and shared by all local files of the same origin in
-   some engines; documented in Settings and in the offline requirements.
-7. **Phase 02 content will change the size and the DOM budget.** The gates in
-   `PHASE-02-INTEGRATION.md` §8 must be re-run.
+## ۱۶. آمادگی برای PROMPT 03
 
-## 21. How to reproduce the core tests
+| شرط | وضعیت |
+| --- | --- |
+| پایهٔ کد بدون خطای اجرایی | PASS |
+| ناوبری و پوستهٔ پایدار | PASS |
+| ذخیره‌سازی صادق و قابل اتکا | PASS (به‌جز بستن کامل مرورگر: NOT TESTED) |
+| پشتیبان/بازیابی | PASS |
+| رابط بدون متن فنی و ابزار توسعه | PASS |
+| تفکیک محتوا از رابط | PASS — کاتالوگ خالی، هیچ دادهٔ ساختگی |
+| بازبینی پیکسلی | NOT TESTED |
+| اندروید واقعی | NOT TESTED |
 
-```
-1. Open start.html from disk (double click, or Ctrl+O).
-2. First run: "شروع یادگیری" → name → birth date → grade → (track) → confirm.
-3. Reload the page: the dashboard must return with the same name and counters.
-4. Settings → "دریافت پشتیبان": a .json file is produced.
-5. Settings → "پاککردن" → confirm: the app returns to the welcome page.
-6. Welcome → "بازیابی از پشتیبان" → choose the file → confirm twice.
-7. Dashboard must show the original name, lessons and exams.
-8. Settings → ابزار توسعه → "پیشنمایش ساختاری" = روشن, then open
-   Library → کتاب نمونه → درس نمونه, mark it read, and run the sample exam.
-9. DevTools → Network → Offline → reload: steps 2–8 must behave identically.
-```
+**نتیجه:** پایه برای شروع PROMPT 03 آماده است، به شرط آنکه پیش از انتشار عمومی
+یک بازبینی چشمی و یک آزمون روی دستگاه اندروید واقعی انجام شود.
+
+</div>

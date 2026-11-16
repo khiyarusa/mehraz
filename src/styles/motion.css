@@ -1,70 +1,89 @@
 /* ==========================================================================
-   MEHRAZ — motion (v2)
-   One vocabulary: short distances, calm easing, meaning before decoration.
-   Every animation is optional; the product is complete without it.
+   MEHRAZ — motion (v3)
+   One vocabulary, four durations. Motion answers an action or introduces a
+   single new context; it never decorates a page that is already readable.
+   Only transform and opacity are animated, so Android paints stay cheap.
    ========================================================================== */
 
-@keyframes mz-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-@keyframes mz-rise-lg { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes mz-page-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes mz-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 @keyframes mz-fade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes mz-scale { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: none; } }
-@keyframes mz-sheet { from { opacity: .5; transform: translateY(30px); } to { opacity: 1; transform: none; } }
-@keyframes mz-toast-in { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
-@keyframes mz-toast-out { to { opacity: 0; transform: translateY(10px) scale(.98); } }
+@keyframes mz-pop { from { opacity: 0; transform: translateY(8px) scale(.99); } to { opacity: 1; transform: none; } }
+@keyframes mz-sheet { from { opacity: .6; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes mz-toast-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes mz-toast-out { to { opacity: 0; transform: translateY(8px); } }
 @keyframes mz-shimmer { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
-@keyframes mz-dot { 0%, 100% { box-shadow: 0 0 0 0 rgba(15,157,138,.34); } 50% { box-shadow: 0 0 0 5px transparent; } }
 @keyframes mz-spin { to { transform: rotate(360deg); } }
 @keyframes mz-draw { to { stroke-dashoffset: 0; } }
-@keyframes mz-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes mz-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 @keyframes mz-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes mz-sheen { from { transform: translateX(-120%) skewX(-14deg); } to { transform: translateX(220%) skewX(-14deg); } }
+@keyframes mz-indicator { from { transform: scaleY(.2); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+@keyframes mz-step { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+@keyframes mz-step-back { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+@keyframes mz-check { 0% { transform: scale(.4); opacity: 0; } 60% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
 
-/* page entrance */
-.page { animation: mz-rise-lg var(--d-page) var(--e-soft) both; }
-.page > * { animation: mz-rise var(--d-slow) var(--e-soft) both; }
-.page > *:nth-child(1) { animation-delay: 30ms; }
-.page > *:nth-child(2) { animation-delay: 70ms; }
-.page > *:nth-child(3) { animation-delay: 110ms; }
-.page > *:nth-child(4) { animation-delay: 150ms; }
-.page > *:nth-child(5) { animation-delay: 180ms; }
-.page > *:nth-child(n+6) { animation-delay: 210ms; }
+/* ---- page context ------------------------------------------------------- */
+/* The new route fades in as one surface. Children are not staggered: a page
+   that assembles itself piece by piece reads as decoration, not navigation. */
+.page { animation: mz-page-in var(--d-3) var(--e-entrance) both; }
 
-.stagger > * { animation: mz-rise var(--d-slow) var(--e-soft) both; }
-.stagger > *:nth-child(1) { animation-delay: 40ms; }
-.stagger > *:nth-child(2) { animation-delay: 85ms; }
-.stagger > *:nth-child(3) { animation-delay: 130ms; }
-.stagger > *:nth-child(4) { animation-delay: 175ms; }
-.stagger > *:nth-child(5) { animation-delay: 220ms; }
-.stagger > *:nth-child(6) { animation-delay: 265ms; }
-.stagger > *:nth-child(n+7) { animation-delay: 300ms; }
+/* Lists may arrive together, with a short, bounded cascade. */
+.stagger > * { animation: mz-rise var(--d-2) var(--e-entrance) both; }
+.stagger > *:nth-child(1) { animation-delay: 20ms; }
+.stagger > *:nth-child(2) { animation-delay: 55ms; }
+.stagger > *:nth-child(3) { animation-delay: 90ms; }
+.stagger > *:nth-child(4) { animation-delay: 120ms; }
+.stagger > *:nth-child(5) { animation-delay: 150ms; }
+.stagger > *:nth-child(n+6) { animation-delay: 175ms; }
 
-.fade-in { animation: mz-fade var(--d-base) var(--e-out) both; }
-.rise-in { animation: mz-rise var(--d-slow) var(--e-soft) both; }
-.step-enter { animation: mz-rise var(--d-slow) var(--e-soft) both; }
+.fade-in { animation: mz-fade var(--d-2) var(--e-standard) both; }
+.rise-in { animation: mz-rise var(--d-2) var(--e-entrance) both; }
+.step-enter { animation: mz-step var(--d-3) var(--e-entrance) both; }
+.step-enter[data-dir="back"] { animation-name: mz-step-back; }
+.step-enter[data-dir="none"] { animation-name: none; }
 
-/* overlays */
-.overlay { animation: mz-fade var(--d-base) var(--e-out) both; }
-.overlay > .modal { animation: mz-scale var(--d-slow) var(--e-soft) both; }
-.overlay.is-closing { animation: mz-fade var(--d-fast) var(--e-out) reverse both; }
-.overlay > .bottomsheet { animation: mz-sheet var(--d-slow) var(--e-soft) both; }
+/* ---- navigation feedback ------------------------------------------------ */
+.navitem.is-active::before { animation: mz-indicator var(--d-3) var(--e-entrance) both; }
+.navitem__icon { transition: transform var(--d-2) var(--e-standard), opacity var(--d-1) var(--e-standard); }
+.navitem.is-active .navitem__icon { transform: translateY(-1px); }
 
-.toast { animation: mz-toast-in var(--d-slow) var(--e-soft) both; }
-.toast.is-leaving { animation: mz-toast-out var(--d-base) var(--e-out) both; }
+/* ---- overlays ----------------------------------------------------------- */
+.overlay { animation: mz-fade var(--d-2) var(--e-standard) both; }
+.overlay > .modal { animation: mz-pop var(--d-3) var(--e-entrance) both; }
+.overlay.is-closing { animation: mz-fade var(--d-1) var(--e-standard) reverse both; }
+.overlay > .bottomsheet { animation: mz-sheet var(--d-3) var(--e-entrance) both; }
 
-.bar-anim { transform-origin: right center; animation: mz-bar var(--d-hero) var(--e-soft) both; }
+.toast { animation: mz-toast-in var(--d-3) var(--e-entrance) both; }
+.toast.is-leaving { animation: mz-toast-out var(--d-2) var(--e-standard) both; }
+
+/* ---- data --------------------------------------------------------------- */
+.bar-anim { transform-origin: right center; animation: mz-bar var(--d-4) var(--e-entrance) both; }
+.progress__bar { transition: width var(--d-4) var(--e-entrance); }
+.ring__value, .orbit__arc { transition: stroke-dashoffset var(--d-4) var(--e-entrance); }
 .skeleton::after { animation-name: mz-shimmer; }
-.heat__cell { animation: mz-fade var(--d-base) var(--e-out) both; }
-.dot--pulse { animation-name: mz-dot; }
+.area__line { animation: mz-draw 1.1s var(--e-entrance) forwards; }
+.area__fill { animation: mz-fade var(--d-3) var(--e-standard) 260ms forwards; }
+.area__dot { animation: mz-fade var(--d-2) var(--e-standard) forwards; }
 .spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; border-top-color: transparent; animation: mz-spin .7s linear infinite; }
 
-/* primary button sheen */
+/* A finished lesson: the tick lands once, then stays still. */
+.is-done .lessonrow__status svg, .lessonrow.is-done .lessonrow__status svg { animation: mz-check var(--d-3) var(--e-entrance) both; }
+
+/* ---- primary button sheen (pointer devices only) ----------------------- */
+/* The sheen lives inside the button box. Without clipping, its translated
+   pseudo-element widens the document scroll area (measured: +82…+540 px). */
+.btn--primary { overflow: hidden; isolation: isolate; }
 .btn--primary::after {
-  content: ""; position: absolute; inset: 0; overflow: hidden; border-radius: inherit;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.26), transparent);
   transform: translateX(-120%) skewX(-14deg);
   pointer-events: none;
 }
-.btn--primary:hover::after { animation: mz-sheen .9s var(--e-out) 1; }
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary:hover::after { animation: mz-sheen .8s var(--e-standard) 1; }
+}
+@keyframes mz-sheen { from { transform: translateX(-120%) skewX(-14deg); } to { transform: translateX(220%) skewX(-14deg); } }
+.hero .btn--primary::after { display: none; }
 
 /* ---- branded boot sequence -------------------------------------------- */
 .boot {
@@ -73,7 +92,7 @@
   background:
     radial-gradient(70% 50% at 50% 0%, rgba(47,107,255,.22), transparent 60%),
     linear-gradient(160deg, #0B1A2B 0%, #060F1B 100%);
-  transition: opacity .55s var(--e-out), visibility .55s;
+  transition: opacity .45s var(--e-standard), visibility .45s;
 }
 .boot.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .boot__inner { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 24px; text-align: center; }
@@ -83,31 +102,46 @@
 .boot__ring circle {
   fill: none; stroke: rgba(127,166,255,.55); stroke-width: 1.4;
   stroke-dasharray: 260; stroke-dashoffset: 260;
-  animation: mz-draw 1.25s var(--e-soft) .1s forwards;
+  animation: mz-draw 1.1s var(--e-entrance) .1s forwards;
 }
 .boot__mark {
   display: grid; place-items: center; width: 58px; height: 58px; border-radius: 18px;
   background: linear-gradient(155deg, #5C8DFF, #2F6BFF 50%, #17347A);
   box-shadow: 0 18px 40px -18px rgba(47,107,255,.9), inset 0 1px 0 rgba(255,255,255,.3);
-  animation: mz-scale .8s var(--e-soft) both;
+  animation: mz-pop .7s var(--e-entrance) both;
 }
-.boot__word { font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1; animation: mz-rise .7s var(--e-soft) .2s both; }
-.boot__latin { font-family: var(--font-num); font-size: .48rem; letter-spacing: .4em; color: rgba(255,255,255,.45); text-transform: uppercase; margin-block-start: 7px; animation: mz-fade .7s var(--e-out) .35s both; }
-.boot__note { font-size: .72rem; color: rgba(255,255,255,.5); max-width: 26ch; line-height: 1.9; animation: mz-fade .7s var(--e-out) .55s both; }
+.boot__word { font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1; animation: mz-rise .6s var(--e-entrance) .15s both; }
+.boot__latin { font-family: var(--font-num); font-size: .48rem; letter-spacing: .4em; color: rgba(255,255,255,.45); text-transform: uppercase; margin-block-start: 7px; animation: mz-fade .6s var(--e-standard) .3s both; }
+.boot__note { font-size: .72rem; color: rgba(255,255,255,.5); max-width: 26ch; line-height: 1.9; animation: mz-fade .6s var(--e-standard) .45s both; }
 .boot__bar { width: 150px; height: 3px; border-radius: 999px; background: rgba(255,255,255,.12); overflow: hidden; }
-.boot__bar i { display: block; height: 100%; width: 100%; transform-origin: right center; background: linear-gradient(90deg, #2F6BFF, #BFD6FF); animation: mz-bar 1.15s var(--e-soft) .4s both; }
+.boot__bar i { display: block; height: 100%; width: 100%; transform-origin: right center; background: linear-gradient(90deg, #2F6BFF, #BFD6FF); animation: mz-bar 1s var(--e-entrance) .35s both; }
+
+/* ---- ambient art -------------------------------------------------------
+   The orbit is the only continuously moving element and it is purely
+   decorative; it stops for reduced motion and on low-power preferences. */
+.orbit__ring--a { transform-origin: 150px 150px; animation: mz-spin 120s linear infinite; }
+.orbit__ring--b { transform-origin: 150px 150px; animation: mz-spin 80s linear infinite reverse; }
+.orbit__dash { transform-origin: 150px 150px; animation: mz-spin 60s linear infinite; }
+.orbit__node { animation: mz-float 9s var(--e-inout) infinite; transform-origin: center; }
+.orbit__node:nth-of-type(2) { animation-delay: 1.1s; }
+.orbit__node:nth-of-type(3) { animation-delay: 2.2s; }
+.orbit__node:nth-of-type(4) { animation-delay: 3.3s; }
 
 /* ---- reduced motion ---------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
   .orbit__ring--a, .orbit__ring--b, .orbit__dash, .orbit__node { animation: none !important; }
+  .page, .stagger > *, .step-enter { opacity: 1 !important; transform: none !important; }
 }
-[data-motion="reduced"] *, [data-motion="reduced"] *::before, [data-motion="reduced"] *::after {
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
   animation-duration: 0.001ms !important;
   animation-iteration-count: 1 !important;
   animation-delay: 0ms !important;
@@ -118,4 +152,11 @@
 [data-motion="reduced"] .orbit__ring--b,
 [data-motion="reduced"] .orbit__dash,
 [data-motion="reduced"] .orbit__node { animation: none !important; }
-[data-motion="reduced"] .page, [data-motion="reduced"] .page > * { animation: none !important; opacity: 1; transform: none; }
+[data-motion="reduced"] .page,
+[data-motion="reduced"] .stagger > *,
+[data-motion="reduced"] .step-enter { opacity: 1 !important; transform: none !important; }
+
+/* Coarse pointers should not inherit hover-only flourishes. */
+@media (hover: none) {
+  .card--link:hover, .subjectcard:hover, .gradecard:hover, .lessonrow:hover, .option:hover { transform: none; }
+}

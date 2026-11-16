@@ -114,6 +114,61 @@
     }
   }
 
+  function readLocal() {
+    try {
+      var raw = window.localStorage.getItem(cfg.storageKey);
+      if (!raw) return null;
+      var parsed = M.util.safeParse(raw);
+      return parsed.ok ? parsed.value : null;
+    } catch (err) {
+      M.diag.record('note', 'localStorage read failed: ' + err.message);
+      return null;
+    }
+  }
+
+  function stampOf(value) {
+    var t = value && value.meta && value.meta.updatedAt ? Date.parse(value.meta.updatedAt) : 0;
+    return isNaN(t) ? 0 : t;
+  }
+
+  /* Both stores can hold a copy (IndexedDB normally, localStorage after a
+     fallback). The newer stamp wins, so a session that had to fall back is
+     never overwritten by the older IndexedDB record. */
+  function newest(a, b) {
+    if (!a) return b;
+    if (!b) return a;
+    return stampOf(b) > stampOf(a) ? b : a;
+  }
+
+  function mirror(value) {
+    try {
+      window.localStorage.setItem(cfg.storageKey, JSON.stringify(value));
+    } catch (err) {
+      /* the mirror is best effort; IndexedDB remains the source of truth */
+    }
+  }
+
+  /* A failed IndexedDB write is repaired on the spot: the same payload is
+     written to localStorage and the adapter switches over for the rest of the
+     session. Returning false here would tell the student their work was lost
+     while a perfectly good store was available. */
+  function writeLocal(value) {
+    try {
+      window.localStorage.setItem(cfg.storageKey, JSON.stringify(value));
+      if (info.driver !== 'localstorage') {
+        note('switched to localStorage after a failed IndexedDB write');
+        info.driver = 'localstorage';
+        info.fallbackFrom = 'indexeddb';
+      }
+      info.ok = true;
+      return true;
+    } catch (err) {
+      info.error = err;
+      M.diag.record('note', 'localStorage write failed: ' + err.message);
+      return false;
+    }
+  }
+
   var api = {
     init: function () {
       info.testedAt = M.util.nowISO();
@@ -165,36 +220,24 @@
         probed: info.probed,
         testedAt: info.testedAt,
         error: info.error ? String(info.error.message || info.error) : null,
-        notes: info.notes.slice()
+        notes: info.notes.slice(),
+        fallbackFrom: info.fallbackFrom || null
       };
-    },
-
-    label: function (driver) {
-      var d = driver || info.driver;
-      if (d === 'indexeddb') return 'IndexedDB';
-      if (d === 'localstorage') return 'localStorage';
-      return 'حافظه موقت';
     },
 
     get: function () {
       if (info.driver === 'indexeddb' && db) {
         return idbOp('readonly', function (store) {
           return store.get(cfg.storageKey);
+        }).then(function (value) {
+          return newest(value, readLocal());
         }).catch(function (err) {
           M.diag.record('note', 'read failed: ' + err.message);
-          return null;
+          return readLocal();
         });
       }
       if (info.driver === 'localstorage') {
-        try {
-          var raw = window.localStorage.getItem(cfg.storageKey);
-          if (!raw) return Promise.resolve(null);
-          var parsed = M.util.safeParse(raw);
-          return Promise.resolve(parsed.ok ? parsed.value : null);
-        } catch (err) {
-          M.diag.record('note', 'localStorage read failed: ' + err.message);
-          return Promise.resolve(null);
-        }
+        return Promise.resolve(readLocal());
       }
       return Promise.resolve(mem[cfg.storageKey] || null);
     },
@@ -204,21 +247,15 @@
         return idbOp('readwrite', function (store) {
           return store.put(value, cfg.storageKey);
         }).then(function () {
+          mirror(value);
           return true;
         }).catch(function (err) {
           M.diag.record('note', 'write failed: ' + err.message);
-          return false;
+          return writeLocal(value);
         });
       }
       if (info.driver === 'localstorage') {
-        try {
-          window.localStorage.setItem(cfg.storageKey, JSON.stringify(value));
-          return Promise.resolve(true);
-        } catch (err) {
-          info.error = err;
-          M.diag.record('note', 'localStorage write failed: ' + err.message);
-          return Promise.resolve(false);
-        }
+        return Promise.resolve(writeLocal(value));
       }
       mem[cfg.storageKey] = value;
       return Promise.resolve(false);
@@ -229,6 +266,7 @@
         return idbOp('readwrite', function (store) {
           return store.delete(cfg.storageKey);
         }).then(function () {
+          try { window.localStorage.removeItem(cfg.storageKey); } catch (err) { /* ignore */ }
           return true;
         }).catch(function () {
           return false;
@@ -246,7 +284,7 @@
       return Promise.resolve(true);
     },
 
-    /* Re-runs the probe chain (used by Settings > storage diagnostics). */
+    /* Re-runs the probe chain. Developer console only; there is no UI entry. */
     recheck: function () {
       db = null;
       info.driver = 'memory';

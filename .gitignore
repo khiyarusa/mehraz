@@ -15,3 +15,7 @@ desktop.ini
 *.swp
 .idea/
 .vscode/
+
+# local recoverable backups
+.backup/
+

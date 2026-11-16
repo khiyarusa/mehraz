@@ -41,10 +41,13 @@
 
   function firstLesson() {
     var profile = M.store.profile();
+    var track = profile.grade >= 10 ? profile.track : null;
     var index = M.content.lessonIndex();
     return (
       index.filter(function (row) {
-        return row.book.grade === profile.grade;
+        if (row.book.grade !== profile.grade) return false;
+        if (track && row.book.track && row.book.track !== track) return false;
+        return true;
       })[0] || null
     );
   }
@@ -63,9 +66,11 @@
       '</span></div>' +
       '<h1>' + esc(greeting()) + '، ' + esc(p.displayName) + '</h1>' +
       '<p class="hero__sub">' +
-      (stats.lessonsDone
-        ? 'مسیر شما در جریان است. آخرین قدمها ثبت شدهاند و ادامهٔ همین مسیر، کوتاهترین راه است.'
-        : 'یک درس بردارید و از همانجا شروع کنید؛ هرچه بخوانید، در همین مسیر میماند.') +
+      (M.content.lessonCount() === 0
+        ? 'کتابخانهٔ پایهٔ شما در حال آماده‌شدن است. تا آن زمان پایه‌های دیگر را ببینید و پروفایل خود را کامل کنید.'
+        : stats.lessonsDone
+        ? 'مسیر شما در جریان است. آخرین قدم ثبت شدهاند و ادامهٔ همین مسیر، کوتاه راه است.'
+        : 'یک درس بردارید و از همانجا شروع کنید؛ هرچه بخوانید، در همین مسیر می.') +
       '</p>' +
       '<div class="hero__meta">' +
       '<span class="chip chip--glass">پایهٔ ' + esc(M.content.gradeLabel(p.grade)) + '</span>' +
@@ -93,7 +98,7 @@
       return M.ui.empty({
         icon: 'book',
         title: 'هنوز درسی برای مطالعه نیست',
-        text: 'کتابهای این پایه هنوز به کتابخانه اضافه نشدهاند. میتوانید پایههای دیگر را ببینید یا پروفایل خود را کامل کنید.',
+        text: 'کتاب این پایه هنوز به کتابخانه اضافه نشدهاند. می پایههای دیگر را ببینید یا پروفایل خود را کامل کنید.',
         actions: '<a class="btn btn--ghost btn--sm" href="#/library?scope=all">همهٔ پایهها</a>'
       });
     }
@@ -127,8 +132,8 @@
         title: 'کتابخانهٔ این پایه خالی است',
         text: 'برای پایهٔ ' + M.content.gradeLabel(p.grade) +
           (track ? ' رشتهٔ ' + M.content.trackLabel(track) : '') +
-          ' هنوز کتابی ثبت نشده است. ساختار کتابخانه آماده است و کتابها بهتدریج اضافه میشوند.',
-        actions: '<a class="btn btn--ghost btn--sm" href="#/library?scope=all">دیدن ساختار کتابخانه</a>'
+          ' هنوز کتابی ثبت نشده است. کتاب‌های رسمی همین پایه به‌زودی اضافه می‌شوند.',
+        actions: '<a class="btn btn--ghost btn--sm" href="#/library?scope=all">دیدن همهٔ پایه‌ها</a>'
       });
     }
 
@@ -162,7 +167,7 @@
       '<section class="section"><div class="card card--pad">' +
       '<div class="row" style="margin-bottom:14px">' +
       '<div><div class="card__title">فعالیت هفته</div>' +
-      '<div class="hint">' + (total ? util.toFa(total) + ' رویداد در هفت روز گذشته' : 'هنوز رویدادی ثبت نشده') + '</div></div>' +
+      '<div class="hint">' + (total ? util.toFa(total) + ' فعالیت در هفت روز گذشته' : 'هنوز فعالیتی ثبت نشده') + '</div></div>' +
       '<span class="chip chip--outline push">۷ روز</span></div>' +
       M.ui.weekChart(week) +
       '</div></section>'
@@ -180,8 +185,8 @@
         icon: 'exam',
         compact: true,
         title: 'هنوز آزمونی ثبت نشده',
-        text: 'نتیجهٔ آزمونها پس از شرکت در آنها همینجا میآید.',
-        actions: '<a class="btn btn--ghost btn--sm" href="#/exam">آزمونها</a>'
+        text: 'نتیجهٔ آزمون پس از شرکت در آنها همینجا می.',
+        actions: '<a class="btn btn--ghost btn--sm" href="#/exam">آزمون</a>'
       });
     }
 
@@ -200,7 +205,7 @@
           '</div>'
         );
       }).join('') +
-      '<a class="btn btn--quiet btn--sm" href="#/exam" style="align-self:flex-start">همهٔ آزمونها' + M.icon('chevronEnd', 14) + '</a>' +
+      '<a class="btn btn--quiet btn--sm" href="#/exam" style="align-self:flex-start">همهٔ آزمون' + M.icon('chevronEnd', 14) + '</a>' +
       '</div>'
     );
   }
@@ -213,7 +218,7 @@
         icon: 'review',
         compact: true,
         title: 'مروری در انتظار نیست',
-        text: 'پس از خواندن درسها و آزمونها، مرورهای بعدی خودشان اینجا ظاهر میشوند.'
+        text: 'وقتی مروری برای شما برنامه‌ریزی شود، همین‌جا دیده می‌شود.'
       });
     }
     return (
@@ -253,14 +258,15 @@
   }
 
   views.dashboard = function () {
-    var lessonsTotal = M.content.lessonCount();
-    var stats = M.store.stats(lessonsTotal);
+    var p = M.store.profile();
+    var shelf = M.content.lessonIdsFor(p.grade, p.grade >= 10 ? p.track : null);
+    var stats = M.store.stats(shelf);
     var next = lastLesson() || firstLesson();
     if (next) next.st = M.store.state.progress.lessons[next.lesson.id] || { status: 'not-started' };
 
     var band = M.ui.statBand([
-      { icon: 'check', label: 'درسهای خواندهشده', value: util.toFa(stats.lessonsDone), unit: 'درس', foot: stats.lessonsTotal ? 'از ' + util.toFa(stats.lessonsTotal) + ' درس' : 'کتابخانه خالی است' },
-      { icon: 'exam', label: 'آزمونها', value: util.toFa(stats.examsTaken), unit: 'آزمون', foot: stats.examsTaken ? 'میانگین ' + util.fmtPct(stats.averagePercent) : 'هنوز آزمونی نداده‌اید' },
+      { icon: 'check', label: 'درس خواندهشده', value: util.toFa(stats.lessonsDone), unit: 'درس', foot: stats.lessonsTotal ? 'از ' + util.toFa(stats.lessonsTotal) + ' درس' : 'کتابخانه خالی است' },
+      { icon: 'exam', label: 'آزمون', value: util.toFa(stats.examsTaken), unit: 'آزمون', foot: stats.examsTaken ? 'میانگین ' + util.fmtPct(stats.averagePercent) : 'هنوز آزمونی نداده‌اید' },
       { icon: 'target', label: 'میانگین نتایج', value: stats.examsTaken ? util.fmtPct(stats.averagePercent) : '—', foot: stats.examsTaken ? 'بر پایهٔ ' + util.toFa(stats.examsTaken) + ' آزمون' : 'پس از نخستین آزمون' },
       { icon: 'review', label: 'مرور در انتظار', value: util.toFa(stats.reviewDue), unit: 'مرور', foot: stats.reviewTotal ? 'از ' + util.toFa(stats.reviewTotal) : 'برنامهٔ مرور خالی است' }
     ]);
@@ -285,7 +291,7 @@
       '</div>';
 
     return {
-      title: 'خانه',
+      title: 'داشبورد',
       nav: 'dashboard',
       html: html,
       onMount: function (root) {

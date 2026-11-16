@@ -1,7 +1,8 @@
 # Build instructions (development only)
 
 The end user never runs anything from this folder. `start.html` at the project
-root is already built and complete. This document is for whoever changes `src/`.
+root is already built (content is not included; see `docs/CONTENT-PIPELINE.md`).
+This document is for whoever changes `src/`.
 
 ---
 
@@ -50,7 +51,7 @@ exposes `MZ_QA.audit(widths, path)` and `MZ_QA.measure()` in the page console.
    `tokens.css`, `layout.css`, `components.css`, `motion.css`, `responsive.css`.
 3. Replaces `/*MEHRAZ:SCRIPTS*/` with `window.MEHRAZ_CONTENT = <catalog>;` followed
    by, in order:
-   `bootstrap`, `jalali`, `storage`, `state`, `content`, `backup`, `components`,
+   `bootstrap`, `art`, `jalali`, `storage`, `state`, `content`, `backup`, `components`,
    `router`, `profile`, `dashboard`, `learning`, `examination`, `review`,
    `settings`, `app`.
 4. Replaces `{{BUILD_STAMP}}` with the current date/time.
