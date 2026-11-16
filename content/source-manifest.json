@@ -1,68 +1,89 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-11-16T12:10:00Z",
-  "purpose": "Fingerprints and structural classification of official textbook files pulled from the portal. The PDFs themselves are deliberately NOT committed and NOT shipped: they are source material for preparing original lessons, not distributable assets.",
-  "sourcePortal": "http://chap.sch.ir",
-  "academicYear": "1405-1406",
-  "method": "tools/inspect-pdf.ps1 — counts /BaseFont, /ToUnicode, /Subtype /Image and DCTDecode markers in the raw PDF objects.",
-  "files": [
-    {
-      "bookCode": "701",
-      "title": "آموزش قرآن (هفتم)",
-      "grade": 7,
-      "track": null,
-      "url": "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/555/C701.pdf",
-      "downloadedAt": "2026-11-16T11:58:00Z",
-      "bytes": 5050896,
-      "sha256": "a349cdd80fb743d14e22bfccca65e2e36dd9e07ab8e9170a462d1547bcf58a20",
-      "pagesApprox": null,
-      "fonts": 0,
-      "toUnicodeMaps": 0,
-      "images": 154,
-      "textLayer": "scan",
-      "extraction": {
-        "status": "blocked-needs-ocr",
-        "reason": "Page-image scan: no embedded fonts and no ToUnicode maps, so there is no text to extract."
-      }
-    },
-    {
-      "bookCode": "706",
-      "title": "علوم تجربی (هفتم)",
-      "grade": 7,
-      "track": null,
-      "url": "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/555/C706.pdf",
-      "downloadedAt": "2026-11-16T17:58:00Z",
-      "bytes": 11795385,
-      "sha256": "da0b1c4277debca47d87eee9215fa12a183b46afd209f5d6fa1822246c7486bd",
-      "pagesApprox": null,
-      "fonts": 0,
-      "toUnicodeMaps": 0,
-      "images": 605,
-      "textLayer": "scan",
-      "extraction": {
-        "status": "blocked-needs-ocr",
-        "reason": "Page-image scan: no embedded fonts and no ToUnicode maps, so there is no text to extract."
-      }
-    },
-    {
-      "bookCode": "705",
-      "title": "ریاضی (هفتم)",
-      "grade": 7,
-      "track": null,
-      "url": "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/555/C705.pdf",
-      "downloadedAt": "2026-11-16T12:02:00Z",
-      "bytes": 35916566,
-      "sha256": "bd29fabf28a0d9e36e18a47f4ad2940f901d85a8821c44ce09302fcfad847cb4",
-      "pagesApprox": 135,
-      "fonts": 0,
-      "toUnicodeMaps": 0,
-      "images": 190,
-      "textLayer": "scan",
-      "extraction": {
-        "status": "blocked-needs-ocr",
-        "reason": "Page-image scan: no embedded fonts and no ToUnicode maps, so there is no text to extract."
-      }
-    }
-  ],
-  "conclusion": "Every inspected official PDF (three files across grades 7) is a page-image scan. Producing lesson text therefore requires OCR with Persian support. No Persian OCR engine is available in the current build environment: the bundled Python and Node runtimes do not execute, Windows OCR only ships an English recognizer, and installing a Persian recognizer or Tesseract is a system-level change that needs the owner's approval. Authoring lessons from memory instead of the controlling source would violate the project's source policy, so no lesson content has been authored yet."
+    "schemaVersion":  1,
+    "generatedAt":  "2026-11-16T12:10:00Z",
+    "purpose":  "Fingerprints and structural classification of official textbook files pulled from the portal. The PDFs themselves are deliberately NOT committed and NOT shipped: they are source material for preparing original lessons, not distributable assets.",
+    "sourcePortal":  "http://chap.sch.ir",
+    "academicYear":  "1405-1406",
+    "method":  "tools/inspect-pdf.ps1 — counts /BaseFont, /ToUnicode, /Subtype /Image and DCTDecode markers in the raw PDF objects.",
+    "files":  [
+                  {
+                      "bookCode":  "701",
+                      "title":  "آموزش قرآن (هفتم)",
+                      "grade":  7,
+                      "track":  null,
+                      "url":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/555/C701.pdf",
+                      "downloadedAt":  "2026-11-16T11:58:00Z",
+                      "bytes":  5050896,
+                      "sha256":  "a349cdd80fb743d14e22bfccca65e2e36dd9e07ab8e9170a462d1547bcf58a20",
+                      "pagesApprox":  null,
+                      "fonts":  0,
+                      "toUnicodeMaps":  0,
+                      "images":  154,
+                      "textLayer":  "scan",
+                      "extraction":  {
+                                         "status":  "blocked-needs-ocr",
+                                         "reason":  "Page-image scan: no embedded fonts and no ToUnicode maps, so there is no text to extract."
+                                     }
+                  },
+                  {
+                      "bookCode":  "706",
+                      "title":  "علوم تجربی (هفتم)",
+                      "grade":  7,
+                      "track":  null,
+                      "url":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/555/C706.pdf",
+                      "downloadedAt":  "2026-11-16T17:58:00Z",
+                      "bytes":  11795385,
+                      "sha256":  "da0b1c4277debca47d87eee9215fa12a183b46afd209f5d6fa1822246c7486bd",
+                      "pagesApprox":  null,
+                      "fonts":  0,
+                      "toUnicodeMaps":  0,
+                      "images":  605,
+                      "textLayer":  "scan",
+                      "extraction":  {
+                                         "status":  "blocked-needs-ocr",
+                                         "reason":  "Page-image scan: no embedded fonts and no ToUnicode maps, so there is no text to extract."
+                                     }
+                  },
+                  {
+                      "bookCode":  "705",
+                      "title":  "ریاضی (هفتم)",
+                      "grade":  7,
+                      "track":  null,
+                      "url":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/555/C705.pdf",
+                      "downloadedAt":  "2026-11-16T12:02:00Z",
+                      "bytes":  35916566,
+                      "sha256":  "bd29fabf28a0d9e36e18a47f4ad2940f901d85a8821c44ce09302fcfad847cb4",
+                      "pagesApprox":  135,
+                      "fonts":  0,
+                      "toUnicodeMaps":  0,
+                      "images":  190,
+                      "textLayer":  "scan",
+                      "extraction":  {
+                                         "status":  "blocked-needs-ocr",
+                                         "reason":  "Page-image scan: no embedded fonts and no ToUnicode maps, so there is no text to extract."
+                                     }
+                  },
+                  {
+                      "bookCode":  "110216",
+                      "title":  "زیست‌شناسی (1)",
+                      "grade":  10,
+                      "track":  "experimental",
+                      "url":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/40/C110216.pdf",
+                      "downloadedAt":  "2026-11-16T18:20:00Z",
+                      "bytes":  6775781,
+                      "sha256":  "58f6685b03e63b07a10eb4243f89aca467264eb9d9f419febd2a25bf47320114",
+                      "pagesApprox":  120,
+                      "fonts":  0,
+                      "toUnicodeMaps":  0,
+                      "images":  605,
+                      "textLayer":  "scan",
+                      "extraction":  {
+                                         "status":  "ocr-done-pilot",
+                                         "engine":  "Tesseract 5.4 + fas.traineddata (tessdata_best), local only",
+                                         "pageOffset":  5,
+                                         "note":  "Pages 0-16 OCR done; printed page = PDF index - 5. Lesson l-gostare-hayat uses printed page 7."
+                                     }
+                  }
+              ],
+    "conclusion":  "The official PDFs are page-image scans. A local Persian OCR pipeline is now in place (Tesseract 5.4 + fas, local only; no upload). The first pilot lesson and its chapter exam are authored from the OCR text with page-level source references and are marked draft until a human visually checks the pages and a second pass verifies the answers."
 }

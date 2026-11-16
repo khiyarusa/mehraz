@@ -106,7 +106,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build/build.ps1
 | [`docs/ANDROID-GUIDE.md`](docs/ANDROID-GUIDE.md) | راهنمای فارسی باز کردن روی اندروید |
 | [`docs/PHASE-02-INTEGRATION.md`](docs/PHASE-02-INTEGRATION.md) | افزودن محتوای رسمی در PROMPT 03 |
 | [`docs/CONTENT-PIPELINE.md`](docs/CONTENT-PIPELINE.md) | وضعیت ممیزی منابع و خط‌لولهٔ محتوا |
-| [`docs/CONTENT-INVENTORY.md`](docs/CONTENT-INVENTORY.md) | فهرست رسمی ۱۳۰ کتاب، پوشش پایه‌ها و رشته‌ها، مانع OCR |
+| [`docs/CONTENT-INVENTORY.md`](docs/CONTENT-INVENTORY.md) | فهرست رسمی ۱۳۰ کتاب، پوشش پایه‌ها و رشته‌ها، وضعیت OCR |
+| [`docs/PILOT-01-BIOLOGY.md`](docs/PILOT-01-BIOLOGY.md) | پایلوت اول: زیست‌شناسی دهم، پوشش واقعی و محدودیت‌ها |
 | [`project-guidelines/AGENTS.md`](project-guidelines/AGENTS.md) | قواعد الزامی پروژه |
 
 ## اصول فنی

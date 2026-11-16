@@ -641,7 +641,18 @@
       ' بخش</span>' +
       (lesson.minutes ? '<span class="chip">' + util.toFa(lesson.minutes) + ' دقیقه</span>' : '') +
       (done ? '<span class="chip chip--ok">' + M.icon('check', 12) + ' خوانده‌شده</span>' : '') +
+      (lesson.verification && lesson.verification.status !== 'verified'
+        ? '<span class="chip chip--warn">پیش‌نویس</span>'
+        : '') +
       '</div>' +
+      (lesson.source && lesson.source.reference
+        ? '<p class="hint" style="margin-top:10px">منبع: ' +
+          esc(lesson.source.title || 'کتاب درسی رسمی') +
+          ' — ' +
+          esc(lesson.source.reference) +
+          (lesson.source.academicYear ? ' (سال تحصیلی ' + esc(lesson.source.academicYear) + ')' : '') +
+          '</p>'
+        : '') +
       '</div>' +
       '<div class="row" style="gap:8px">' +
       '<button class="btn ' +
