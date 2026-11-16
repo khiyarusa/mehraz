@@ -1,0 +1,248 @@
+/* ==========================================================================
+   MEHRAZ — motion system
+   One vocabulary: distances are small, durations are short, easing is calm.
+   Every animation is decorative; the UI is fully usable without it.
+   ========================================================================== */
+
+@keyframes mz-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mz-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mz-scale-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes mz-sheet-in {
+  from {
+    opacity: 0.4;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mz-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes mz-toast-out {
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+@keyframes mz-shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes mz-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--ok-soft);
+  }
+  50% {
+    box-shadow: 0 0 0 4px transparent;
+  }
+}
+
+@keyframes mz-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mz-bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes mz-col-grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes mz-draw {
+  from {
+    stroke-dashoffset: var(--dash, 200);
+  }
+}
+
+@keyframes mz-check {
+  from {
+    stroke-dashoffset: 28;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---- page transition --------------------------------------------------- */
+.page {
+  animation: mz-rise var(--d-page) var(--e-soft) both;
+}
+
+.page.is-leaving {
+  animation: mz-fade var(--d-fast) var(--e-out) reverse both;
+  pointer-events: none;
+}
+
+/* stagger helpers: children rise in sequence */
+.stagger > * {
+  animation: mz-rise var(--d-slow) var(--e-soft) both;
+}
+
+.stagger > *:nth-child(1) { animation-delay: 30ms; }
+.stagger > *:nth-child(2) { animation-delay: 70ms; }
+.stagger > *:nth-child(3) { animation-delay: 110ms; }
+.stagger > *:nth-child(4) { animation-delay: 150ms; }
+.stagger > *:nth-child(5) { animation-delay: 190ms; }
+.stagger > *:nth-child(6) { animation-delay: 230ms; }
+.stagger > *:nth-child(7) { animation-delay: 270ms; }
+.stagger > *:nth-child(8) { animation-delay: 300ms; }
+.stagger > *:nth-child(n + 9) { animation-delay: 330ms; }
+
+.fade-in {
+  animation: mz-fade var(--d-base) var(--e-out) both;
+}
+
+.rise-in {
+  animation: mz-rise var(--d-slow) var(--e-soft) both;
+}
+
+/* modal + overlay */
+.overlay {
+  animation: mz-fade var(--d-base) var(--e-out) both;
+}
+
+.overlay > .modal {
+  animation: mz-scale-in var(--d-slow) var(--e-soft) both;
+}
+
+.overlay.is-closing {
+  animation: mz-fade var(--d-fast) var(--e-out) reverse both;
+}
+
+.overlay > .bottomsheet {
+  animation: mz-sheet-in var(--d-slow) var(--e-soft) both;
+}
+
+/* toast */
+.toast {
+  animation: mz-toast-in var(--d-slow) var(--e-soft) both;
+}
+
+.toast.is-leaving {
+  animation: mz-toast-out var(--d-base) var(--e-out) both;
+}
+
+/* progress + charts
+   `.progress__bar` width is set by JS after paint so the transition runs. */
+.bar-anim {
+  transform-origin: right center;
+  animation: mz-bar-grow var(--d-hero) var(--e-soft) both;
+}
+
+.skeleton::after {
+  animation-name: mz-shimmer;
+}
+
+.heat__cell {
+  animation: mz-fade var(--d-base) var(--e-out) both;
+}
+
+.dot--pulse {
+  animation-name: mz-dot;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: mz-spin 0.7s linear infinite;
+}
+
+/* press feedback for touch-first targets */
+.pressable:active {
+  transform: scale(0.985);
+}
+
+/* onboarding step switch */
+.step-enter {
+  animation: mz-rise var(--d-slow) var(--e-soft) both;
+}
+
+/* honour both the OS setting and the in-app preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  animation-delay: 0ms !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+[data-motion="reduced"] .page,
+[data-motion="reduced"] .page.is-leaving {
+  opacity: 1;
+  transform: none;
+}

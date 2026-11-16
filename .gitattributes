@@ -1,0 +1,18 @@
+# Normalise line endings in the repository; check them out natively on Windows.
+* text=auto eol=lf
+
+# build.ps1 is executed by Windows PowerShell 5.1 and carries a UTF-8 BOM.
+*.ps1 text eol=crlf
+
+*.html text
+*.css text
+*.js text
+*.json text
+*.md text
+
+# Binary assets (reserved for phase-02 figures)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.woff2 binary

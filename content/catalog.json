@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": null,
+  "generator": "phase-01-empty-catalogue",
+  "note": "This file is the build-time content input. PROMPT 02 replaces it with validated, source-linked content. Phase 01 must ship with an empty books array.",
+  "books": []
+}

@@ -1,0 +1,17 @@
+# ─── Local tooling ────────────────────────────────────────────────────────────
+.zwork/
+.tmp/
+
+# ─── Generated development artefacts ──────────────────────────────────────────
+# start.html IS versioned: it is the distributable artefact.
+# These are rebuilt on demand and only add noise to history.
+build/qa-harness.html
+build/build-report.txt
+
+# ─── OS / editor ──────────────────────────────────────────────────────────────
+Thumbs.db
+desktop.ini
+.DS_Store
+*.swp
+.idea/
+.vscode/

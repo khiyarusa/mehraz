@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>MEHRAZ responsive harness (dev only)</title>
+<style>
+  html,body{margin:0;background:#0b1622;color:#dbe6f4;font:12px/1.7 Tahoma,sans-serif}
+  #bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:8px 12px;background:#0b1622;position:sticky;top:0;z-index:5;border-bottom:1px solid #1e3046}
+  #bar b{color:#9cc4ff}
+  #stage{overflow:hidden}
+  #frame{border:0;background:#fff;display:block;margin:0;transform-origin:top left}
+  #log{white-space:pre-wrap;padding:10px 12px;font:11px/1.55 Consolas,monospace;direction:ltr;text-align:left;color:#9fd0ff}
+</style>
+</head>
+<body>
+<div id="bar"><b>MEHRAZ harness</b><span>dev only - this page never ships</span></div>
+<div id="stage"><iframe id="frame" width="390" height="780" srcdoc="{{APP}}"></iframe></div>
+<div id="log">ready</div>
+<script>
+window.MZ_QA = {
+  results: [],
+  log: function (msg) {
+    document.getElementById('log').textContent = typeof msg === 'string' ? msg : JSON.stringify(msg, null, 2);
+  },
+  frame: function () { return document.getElementById('frame'); },
+  win: function () { return window.MZ_QA.frame().contentWindow; },
+  doc: function () { return window.MZ_QA.frame().contentDocument; },
+  wait: function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); },
+  setSize: function (w, h) {
+    var f = window.MZ_QA.frame();
+    f.style.width = w + 'px';
+    f.style.height = (h || 780) + 'px';
+    return w;
+  },
+  scale: function (s) {
+    var f = window.MZ_QA.frame();
+    f.style.transform = s && s !== 1 ? 'scale(' + s + ')' : '';
+    document.getElementById('stage').style.height = (f.getBoundingClientRect().height) + 'px';
+  },
+  go: function (path) {
+    var w = window.MZ_QA.win();
+    if (!w || !w.MEHRAZ || !w.MEHRAZ.router) return 'no-app';
+    w.MEHRAZ.router.render({ path: path });
+    return path;
+  },
+  measure: function () {
+    var d = window.MZ_QA.doc();
+    if (!d || !d.documentElement) return { error: 'no-document' };
+    var de = d.documentElement;
+    var vw = de.clientWidth;
+    var offenders = [];
+    var all = d.body ? d.body.querySelectorAll('*') : [];
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
+      var r = el.getBoundingClientRect();
+      if (r.width === 0 && r.height === 0) continue;
+      if (r.right > vw + 1.5 || r.left < -1.5) {
+        if (el.closest && el.closest('.segmented, .tablewrap, .tabs, .hero__arcs, .chart, .heat, .qnav')) continue;
+        offenders.push({
+          tag: el.tagName.toLowerCase(),
+          cls: (el.className && el.className.toString ? el.className.toString() : '').slice(0, 46),
+          left: Math.round(r.left),
+          right: Math.round(r.right),
+          w: Math.round(r.width)
+        });
+        if (offenders.length > 6) break;
+      }
+    }
+    var bn = d.getElementById('bottomnav');
+    var sb = d.getElementById('sidebar');
+    var toc = d.querySelector('.toc');
+    var h1 = d.querySelector('.page-head h1, .hero h1, .onboard__title');
+    var app = window.MZ_QA.win().MEHRAZ || {};
+    return {
+      requested: 0,
+      width: vw,
+      scrollWidth: de.scrollWidth,
+      overflowX: de.scrollWidth - de.clientWidth,
+      docHeight: de.scrollHeight,
+      bottomnav: bn ? d.defaultView.getComputedStyle(bn).display : 'n/a',
+      sidebar: sb ? d.defaultView.getComputedStyle(sb).display : 'n/a',
+      toc: toc ? d.defaultView.getComputedStyle(toc).position : 'n/a',
+      heading: h1 ? h1.textContent.trim() : '',
+      route: app.router ? app.router.path() : 'n/a',
+      errors: app.diag ? app.diag.errors.length : -1,
+      targets: d.querySelectorAll('a, button, input, select').length,
+      smallTargets: (function () {
+        var n = 0;
+        var els = d.querySelectorAll('a, button, input, select');
+        for (var j = 0; j < els.length; j++) {
+          var r = els[j].getBoundingClientRect();
+          if (r.width === 0 || r.height === 0) continue;
+          if (r.height < 44 || r.width < 24) n++;
+        }
+        return n;
+      })(),
+      offenders: offenders
+    };
+  },
+  audit: function (widths, path) {
+    var list = widths || [360, 390, 414, 768, 1024, 1280, 1440];
+    var out = [];
+    return list.reduce(function (chain, w) {
+      return chain.then(function () {
+        window.MZ_QA.setSize(w, 800);
+        if (path) window.MZ_QA.go(path);
+        return window.MZ_QA.wait(500).then(function () {
+          var m = window.MZ_QA.measure();
+          m.requested = w;
+          out.push(m);
+          return m;
+        });
+      });
+    }, Promise.resolve()).then(function () {
+      window.MZ_QA.results = out;
+      window.MZ_QA.log(out);
+      return out;
+    });
+  }
+};
+</script>
+</body>
+</html>
