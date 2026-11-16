@@ -2,7 +2,7 @@
    MEHRAZ — content engine
    Phase 01 ships the contract and the renderer, never the educational content.
    The catalogue is embedded at build time (window.MEHRAZ_CONTENT) or left
-   empty; PROMPT 02 fills it. A clearly-labelled structural demo pack exists
+   empty; content is added only from validated sources, never as sample data.
    only behind the developer switch in Settings and contains no subject facts.
    ========================================================================== */
 (function (window) {
@@ -115,7 +115,7 @@
     gradeMeta: GRADE_META,
     trackMeta: TRACK_META,
     sections: SECTIONS,
-    demoEnabled: false,
+    loaded: false,
     loadError: null,
 
     init: function () {
@@ -128,13 +128,7 @@
         content.loadError = res.errors;
         M.diag.record('error', 'content catalogue rejected', res.errors.slice(0, 8));
       }
-      content.demoEnabled = !!(M.store.prefs() && M.store.prefs().devPreview);
       return content.catalog;
-    },
-
-    setDemo: function (on) {
-      content.demoEnabled = !!on;
-      M.store.setPref('devPreview', !!on);
     },
 
     gradeLabel: function (g) {
@@ -145,105 +139,9 @@
       return TRACK_META[t] ? TRACK_META[t].label : '';
     },
 
-    /* ---- structural demo (no educational facts) ------------------------- */
-    demoPack: function () {
-      var profile = M.store.profile() || { grade: 7, track: null };
-      var grade = profile.grade || 7;
-      var track = grade >= 10 ? profile.track || 'math' : null;
-      return {
-        schemaVersion: 1,
-        demo: true,
-        updatedAt: null,
-        books: [
-          {
-            id: 'demo-book',
-            title: 'نمونهٔ ساختاری کتاب',
-            subject: { id: 'demo-subject', title: 'درس نمونه' },
-            grade: grade,
-            track: track,
-            academicYear: '۱۴۰۵–۱۴۰۶',
-            edition: 'structural-demo',
-            source: { kind: 'demo', note: 'داده‌ی ساختاری برای آزمون رابط — محتوای آموزشی نیست' },
-            chapters: [
-              {
-                id: 'demo-chapter',
-                order: 1,
-                title: 'فصل نمونه',
-                lessons: [
-                  {
-                    id: 'demo-lesson',
-                    order: 1,
-                    title: 'درس نمونه',
-                    minutes: 12,
-                    objectives: [],
-                    sections: {},
-                    source: { kind: 'demo', pages: '—' }
-                  }
-                ],
-                exams: []
-              }
-            ],
-            exams: [
-              {
-                id: 'demo-exam',
-                title: 'آزمون نمونهٔ ساختاری',
-                chapterId: 'demo-chapter',
-                questions: [
-                  {
-                    id: 'demo-q1',
-                    type: 'mcq',
-                    prompt: 'پرسش نمونه است؛ گزینهٔ دوم را انتخاب کنید.',
-                    options: ['گزینهٔ الف', 'گزینهٔ ب', 'گزینهٔ ج', 'گزینهٔ د'],
-                    correct: [1],
-                    explanation: 'پاسخ درست گزینهٔ دوم است.'
-                  },
-                  {
-                    id: 'demo-q2',
-                    type: 'truefalse',
-                    prompt: 'این یک جملهٔ نمونه برای آزمون ساختاری است.',
-                    correct: 'true',
-                    explanation: 'این جمله فقط برای بررسی رابط ساخته شده است.'
-                  },
-                  {
-                    id: 'demo-q3',
-                    type: 'multi',
-                    prompt: 'کدام گزینه‌ها نمونهٔ ساختاری‌اند؟',
-                    options: ['نمونهٔ الف', 'نمونهٔ ب', 'نمونهٔ ج', 'نمونهٔ د'],
-                    correct: [0, 2],
-                    explanation: 'گزینه‌های یکم و سوم انتخاب می‌شوند.'
-                  },
-                  {
-                    id: 'demo-q4',
-                    type: 'numeric',
-                    prompt: 'عدد ۱۲ را وارد کنید.',
-                    answer: 12,
-                    tolerance: 0,
-                    explanation: 'پاسخ عددی ۱۲ است.'
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      };
-    },
-
     activeCatalog: function () {
-      // Read the live preference: clearing user data resets prefs, and the
-      // demo pack must disappear with it instead of lingering in a cached flag.
-      var prefs = M.store.prefs();
-      content.demoEnabled = prefs ? prefs.devPreview === true : content.demoEnabled;
-      if (!content.demoEnabled) return content.catalog;
-      var demo = content.demoPack();
-      var merged = {
-        schemaVersion: content.catalog.schemaVersion,
-        updatedAt: content.catalog.updatedAt,
-        demo: true,
-        books: asArray(content.catalog.books).concat(demo.books)
-      };
-      return merged;
+      return content.catalog;
     },
-
     books: function (filter) {
       filter = filter || {};
       return asArray(content.activeCatalog().books).filter(function (b) {
@@ -251,7 +149,6 @@
         if (filter.track !== undefined && filter.track !== null) {
           if (b.track !== filter.track) return false;
         }
-        if (filter.includeDemo === false && b.id === 'demo-book') return false;
         return true;
       });
     },
@@ -269,7 +166,7 @@
             books: [],
             lessonCount: 0,
             doneCount: 0,
-            demo: !!b.demo || b.id === 'demo-book'
+            incomplete: false
           };
           order.push(key);
         }
@@ -453,7 +350,7 @@
 
     hasAnyContent: function () {
       return asArray(content.activeCatalog().books).some(function (b) {
-        return b.id !== 'demo-book';
+        return true;
       });
     }
   });

@@ -149,10 +149,7 @@
         router.go('#/dashboard', { replace: true });
         return;
       }
-      if (route.devOnly && !(M.store.prefs() && M.store.prefs().devPreview)) {
-        router.go('#/dashboard', { replace: true });
-        return;
-      }
+
 
       current = {
         path: pathOf(parsed.segments),
@@ -208,7 +205,7 @@
       var titleEl = document.getElementById('topbar-title');
       var subEl = document.getElementById('topbar-sub');
       if (titleEl) titleEl.textContent = info.title || 'مهراز';
-      if (subEl) subEl.textContent = info.sub || M.content.trackLabel(M.store.profile() && M.store.profile().track) || 'یادگیری منظم';
+      if (subEl) subEl.textContent = info.sub || M.content.trackLabel(M.store.profile() && M.store.profile().track) || '';
       document.title = 'مهراز | ' + (info.title || 'یادگیری');
 
       util.$$('[data-nav]').forEach(function (link) {

@@ -1,248 +1,121 @@
 /* ==========================================================================
-   MEHRAZ — motion system
-   One vocabulary: distances are small, durations are short, easing is calm.
-   Every animation is decorative; the UI is fully usable without it.
+   MEHRAZ — motion (v2)
+   One vocabulary: short distances, calm easing, meaning before decoration.
+   Every animation is optional; the product is complete without it.
    ========================================================================== */
 
-@keyframes mz-rise {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+@keyframes mz-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes mz-rise-lg { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes mz-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mz-scale { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes mz-sheet { from { opacity: .5; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+@keyframes mz-toast-in { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes mz-toast-out { to { opacity: 0; transform: translateY(10px) scale(.98); } }
+@keyframes mz-shimmer { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+@keyframes mz-dot { 0%, 100% { box-shadow: 0 0 0 0 rgba(15,157,138,.34); } 50% { box-shadow: 0 0 0 5px transparent; } }
+@keyframes mz-spin { to { transform: rotate(360deg); } }
+@keyframes mz-draw { to { stroke-dashoffset: 0; } }
+@keyframes mz-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes mz-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes mz-sheen { from { transform: translateX(-120%) skewX(-14deg); } to { transform: translateX(220%) skewX(-14deg); } }
 
-@keyframes mz-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
+/* page entrance */
+.page { animation: mz-rise-lg var(--d-page) var(--e-soft) both; }
+.page > * { animation: mz-rise var(--d-slow) var(--e-soft) both; }
+.page > *:nth-child(1) { animation-delay: 30ms; }
+.page > *:nth-child(2) { animation-delay: 70ms; }
+.page > *:nth-child(3) { animation-delay: 110ms; }
+.page > *:nth-child(4) { animation-delay: 150ms; }
+.page > *:nth-child(5) { animation-delay: 180ms; }
+.page > *:nth-child(n+6) { animation-delay: 210ms; }
 
-@keyframes mz-scale-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.985);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+.stagger > * { animation: mz-rise var(--d-slow) var(--e-soft) both; }
+.stagger > *:nth-child(1) { animation-delay: 40ms; }
+.stagger > *:nth-child(2) { animation-delay: 85ms; }
+.stagger > *:nth-child(3) { animation-delay: 130ms; }
+.stagger > *:nth-child(4) { animation-delay: 175ms; }
+.stagger > *:nth-child(5) { animation-delay: 220ms; }
+.stagger > *:nth-child(6) { animation-delay: 265ms; }
+.stagger > *:nth-child(n+7) { animation-delay: 300ms; }
 
-@keyframes mz-sheet-in {
-  from {
-    opacity: 0.4;
-    transform: translateY(28px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+.fade-in { animation: mz-fade var(--d-base) var(--e-out) both; }
+.rise-in { animation: mz-rise var(--d-slow) var(--e-soft) both; }
+.step-enter { animation: mz-rise var(--d-slow) var(--e-soft) both; }
 
-@keyframes mz-toast-in {
-  from {
-    opacity: 0;
-    transform: translateY(14px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+/* overlays */
+.overlay { animation: mz-fade var(--d-base) var(--e-out) both; }
+.overlay > .modal { animation: mz-scale var(--d-slow) var(--e-soft) both; }
+.overlay.is-closing { animation: mz-fade var(--d-fast) var(--e-out) reverse both; }
+.overlay > .bottomsheet { animation: mz-sheet var(--d-slow) var(--e-soft) both; }
 
-@keyframes mz-toast-out {
-  to {
-    opacity: 0;
-    transform: translateY(8px) scale(0.98);
-  }
-}
+.toast { animation: mz-toast-in var(--d-slow) var(--e-soft) both; }
+.toast.is-leaving { animation: mz-toast-out var(--d-base) var(--e-out) both; }
 
-@keyframes mz-shimmer {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(100%);
-  }
-}
+.bar-anim { transform-origin: right center; animation: mz-bar var(--d-hero) var(--e-soft) both; }
+.skeleton::after { animation-name: mz-shimmer; }
+.heat__cell { animation: mz-fade var(--d-base) var(--e-out) both; }
+.dot--pulse { animation-name: mz-dot; }
+.spinner { width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; border-top-color: transparent; animation: mz-spin .7s linear infinite; }
 
-@keyframes mz-dot {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 var(--ok-soft);
-  }
-  50% {
-    box-shadow: 0 0 0 4px transparent;
-  }
-}
-
-@keyframes mz-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes mz-bar-grow {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-@keyframes mz-col-grow {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(1);
-  }
-}
-
-@keyframes mz-draw {
-  from {
-    stroke-dashoffset: var(--dash, 200);
-  }
-}
-
-@keyframes mz-check {
-  from {
-    stroke-dashoffset: 28;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-/* ---- page transition --------------------------------------------------- */
-.page {
-  animation: mz-rise var(--d-page) var(--e-soft) both;
-}
-
-.page.is-leaving {
-  animation: mz-fade var(--d-fast) var(--e-out) reverse both;
+/* primary button sheen */
+.btn--primary::after {
+  content: ""; position: absolute; inset: 0; overflow: hidden; border-radius: inherit;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+  transform: translateX(-120%) skewX(-14deg);
   pointer-events: none;
 }
+.btn--primary:hover::after { animation: mz-sheen .9s var(--e-out) 1; }
 
-/* stagger helpers: children rise in sequence */
-.stagger > * {
-  animation: mz-rise var(--d-slow) var(--e-soft) both;
+/* ---- branded boot sequence -------------------------------------------- */
+.boot {
+  position: fixed; inset: 0; z-index: 300;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(70% 50% at 50% 0%, rgba(47,107,255,.22), transparent 60%),
+    linear-gradient(160deg, #0B1A2B 0%, #060F1B 100%);
+  transition: opacity .55s var(--e-out), visibility .55s;
 }
+.boot.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.boot__inner { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 24px; text-align: center; }
 
-.stagger > *:nth-child(1) { animation-delay: 30ms; }
-.stagger > *:nth-child(2) { animation-delay: 70ms; }
-.stagger > *:nth-child(3) { animation-delay: 110ms; }
-.stagger > *:nth-child(4) { animation-delay: 150ms; }
-.stagger > *:nth-child(5) { animation-delay: 190ms; }
-.stagger > *:nth-child(6) { animation-delay: 230ms; }
-.stagger > *:nth-child(7) { animation-delay: 270ms; }
-.stagger > *:nth-child(8) { animation-delay: 300ms; }
-.stagger > *:nth-child(n + 9) { animation-delay: 330ms; }
-
-.fade-in {
-  animation: mz-fade var(--d-base) var(--e-out) both;
+.boot__stage { position: relative; display: grid; place-items: center; width: 92px; height: 92px; }
+.boot__ring { position: absolute; inset: 0; }
+.boot__ring circle {
+  fill: none; stroke: rgba(127,166,255,.55); stroke-width: 1.4;
+  stroke-dasharray: 260; stroke-dashoffset: 260;
+  animation: mz-draw 1.25s var(--e-soft) .1s forwards;
 }
-
-.rise-in {
-  animation: mz-rise var(--d-slow) var(--e-soft) both;
+.boot__mark {
+  display: grid; place-items: center; width: 58px; height: 58px; border-radius: 18px;
+  background: linear-gradient(155deg, #5C8DFF, #2F6BFF 50%, #17347A);
+  box-shadow: 0 18px 40px -18px rgba(47,107,255,.9), inset 0 1px 0 rgba(255,255,255,.3);
+  animation: mz-scale .8s var(--e-soft) both;
 }
+.boot__word { font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1; animation: mz-rise .7s var(--e-soft) .2s both; }
+.boot__latin { font-family: var(--font-num); font-size: .48rem; letter-spacing: .4em; color: rgba(255,255,255,.45); text-transform: uppercase; margin-block-start: 7px; animation: mz-fade .7s var(--e-out) .35s both; }
+.boot__note { font-size: .72rem; color: rgba(255,255,255,.5); max-width: 26ch; line-height: 1.9; animation: mz-fade .7s var(--e-out) .55s both; }
+.boot__bar { width: 150px; height: 3px; border-radius: 999px; background: rgba(255,255,255,.12); overflow: hidden; }
+.boot__bar i { display: block; height: 100%; width: 100%; transform-origin: right center; background: linear-gradient(90deg, #2F6BFF, #BFD6FF); animation: mz-bar 1.15s var(--e-soft) .4s both; }
 
-/* modal + overlay */
-.overlay {
-  animation: mz-fade var(--d-base) var(--e-out) both;
-}
-
-.overlay > .modal {
-  animation: mz-scale-in var(--d-slow) var(--e-soft) both;
-}
-
-.overlay.is-closing {
-  animation: mz-fade var(--d-fast) var(--e-out) reverse both;
-}
-
-.overlay > .bottomsheet {
-  animation: mz-sheet-in var(--d-slow) var(--e-soft) both;
-}
-
-/* toast */
-.toast {
-  animation: mz-toast-in var(--d-slow) var(--e-soft) both;
-}
-
-.toast.is-leaving {
-  animation: mz-toast-out var(--d-base) var(--e-out) both;
-}
-
-/* progress + charts
-   `.progress__bar` width is set by JS after paint so the transition runs. */
-.bar-anim {
-  transform-origin: right center;
-  animation: mz-bar-grow var(--d-hero) var(--e-soft) both;
-}
-
-.skeleton::after {
-  animation-name: mz-shimmer;
-}
-
-.heat__cell {
-  animation: mz-fade var(--d-base) var(--e-out) both;
-}
-
-.dot--pulse {
-  animation-name: mz-dot;
-}
-
-.spinner {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border: 2px solid currentColor;
-  border-top-color: transparent;
-  animation: mz-spin 0.7s linear infinite;
-}
-
-/* press feedback for touch-first targets */
-.pressable:active {
-  transform: scale(0.985);
-}
-
-/* onboarding step switch */
-.step-enter {
-  animation: mz-rise var(--d-slow) var(--e-soft) both;
-}
-
-/* honour both the OS setting and the in-app preference */
+/* ---- reduced motion ---------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+  .orbit__ring--a, .orbit__ring--b, .orbit__dash, .orbit__node { animation: none !important; }
 }
-
-[data-motion="reduced"] *,
-[data-motion="reduced"] *::before,
-[data-motion="reduced"] *::after {
+[data-motion="reduced"] *, [data-motion="reduced"] *::before, [data-motion="reduced"] *::after {
   animation-duration: 0.001ms !important;
   animation-iteration-count: 1 !important;
   animation-delay: 0ms !important;
   transition-duration: 0.001ms !important;
   scroll-behavior: auto !important;
 }
-
-[data-motion="reduced"] .page,
-[data-motion="reduced"] .page.is-leaving {
-  opacity: 1;
-  transform: none;
-}
+[data-motion="reduced"] .orbit__ring--a,
+[data-motion="reduced"] .orbit__ring--b,
+[data-motion="reduced"] .orbit__dash,
+[data-motion="reduced"] .orbit__node { animation: none !important; }
+[data-motion="reduced"] .page, [data-motion="reduced"] .page > * { animation: none !important; opacity: 1; transform: none; }

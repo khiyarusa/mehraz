@@ -16,7 +16,7 @@ changes it.
 | Devices | desktop (Chrome/Edge) and Android phones (Chrome) |
 | Language | Persian (Farsi), full RTL. Engineering docs in English. |
 | Visual identity | minimal white, deep navy `#14243B`, primary blue `#2563EB` |
-| Creator | Amin — Telegram `@Mozrd`, Rubika `@angosht0` (shown only on the About page) |
+| Creator | **امین** (Amin) — Telegram `@Mozrd`, Rubika `@angosht0` (shown only on the About page) |
 
 ---
 
@@ -184,3 +184,40 @@ reload test.
 - Docs updated (`ARCHITECTURE`, `DESIGN-SYSTEM`, `DATA-SCHEMA`,
   `OFFLINE-REQUIREMENTS`, `QA-REPORT`, `ANDROID-GUIDE`, `PHASE-02-INTEGRATION`).
 - QA report reflects what was actually executed.
+
+---
+
+## 12. Product voice (added in the v2 pass — binding)
+
+The student interface must read like a well-made product, not a README.
+
+**Never** show, in any student-facing text:
+
+- that the site runs from a local file, is offline, needs no server, has no account,
+  or stores data in the browser;
+- storage driver names, database names, schema versions, build identifiers;
+- pipeline, extraction, generation, validation or phase wording;
+- developer tools, sample/demo content, debug panels or test routes.
+
+If persistence genuinely fails, say **one** sentence a student can act on
+(«ذخیرهٔ تغییرات ممکن نشد…») and offer the backup. Never claim a write succeeded
+when it did not.
+
+Settings is for the student's own things: profile, appearance, backup, erase.
+Diagnostics belong in `docs/`, not on screen.
+
+The creator's Persian name is exactly **امین** — never «آمین». It appears only on
+the About page (`#/about`), never on the dashboard, welcome, lessons or navigation.
+
+No fabricated educational content, ever. Empty means an explanatory empty state.
+
+## 13. Visual rules (v2)
+
+- Composition before decoration: every page has one focal element, not five equal cards.
+- Use the art system (`src/scripts/art.js`) for illustrations; never add an image file,
+  emoji or remote asset as a design element.
+- Monograms are deterministic: the same subject id always yields the same emblem.
+- Accent colours (mint/amber/violet/rose) are functional only — success, caution,
+  subject identity, error. Never decorative fills.
+- Motion must be purposeful, transform/opacity based, and fully disabled under
+  `prefers-reduced-motion` and the in-app «کم» setting.

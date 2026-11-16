@@ -21,7 +21,6 @@
       prefs: {
         theme: 'light',
         motion: 'system',
-        devPreview: false
       },
       progress: {
         lessons: {},
@@ -90,7 +89,6 @@
     if (isObject(raw.prefs)) {
       base.prefs.theme = raw.prefs.theme === 'night' ? 'night' : 'light';
       base.prefs.motion = raw.prefs.motion === 'reduced' ? 'reduced' : 'system';
-      base.prefs.devPreview = raw.prefs.devPreview === true;
     }
     out.prefs = base.prefs;
 

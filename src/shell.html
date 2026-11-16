@@ -4,24 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; connect-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="theme-color" content="#ffffff">
-<meta name="description" content="مهراز — سامانهٔ یادگیری آفلاین برای دانش‌آموزان. بدون حساب کاربری، بدون اینترنت، با ذخیره‌سازی محلی.">
+<meta name="theme-color" content="#FAFBFE">
+<meta name="description" content="مهراز — فضای یادگیری برای دانش‌آموزان: درس، تمرین، آزمون و مرور در یک برنامهٔ آرام و منظم.">
 <meta name="robots" content="noindex, nofollow">
-<title>مهراز | سامانهٔ یادگیری</title>
-<!-- MEHRAZ {{BUILD_STAMP}} — single-file standalone build. No external requests. -->
+<title>مهراز | فضای یادگیری</title>
+<!-- MEHRAZ {{BUILD_STAMP}} -->
 <style>
 /*MEHRAZ:STYLES*/
-/* boot splash (removed from the DOM once the app is ready) */
-.boot{position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:var(--bg);transition:opacity .38s var(--e-out),visibility .38s}
-.boot.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
-.boot__inner{display:flex;flex-direction:column;align-items:center;gap:18px;padding:24px;text-align:center;animation:mz-rise .6s var(--e-soft) both}
-.boot__mark{display:grid;place-items:center;width:54px;height:54px;border-radius:17px;background:linear-gradient(155deg,#2f6df0,#1d4ed8 55%,#17347a);box-shadow:0 14px 34px -16px rgba(37,99,235,.8),inset 0 1px 0 rgba(255,255,255,.28)}
-.boot__word{font-size:1.5rem;font-weight:700;color:var(--txt-strong);line-height:1}
-.boot__latin{font-family:var(--font-num);font-size:.5rem;letter-spacing:.34em;color:var(--txt-muted);text-transform:uppercase;margin-top:6px}
-.boot__bar{width:132px;height:3px;border-radius:999px;background:var(--surface-3);overflow:hidden;position:relative}
-.boot__bar::after{content:"";position:absolute;inset-block:0;width:44%;border-radius:999px;background:var(--brand);animation:boot-slide 1.15s var(--e-inout) infinite}
-@keyframes boot-slide{0%{inset-inline-start:-44%}100%{inset-inline-start:100%}}
-.boot__note{font-size:.72rem;color:var(--txt-faint);max-width:26ch;line-height:1.9}
 </style>
 </head>
 <body>
@@ -35,20 +24,18 @@
     <nav class="navgroup" id="nav-extra" aria-label="بیشتر"></nav>
     <div class="sidebar__spacer"></div>
     <div class="sidebar__footer">
-      <div class="storagechip" id="storage-chip">
-        <span class="dot"></span><span>در حال بررسی ذخیره‌سازی…</span>
-      </div>
-      <a class="sidebar__link" href="#/about">مهراز — نسخهٔ ۱٫۰</a>
+      <div id="sidebar-profile"></div>
+      <a class="sidebar__link" href="#/about">دربارهٔ سازنده</a>
     </div>
   </aside>
 
   <div class="main">
-    <header class="topbar">
+    <header class="topbar" id="topbar">
       <div class="topbar__lead">
         <span class="topbar__mobilebrand" id="topbar-brand"></span>
         <div class="topbar__titles">
           <div class="topbar__title" id="topbar-title">مهراز</div>
-          <div class="topbar__sub" id="topbar-sub">یادگیری منظم</div>
+          <div class="topbar__sub" id="topbar-sub"></div>
         </div>
       </div>
 
@@ -68,26 +55,26 @@
         <button class="iconbtn" id="theme-btn" type="button" aria-label="تغییر پوسته" title="تغییر پوسته">
           <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5"/></svg>
         </button>
-        <button class="profile-chip" id="profile-chip" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="حساب کاربری">
+        <button class="profile-chip" id="profile-chip" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="حساب کاربری" hidden>
           <span class="avatar avatar--sm" aria-hidden="true">م</span>
           <span class="profile-chip__text"><span class="profile-chip__name">مهراز</span><span class="profile-chip__meta">دانش‌آموز</span></span>
         </button>
         <div class="menu" id="profile-menu" role="menu" hidden>
           <button class="menu__item" type="button" role="menuitem" data-menu-go="#/profile/edit">
-            <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4l10-10a2.5 2.5 0 0 0-3.5-3.5L4.5 16.5z"/><path d="m13.5 7 3.5 3.5"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4l10-10a2.5 2.5 0 0 0-3.5-3.5L4.5 16.5z"/><path d="m13.5 7 3.5 3.5"/></svg>
             ویرایش پروفایل
           </button>
           <button class="menu__item" type="button" role="menuitem" data-menu-go="#/progress">
-            <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 19v-6"/><path d="M13 19V9"/><path d="M18 19v-9"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 19v-6"/><path d="M13 19V9"/><path d="M18 19v-9"/></svg>
             مسیر من
           </button>
           <button class="menu__item" type="button" role="menuitem" data-menu-go="#/settings">
-            <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8.5"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8.5"/></svg>
             تنظیمات
           </button>
           <div class="menu__sep"></div>
           <button class="menu__item" type="button" role="menuitem" data-menu-go="#/about">
-            <svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg>
             دربارهٔ سازنده
           </button>
         </div>
@@ -97,9 +84,8 @@
     <main class="content" id="view" tabindex="-1"></main>
 
     <footer class="appfoot">
-      <span>مهراز — یادگیری آفلاین، بدون حساب کاربری.</span>
+      <span>مهراز</span>
       <a href="#/about">دربارهٔ سازنده</a>
-      <a href="#/settings">حریم خصوصی و داده‌ها</a>
     </footer>
   </div>
 </div>
@@ -111,26 +97,31 @@
 
 <div class="boot" id="boot">
   <div class="boot__inner">
-    <span class="boot__mark" aria-hidden="true">
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-        <path d="M3.6 20.4V9.9L12 5.2l8.4 4.7v10.5" stroke="rgba(255,255,255,.42)" stroke-width="1.5" stroke-linejoin="round"/>
-        <path d="M7.7 20.4v-7.2L12 10.7l4.3 2.5v7.2" stroke="#fff" stroke-width="1.7" stroke-linejoin="round"/>
-        <path d="M12 3.4v3.2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-        <rect x="10.5" y="2" width="3" height="1.5" rx=".5" fill="#fff"/>
+    <div class="boot__stage">
+      <svg class="boot__ring" viewBox="0 0 92 92" aria-hidden="true">
+        <circle cx="46" cy="46" r="41"/>
       </svg>
-    </span>
+      <span class="boot__mark" aria-hidden="true">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+          <path d="M3.6 20.4V9.9L12 5.2l8.4 4.7v10.5" stroke="rgba(255,255,255,.42)" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M7.7 20.4v-7.2L12 10.7l4.3 2.5v7.2" stroke="#fff" stroke-width="1.7" stroke-linejoin="round"/>
+          <path d="M12 3.4v3.2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="10.5" y="2" width="3" height="1.5" rx=".5" fill="#fff"/>
+        </svg>
+      </span>
+    </div>
     <div>
       <div class="boot__word">مهراز</div>
       <div class="boot__latin">MEHRAZ</div>
     </div>
-    <div class="boot__bar" role="progressbar" aria-label="در حال آماده‌سازی"></div>
-    <p class="boot__note">در حال آماده‌سازی فضای یادگیری — بدون نیاز به اینترنت</p>
+    <div class="boot__bar" role="progressbar" aria-label="در حال آماده‌سازی"><i></i></div>
+    <p class="boot__note">فضای یادگیری شما آماده می‌شود</p>
   </div>
 </div>
 
 <noscript>
-  <div style="padding:24px;text-align:center;font-family:Tahoma,sans-serif">
-    برای استفاده از مهراز باید JavaScript در مرورگر فعال باشد.
+  <div style="padding:28px;text-align:center;font-family:Tahoma,sans-serif">
+    برای استفاده از مهراز، JavaScript را در مرورگر فعال کنید.
   </div>
 </noscript>
 

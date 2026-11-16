@@ -259,6 +259,7 @@ src/styles/components.css      every component, light + night themes
 src/styles/motion.css          keyframes, page transitions, stagger, reduced motion
 src/styles/responsive.css      breakpoints, bottom nav, touch targets, print
 src/scripts/bootstrap.js       namespace, utils, Persian digits, icons, brand
+src/scripts/art.js             generated SVG art: orbit, monograms, rings, area charts, empty states
 src/scripts/jalali.js          Jalali conversion, leap years, month lengths, age
 src/scripts/storage.js         IndexedDB → localStorage → memory adapter
 src/scripts/state.js           state tree, normalisation, mutations, statistics

@@ -14,7 +14,7 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 
 $styleFiles = @('tokens', 'layout', 'components', 'motion', 'responsive')
 $scriptFiles = @(
-    'bootstrap', 'jalali', 'storage', 'state', 'content', 'backup',
+    'bootstrap', 'art', 'jalali', 'storage', 'state', 'content', 'backup',
     'components', 'router', 'profile', 'dashboard', 'learning',
     'examination', 'review', 'settings', 'app'
 )

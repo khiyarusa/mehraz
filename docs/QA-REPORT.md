@@ -1,4 +1,114 @@
-# MEHRAZ — QA Report (Phase 01)
+# MEHRAZ — QA Report
+
+Two passes are recorded here:
+
+- **v2 — visual, UX and content pass** (current): everything below in section A.
+- **v1 — foundation pass** (historical, kept for evidence): section B onwards.
+
+---
+
+# A. v2 pass — visual transformation and content cleanup
+
+Date: 2026-11-16 · build size 323.8 KB · single file, `file://`
+
+## A1. Scope executed
+
+1. Full source audit (not the docs): strings, dev surface, dead controls, layout math.
+2. Identity and copy: creator name corrected, every technical message removed from
+   the student interface, Persian proofreading of all touched strings.
+3. Removal of the development surface: structural preview toggle, sample book,
+   sample lesson, sample exam, demo labels, `devOnly` route guard, `devPreview` pref.
+4. New design system: tokens v2, art system (inline SVG), component layer rewrite.
+5. Page-level redesign: welcome, onboarding, dashboard, library, book, lesson,
+   exam, result, review, progress, settings, about.
+6. Motion: branded boot sequence, page/stagger entrance, orbit drift, ring and area
+   draw, sheen, toast/modal transitions, reduced-motion overrides.
+7. Measurement pass in a real browser at six widths.
+
+## A2. Confirmed defects found and fixed in this pass
+
+| # | Defect | Evidence | Fix |
+| --- | --- | --- | --- |
+| 1 | Creator shown as «آمین» | `settings.js` string | corrected to «امین»; source scan now returns zero matches |
+| 2 | Technical messaging throughout the student UI (offline, local storage, no account, file://) | welcome chips, footer, boot note, sidebar chip, dashboard cards, settings storage card, toasts | removed; replaced with student-facing language or deleted |
+| 3 | Development tools exposed to students | Settings → «ابزار توسعه» with structural preview; demo book/lesson/exam; demo banners | entire surface removed from source, build and UI |
+| 4 | Bottom navigation rendered **in normal flow on desktop** underneath the footer | computed `display:block`, `position:static` at 1280/1440 | base `.bottomnav{display:none}` restored outside the mobile media query; now `none` on desktop, `grid`+`fixed` ≤1023 |
+| 5 | Stat band collapsed to a single column at 360px | `gridTemplateColumns` = 1 track | 1-col override removed; 2×2 kept with reduced numeral size |
+| 6 | Inconsistent corner radius on mobile stat band (15px vs 20px elsewhere) | computed `border-radius` 15px | unified to `--r-lg` (20px) |
+| 7 | Brand Latin sub-line rendered at 6.4–7.4px | computed font-size | hidden below 640px, 8.3px above (decorative only) |
+| 8 | Chart axis labels at 9px | computed font-size | raised to 10px |
+| 9 | Missing focus-visible continuity after redesign | source review | `:focus-visible` ring re-declared globally and used by every interactive component |
+
+### Investigated, not a defect
+
+- **Exam submit appeared not to navigate** in one run. Re-test showed the attempt was
+  stored and the route changed after the IndexedDB write resolved. It is latency in
+  the asynchronous flush, not a routing bug; behaviour is correct.
+- **`.hero` reports `scrollHeight` > `clientHeight`.** The overflow is the decorative
+  orbit positioned partly outside the panel; measured content (`actions` bottom 386px)
+  sits inside the panel (bottom 408px). No text is clipped.
+- **Hero heading contrast measured 1.03:1.** False positive: the sampler walks to the
+  nearest solid background, but the hero paints a gradient. Actual white-on-navy is ≈15:1.
+
+## A3. Measurements (real render, iframe at fixed widths)
+
+| Width | Horizontal overflow | Sidebar | Bottom nav | Stat band | Hero height |
+| --- | --- | --- | --- | --- | --- |
+| 360 | 0 | hidden | floating, fixed | 2 cols | 358 |
+| 390 | 0 | hidden | floating, fixed | 2 cols | 296 |
+| 430 | 0 | hidden | floating, fixed | 2 cols | 300 |
+| 768 | 0 | hidden | floating, fixed | 2 cols | 310 |
+| 1280 | 0 | visible (246) | none | 4 cols | 410 |
+| 1440 | 0 | visible (268) | none | 4 cols | 410 |
+
+Contrast (computed): body 16.9:1 · card text 5.56:1 · hints 5.56:1 · stat labels 5.56:1 ·
+section titles 16.96:1.
+
+Routes walked with zero console errors and zero rendered error cards:
+dashboard, library, library?scope=all, library/10, library/10/math, library/7, exam,
+review, progress, settings, about, profile/edit, plus book, lesson and exam-result
+against a temporary in-memory fixture (not shipped).
+
+Lesson surface: 10 editorial sections, 10 TOC entries, 10 section indices.
+Book surface: chapter accordion + 2 lesson rows. Exam runner: 4 option buttons,
+4 navigator cells, result page 1 ring + 2 review rows.
+
+## A4. Acceptance checklist
+
+| Requirement | Status |
+| --- | --- |
+| Correct creator spelling (امین) | PASS |
+| No repeated technical messaging | PASS (source scan + UI review) |
+| No exposed development tools | PASS |
+| No fake educational content | PASS — catalogue empty, fixture used only in a test harness |
+| All navigation functional | PASS — 12 routes + 3 content routes |
+| No broken interactions | PASS for tested controls; see A5 |
+| No data loss after upgrade | PASS — schema untouched, existing record loaded, backup import/export unchanged |
+| Backup and restore functional | PASS (re-tested after redesign) |
+| No unexpected network activity | PASS — zero resource entries, CSP intact |
+| Smooth responsive behaviour | PASS — 0 overflow at six widths |
+| All core pages visually reviewed | **NOT TESTED** — screenshot capture failed (see A5) |
+| No severe console errors | PASS — `MEHRAZ.diag.errors` empty |
+| No severe layout issues | PASS by measurement; pixel review not possible |
+
+## A5. What could not be verified in this pass
+
+| Item | Status | Reason |
+| --- | --- | --- |
+| Screenshots of the ten pages | **NOT TESTED** | The browser capture endpoint returned `browser_capture_busy` / `browser_cancelled` for every attempt after the first hour of the session, on fresh tabs and fresh page loads. No image was produced; nothing is claimed about pixels. |
+| Real Android device | **NOT TESTED** | No device attached. |
+| Firefox / Safari | **NOT TESTED** | Single Chromium engine available. |
+| Screen reader (NVDA/TalkBack) | **NOT TESTED** | No assistive technology in this environment. |
+| Full browser process restart | **NOT TESTED** | The automation pane tears down storage when its last tab closes. |
+| Real touch targets | **NOT TESTED** | No coarse-pointer hardware; the CSS rule exists and was reviewed. |
+
+Honest summary: the redesign is verified by DOM structure, computed geometry,
+contrast maths and interaction tests. It is **not** verified by looking at pixels,
+because that instrument was unavailable. A human should open the file once and
+confirm the visual impression before this is called finished.
+
+---
+## B. v1 pass — foundation (historical)
 
 Build: `2026-11-15 22:37` · artefact `start.html` 323.7 KB · 9 658 lines
 Status legend: **PASS** · **FAIL** · **NOT TESTED** · **BLOCKED**

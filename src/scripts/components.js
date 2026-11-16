@@ -60,14 +60,20 @@
     );
   };
 
+  var EMPTY_ART = {
+    book: 'lesson', library: 'library', exam: 'exam', review: 'review',
+    progress: 'progress', search: 'search', sparkles: 'progress', alert: 'search'
+  };
+
   ui.empty = function (opts) {
     var compact = opts.compact ? ' empty--compact' : '';
+    var kind = EMPTY_ART[opts.icon] || 'progress';
     return (
       '<div class="empty' +
       compact +
       '">' +
       '<span class="empty__art">' +
-      M.icon(opts.icon || 'sparkles', opts.compact ? 22 : 26) +
+      M.art.empty(kind, opts.compact ? 64 : 88) +
       '</span>' +
       '<p class="empty__title">' +
       esc(opts.title) +
@@ -154,135 +160,43 @@
 
   ui.donut = function (value, opts) {
     opts = opts || {};
-    var size = opts.size || 92;
-    var stroke = opts.stroke || 9;
-    var r = (size - stroke) / 2;
-    var c = 2 * Math.PI * r;
-    var v = util.clamp(value, 0, 100);
-    var offset = c - (v / 100) * c;
+    return M.art.ring(util.clamp(value, 0, 100), opts);
+  };
+
+  ui.ring = function (value, opts) {
+    return M.art.ring(util.clamp(value, 0, 100), opts || {});
+  };
+  ui.weekChart = function (days) {
+    var values = days.map(function (d) { return d.count; });
+    var total = values.reduce(function (a, b) { return a + b; }, 0);
+    var labels = days.map(function (d) { return util.toFa(d.day); });
     return (
-      '<div class="donut" style="width:' +
-      size +
-      'px;height:' +
-      size +
-      'px" role="img" aria-label="' +
-      esc(opts.aria || 'پیشرفت ' + util.fmtPct(v)) +
-      '">' +
-      '<svg width="' +
-      size +
-      '" height="' +
-      size +
-      '" viewBox="0 0 ' +
-      size +
-      ' ' +
-      size +
-      '">' +
-      '<circle class="donut__track" cx="' +
-      size / 2 +
-      '" cy="' +
-      size / 2 +
-      '" r="' +
-      r +
-      '" fill="none" stroke-width="' +
-      stroke +
-      '"/>' +
-      '<circle class="donut__value" cx="' +
-      size / 2 +
-      '" cy="' +
-      size / 2 +
-      '" r="' +
-      r +
-      '" fill="none" stroke-width="' +
-      stroke +
-      '" stroke-dasharray="' +
-      c.toFixed(1) +
-      '" stroke-dashoffset="' +
-      c.toFixed(1) +
-      '" data-donut-value="' +
-      offset.toFixed(1) +
-      '"/>' +
-      '</svg>' +
-      '<span class="donut__label">' +
-      util.fmtPct(v) +
-      (opts.caption ? '<small>' + esc(opts.caption) + '</small>' : '') +
-      '</span>' +
+      '<figure style="margin:0">' +
+      M.art.areaChart(values, { labels: labels, height: 120 }) +
+      '<figcaption class="hint" style="margin-top:8px">' +
+      (total
+        ? 'در این هفته ' + util.toFa(total) + ' رویداد یادگیری ثبت شده است.'
+        : 'هنوز فعالیتی برای این هفته ثبت نشده است.') +
+      '</figcaption></figure>'
+    );
+  };
+
+  ui.statBand = function (items) {
+    return (
+      '<div class="statband">' +
+      items.map(function (it) {
+        return (
+          '<div class="statband__cell">' +
+          '<div class="statband__label">' + M.icon(it.icon || 'progress', 14) + '<span>' + esc(it.label) + '</span></div>' +
+          '<div class="statband__value">' + (it.raw ? it.value : esc(it.value)) +
+          (it.unit ? '<small>' + esc(it.unit) + '</small>' : '') + '</div>' +
+          (it.foot ? '<div class="statband__foot">' + esc(it.foot) + '</div>' : '') +
+          '</div>'
+        );
+      }).join('') +
       '</div>'
     );
   };
-
-  ui.weekChart = function (days) {
-    var max = Math.max.apply(
-      null,
-      days.map(function (d) {
-        return d.count;
-      })
-    );
-    var peak = Math.max(1, max);
-    var w = 300;
-    var h = 120;
-    var gap = 10;
-    var bw = (w - gap * (days.length - 1)) / days.length;
-    var bars = days
-      .map(function (d, i) {
-        var ratio = d.count / peak;
-        var bh = Math.max(3, ratio * (h - 26));
-        var x = i * (bw + gap);
-        var y = h - 18 - bh;
-        var fill = d.isToday ? 'var(--brand)' : d.count ? 'var(--brand-soft-2)' : 'var(--surface-3)';
-        return (
-          '<rect x="' +
-          x.toFixed(1) +
-          '" y="' +
-          y.toFixed(1) +
-          '" width="' +
-          bw.toFixed(1) +
-          '" height="' +
-          bh.toFixed(1) +
-          '" rx="4" fill="' +
-          fill +
-          '" class="bar-anim" style="animation-delay:' +
-          (i * 45) +
-          'ms"/>' +
-          '<text x="' +
-          (x + bw / 2).toFixed(1) +
-          '" y="' +
-          (h - 2) +
-          '" text-anchor="middle">' +
-          util.toFa(d.day) +
-          '</text>'
-        );
-      })
-      .join('');
-    var total = days.reduce(function (a, d) {
-      return a + d.count;
-    }, 0);
-    return (
-      '<figure style="margin:0">' +
-      '<svg class="chart" viewBox="0 0 ' +
-      w +
-      ' ' +
-      h +
-      '" role="img" aria-label="فعالیت هفته: ' +
-      util.toFa(total) +
-      ' رویداد">' +
-      '<line x1="0" y1="' +
-      (h - 18) +
-      '" x2="' +
-      w +
-      '" y2="' +
-      (h - 18) +
-      '" stroke="var(--border)" stroke-width="1"/>' +
-      bars +
-      '</svg>' +
-      '<figcaption class="hint" style="margin-top:6px">' +
-      (total
-        ? 'در این هفته ' + util.toFa(total) + ' رویداد یادگیری ثبت شده است.'
-        : 'در این هفته هنوز رویدادی ثبت نشده است.') +
-      '</figcaption>' +
-      '</figure>'
-    );
-  };
-
   ui.stat = function (opts) {
     return (
       '<div class="stat">' +
@@ -508,14 +422,24 @@
 
   /* ---- transitions ------------------------------------------------------ */
   ui.animateProgress = function (root) {
-    var bars = util.$$('[data-progress]', root || document);
-    var donuts = util.$$('[data-donut-value]', root || document);
+    var host = root || document;
+    var bars = util.$$('[data-progress]', host);
+    var rings = util.$$('[data-ring-value]', host);
+    var donuts = util.$$('[data-donut-value]', host);
+    var orbits = util.$$('[data-orbit-pct]', host);
+
     util.nextFrame(function () {
       bars.forEach(function (bar) {
         bar.style.width = util.clamp(Number(bar.getAttribute('data-progress')), 0, 100) + '%';
       });
-      donuts.forEach(function (ring) {
-        ring.style.strokeDashoffset = ring.getAttribute('data-donut-value');
+      rings.concat(donuts).forEach(function (ring) {
+        var v = ring.getAttribute('data-ring-value') || ring.getAttribute('data-donut-value');
+        ring.style.strokeDashoffset = v;
+      });
+      orbits.forEach(function (arc) {
+        var len = Math.round(2 * Math.PI * 86);
+        var pct = util.clamp(Number(arc.getAttribute('data-orbit-pct')), 0, 100);
+        arc.style.strokeDashoffset = String(len - (pct / 100) * len);
       });
     });
   };

@@ -1,291 +1,199 @@
-# MEHRAZ — Design System
+# MEHRAZ — Design System (v2)
 
-Version 1.0.0 · phase 01
-
-The visual language is "quiet academic": white paper, deep navy structure, one
-confident blue for action, generous space, no decoration that does not carry
-meaning. Everything is RTL-first.
+Visual language: **editorial white, deep navy structure, one confident blue.**
+The goal of v2 was not "more decoration" — it was composition: every page should
+read as a designed spread, not a grid of identical boxes.
 
 ---
 
-## 1. Brand
+## 1. What changed from v1
 
-### Mark
-
-A geometric arch inside a rounded square: the outer arch is drawn at 42 % white
-so it reads as a plan, the inner arch is solid white, and a keystone sits above.
-It references architecture and a gateway to knowledge — not a school icon, not a
-book clip-art.
-
-```
-24×24 viewBox
-M3.6 20.4V9.9L12 5.2l8.4 4.7v10.5   (outer, 1.5 stroke, white 42%)
-M7.7 20.4v-7.2L12 10.7l4.3 2.5v7.2  (inner, 1.7 stroke, white)
-M12 3.4v3.2 + rect(10.5,2,3,1.5)    (keystone)
-```
-
-The mark sits on a 155° blue gradient (`#2f6df0 → #1d4ed8 → #17347a`) with a
-hairline inner highlight. Sizes: 40 px (header/sidebar), 32 px (compact), 54 px
-(boot splash), 30 px (splash glyph).
-
-### Wordmark
-
-Persian «مهراز» in 700 weight, above the tracked Latin `MEHRAZ` (0.34 em, 8 px,
-uppercase, muted). The Latin line is a texture, not a second logotype; it is
-hidden below 380 px.
-
-### Usage
-
-- Sidebar: `onDark` variant, white wordmark, Latin at 50 % white.
-- Mobile header: compact variant, ink wordmark.
-- Never place the mark on a busy photograph. Never recolour the arches.
+| Area | v1 | v2 |
+| --- | --- | --- |
+| Palette | flat semantic aliases | ink scale + accent set with explicit roles, higher-contrast muted text, gradient hero |
+| Rhythm | one card style everywhere | five composition patterns: hero, stat band, continue card, subject card, editorial block |
+| Illustration | none (icons only) | generated SVG art system: orbit, monograms, rings, area charts, empty-state scenes |
+| Chrome | full-width mobile bar, storage chip in sidebar | floating pill navigation, student card in sidebar, scroll-aware topbar |
+| Type | 15/1.85 body, 28 display | display up to 2.55rem in the hero, 1.3 line-height titles, 10px overlines with tracking |
+| Motion | generic rise/fade | branded boot sequence, orbit drift, ring/area draw, sheen on primary, staggered entrance |
+| Density | uniform padding | deliberate scale: 20–40px depending on the panel's role |
 
 ---
 
 ## 2. Colour
 
-Two layers: raw brand values, then semantic aliases. **Components only use the
-semantic aliases**, which is what makes the night theme a token swap rather than
-a second stylesheet.
+### Ink (structure)
+`--ink-950 #060F1B` · `--ink-900 #0A1727` · `--ink-800 #102338` · `--ink-700 #17314B`
 
-### Raw palette (fixed by the brand brief)
+### Blue (action)
+`--blue-700 #1E51D6` · `--blue-600 #2F6BFF` · `--blue-500 #4D82FF` · `--blue-400 #7FA6FF`
+`--blue-100 #E6EFFF` (soft) · `--blue-050 #F3F7FF` (wash)
 
-| Token | Value | Use |
-| --- | --- | --- |
-| `--palette-bg` | `#FFFFFF` | page |
-| `--palette-navy` | `#14243B` | structure, hero |
-| `--palette-navy-deep` | `#0D1B2A` | sidebar base, hero end |
-| `--palette-blue` | `#2563EB` | primary action |
-| `--palette-blue-2` | `#3B82F6` | gradient partner, active accents |
-| `--palette-blue-soft` | `#EAF2FF` | selected surfaces |
-| `--palette-text` | `#172033` | body |
-| `--palette-text-2` | `#64748B` | secondary text |
-| `--palette-border` | `#E5EAF1` | hairlines |
-| `--palette-surface` | `#F6F8FC` | inset surfaces |
-| `--palette-success` | `#16876B` | success |
-| `--palette-warning` | `#D69E36` | caution |
-| `--palette-danger` | `#D95353` | destructive |
+### Functional accents — never decoration
+`--mint-600 #0B8F76` (success / completed) · `--amber-600 #B07B22` (caution)
+`--violet-600 #6A5AD8` · `--rose-600 #BE5568` (errors) · `--violet/rose` also seed
+subject monograms so subjects differ without inventing new semantics.
 
-### Semantic aliases (light)
+### Surfaces
+`--paper #FAFBFE` page · `--surface #FFFFFF` card · `--surface-2 #F7F9FD` inset ·
+`--line #E4EAF3` hairline · `--line-2 #EEF2F8` internal divider.
 
-`--bg`, `--bg-sunken`, `--bg-raised`, `--bg-translucent`, `--bg-inset`,
-`--surface`, `--surface-2`, `--surface-3`, `--border`, `--border-strong`,
-`--txt-strong`, `--txt`, `--txt-muted`, `--txt-faint`, `--brand`, `--brand-hover`,
-`--brand-2`, `--brand-soft`, `--brand-soft-2`, `--brand-line`, `--ok`, `--ok-soft`,
-`--warn`, `--warn-soft`, `--danger`, `--danger-soft`, `--nav-navy`, `--nav-text`.
+### Text
+`--t-900 #0B1A2B` headings · `--t-500 #566A82` secondary · `--t-400 #7C8CA1` meta.
 
-### Night theme
+### Measured contrast (sRGB, WCAG 2.1)
 
-`[data-theme="night"]` on `<html>` swaps the aliases (background `#0b1622`,
-surface `#101f2e`, border `#1e3046`, text `#dde7f4`, brand `#4c8df6`). The
-sidebar stays navy, so the identity holds in both themes.
+| Pair | Ratio |
+| --- | --- |
+| Body text on paper | 16.9 : 1 |
+| Secondary `--t-500` on white | 5.56 : 1 |
+| Meta `--t-400` on white | 4.1 : 1 (used only ≥11px, non-essential) |
+| Section titles | 16.96 : 1 |
+| White on hero navy (avg. #0D1E33) | ≈15 : 1 |
 
-### Measured contrast (WCAG 2.1, sRGB)
-
-| Pair | Ratio | Result |
-| --- | --- | --- |
-| Body text on page (light) | 16.27 : 1 | AAA |
-| Secondary text `--txt-muted` on white | 4.76 : 1 | AA |
-| Body text on page (night) | 14.59 : 1 | AAA |
-| White on hero navy | 13.4 : 1 | AAA |
-| Hero meta text (white 82 %) on navy | 8.6 : 1 | AAA |
-| Primary button white on `#2563EB` | 4.9 : 1 | AA |
-
-Colour is never the only signal: states also change icon, text, or border.
+Colour never carries meaning alone: every state also changes text, icon or border.
 
 ---
 
-## 3. Typography
+## 3. Type
 
-### Stack
+Stack unchanged and **no bundled webfont** (see v1 rationale: the Persian faces
+available on the build machine are proprietary and may not be redistributed;
+Vazirmatn stays first in the stack so a licensed copy can be dropped in later).
 
-```css
---font-sans: "Vazirmatn", "IRANSansX", "Segoe UI", "Noto Naskh Arabic",
-             Tahoma, Roboto, "Droid Arabic Naskh", system-ui, sans-serif;
-```
-
-**Why no bundled webfont.** A redistributable, licensed Persian webfont was not
-available in the build environment; the Persian faces present on this machine
-(B Nazanin, B Mitra, IRAN Sans variants) are commercial and may not be
-redistributed. Shipping them would be a licence violation, and downloading one at
-runtime is forbidden. The stack therefore resolves to a high-quality
-Persian-capable system face on every target: Segoe UI / Tahoma on Windows, Noto
-Naskh Arabic / Roboto on Android. Vazirmatn is first so that a licensed copy
-dropped into the project in phase 02 takes effect with no code change.
-
-### Scale
-
-| Token | Size | Use |
+| Role | Size / weight | Notes |
 | --- | --- | --- |
-| `--fs-11` | 11 px | chips, meta, footnotes |
-| `--fs-12` | 12 px | small UI text |
-| `--fs-13` | 13 px | card body, lists |
-| `--fs-14` | 14 px | buttons, dense reading |
-| `--fs-15` | 15 px | default body |
-| `--fs-16` | 16 px | section titles |
-| `--fs-18/20` | 18/20 px | card titles, sub-headings |
-| `--fs-24/28` | 24/28 px | page titles |
-| `--fs-34/44` | 34/44 px | hero greeting |
+| Hero display | clamp(1.75 → 2.55rem) / 800 | 1.34 line-height, −0.02em tracking (Latin only) |
+| Page title | clamp(1.45 → 2rem) / 700 | |
+| Section title | 1rem / 700 | preceded by a 5px blue dot |
+| Card title | 0.9375rem / 700 | |
+| Body | 0.9375rem / 400 | 1.85 line-height |
+| Reading body (lesson) | 0.875rem / 400 | 2.0 line-height |
+| Meta / caption | 0.6875rem / 400–600 | |
+| Overline | 0.625rem / 800 | 0.14em tracking, uppercase Latin |
 
-Weights 400 / 500 / 600 / 700 only. Line height: 1.35 titles, 1.55 snug,
-**1.85 body**, 2.0 loose — Persian ascenders and diacritics need the extra room.
-
-Numbers use `--font-num` with `font-variant-numeric: tabular-nums` and Persian
-digits via `util.toFa()`. Percentages are `۵۰٪` (number first, sign after), which
-is what RTL bidi produces naturally and what Iranian textbooks use.
-
-Rules: no letter-spacing on Persian; no text-transform; `overflow-wrap` never
-forced (long Persian words are common — containers use `min-width: 0` instead);
-no clipping through fixed heights on text blocks.
+Persian punctuation only (، ٫ ٪), ZWNJ in compounds, Persian digits via
+`util.toFa`. Numbers are tabular in stats and tables.
 
 ---
 
 ## 4. Space, radius, elevation
 
-- Space scale 4 px base: 4, 8, 12, 16, 20, 24, 28, 32, 40, 48, 64, 80.
-- Radii: 6 (micro), 10 (inputs compact), 14 (buttons/cards small), 18 (cards),
-  24 (hero/panels), 30 (onboarding), pill for chips.
-- Shadows: `--sh-1` (resting card), `--sh-2` (hover lift), `--sh-3` (modal, hero),
-  `--sh-brand` (primary button), `--ring` (focus).
-- Elevation is used in four steps only. A card either rests, lifts 2 px on hover,
-  or floats as a dialog. No glow, no coloured shadow except the brand button.
+- 4px scale; component padding is role-based: card 16–24, hero 22–40, compact row 12–15.
+- Radii: 8 (micro) · 11 (small control) · 15 (control) · 20 (card) · 26 (hero mobile) · 34 (hero desktop) · pill.
+- Elevation has three steps only: resting (`--sh-1`), lift on hover (`--sh-2`), floating/dialog/hero (`--sh-3`).
+  Primary buttons carry a coloured shadow because they are the single action on a surface.
 
 ---
 
-## 5. Layout
+## 5. Composition patterns
 
-| Breakpoint | Behaviour |
+1. **Hero** — greeting line with a live dot, 2-line promise, two actions, glass chips,
+   and an orbit illustration whose arc is bound to real progress. Desktop: 1.18/0.82
+   split. Mobile: the orbit becomes a corner texture (opacity .42) so the text leads.
+2. **Stat band** — one surface, four cells, hairlines, 28px numerals, a 2px gradient
+   rule that appears on hover. Replaces four separate boxes.
+3. **Continue card** — the one place that answers "what now?": monogram tile, title,
+   meta, ring, chevron.
+4. **Subject card** — generated monogram (6 variants, deterministic per subject id),
+   title, lesson count, progress line. Hover lifts 3px.
+5. **Editorial block (lesson)** — numbered circle, section title, body at reading
+   measure; empty sections become a dashed panel with a "در راه" chip, not a skeleton.
+
+---
+
+## 6. Art system (`src/scripts/art.js`)
+
+All artwork is inline SVG generated at runtime — no images, no icon fonts, no canvas.
+
+| Function | Used for |
 | --- | --- |
-| ≥ 1500 px | content max 1200 px |
-| ≥ 1024 px | persistent sidebar (248–274 px) + sticky topbar, no bottom nav |
-| ≤ 1023 px | sidebar hidden, bottom navigation (5 items), compact topbar, content padding + safe area |
-| ≤ 640 px | single-column grids, stacked hero, full-width buttons, two-column modal footer |
-| ≤ 380 px | one-column stats, Latin wordmark hidden |
+| `art.monogram(seed,size)` | subject identity; hash of the subject id picks one of six geometric emblems and one of six accents |
+| `art.orbit({pct})` | dashboard/welcome hero: three concentric orbit rings, progress arc, four floating glyph nodes |
+| `art.ring(pct,opts)` | every progress ring (hero-adjacent, book, exam result, progress page) |
+| `art.areaChart(values,labels)` | weekly activity |
+| `art.empty(kind)` | empty states: library, lesson, exam, review, progress, search |
+| `art.mesh(id)` | reserved page wash |
 
-Content width: `--content-max` 1120 px, centred, padding `clamp(16px, 3vw, 32px)`.
-Sidebar on the right in RTL (first grid column). The sidebar is `position:
-sticky` with its own scroll; the topbar is sticky with a translucent blurred
-backdrop.
+Determinism matters: a subject keeps the same emblem on the dashboard, in the
+library and inside a book page, so the student learns to recognise it.
 
-Nothing may overflow horizontally: `body { overflow-x: hidden }` is a safety net,
-not a fix — the responsive audit asserts `scrollWidth === clientWidth` at 360,
-390, 414, 768, 1024, 1280 and 1440.
-
----
-
-## 6. Components
-
-Inventory: brand, navigation item, sidebar, bottom navigation, topbar, page head,
-section head, card, hero, statistic card, progress bar, donut, week chart,
-breadcrumb, chip, dot, empty state, banner, avatar, profile chip, menu, search
-box + results panel, buttons (primary / soft / ghost / quiet / danger / sizes),
-icon button, input, select, field + error, segmented control, tabs, accordion,
-grade card, track chip, subject card, chapter row, lesson row, quiz card, option,
-question navigator, table, skeleton, placeholder block, TOC, stepper, summary
-list, setting row, modal, bottom sheet, confirmation dialog, toast, creator card,
-link button, heat cell.
-
-Every one is defined once in `components.css` and rendered by one helper in
-`components.js`. No page invents its own button or its own card.
-
-### Component contracts
-
-- **Empty state** — icon in a bordered tile, title, one or two sentences that
-  explain *why* it is empty and what will fill it, optional actions. Never a
-  decorative illustration instead of an explanation.
-- **Statistic card** — label + icon, value in tabular numerals, footnote that
-  states the denominator ("از ۰ درس"), never a fabricated delta.
-- **Progress** — one track, one fill, optional label row. Animates width once on
-  mount (420 ms, `--e-soft`). Decorative instances are `aria-hidden` and carry a
-  screen-reader percentage in the surrounding link.
-- **Modal** — heading, optional subtitle, scrollable body, action row. Focus moves
-  in, is trapped, Escape closes, focus returns to the trigger, background scroll
-  locked.
-- **Toast** — bottom centre, auto-dismiss 4.2 s (or persistent for warnings),
-  optional action. Maximum three stacked.
-- **Question card** — type chip, index chip, prompt, options; options are buttons
-  with `aria-pressed`, multi-answer uses square markers, numeric answers use an
-  input that accepts Persian digits.
+`prefers-reduced-motion` and the in-app "کم" setting stop orbit rotation, node
+floating and dash drift; nothing depends on an animation to be readable.
 
 ---
 
 ## 7. Motion
 
-A single vocabulary; no ad-hoc timings.
-
 | Token | Value | Use |
 | --- | --- | --- |
-| `--d-instant` | 90 ms | press feedback |
-| `--d-fast` | 140 ms | hover, colour |
-| `--d-base` | 220 ms | small reveals |
-| `--d-slow` | 340 ms | cards, accordion |
-| `--d-page` | 420 ms | page entrance |
-| `--d-hero` | 700 ms | progress fill, chart |
+| `--d-fast` | 150ms | hover, colour |
+| `--d-base` | 240ms | small reveals |
+| `--d-slow` | 380ms | cards, accordion, toast |
+| `--d-page` | 460ms | page entrance |
+| `--d-hero` | 900ms | progress fill, chart draw |
 
-Easings: `--e-out` `cubic-bezier(.22,.61,.36,1)`, `--e-inout`
-`cubic-bezier(.4,0,.2,1)`, `--e-soft` `cubic-bezier(.16,1,.3,1)`.
+Easings: `--e-out cubic-bezier(.22,.61,.36,1)`, `--e-inout`, `--e-soft cubic-bezier(.16,1,.3,1)`.
 
-Repertoire: page rise (10 px + fade), staggered card entrance (30–330 ms by
-index), progress width transition, donut dash-offset transition, bar growth with
-`transform: scaleY`, accordion via `grid-template-rows: 0fr → 1fr`, modal
-scale-in 0.985 → 1, sheet slide-up, toast slide-in, skeleton shimmer, pulsing
-storage dot, button press scale 0.982.
+Signature moments:
 
-Rules: travel ≤ 12 px, no bounce, no parallax, no infinite animation except the
-skeleton shimmer and the storage dot, never animate off-screen content, never
-animate a property that triggers layout when a transform will do.
+- **Boot** (≈1s): the mark scales in while a ring draws itself, the wordmark rises,
+  a 3px bar fills right-to-left, then the veil lifts. Skipped instantly under reduced motion.
+- **Page**: 22px rise + fade on the page, children stagger at 30–210ms.
+- **Rings**: `stroke-dashoffset` transition 1.1s `--e-soft` triggered on mount.
+- **Area chart**: line draws (stroke-dashoffset), fill and dots fade in sequence.
+- **Hero orbit**: 90s / 54s / 40s rotations at low opacity, nodes float ±6px.
+- **Primary button**: a single sheen sweep on hover (never looping).
 
-`prefers-reduced-motion: reduce` **and** the in-app setting
-`[data-motion="reduced"]` collapse every duration to 0.001 ms and remove
-transforms. All functionality is identical without motion.
+Rules: transform/opacity only, no layout animation, no infinite animation except
+the orbit (paused off-screen by CSS `content-visibility` where supported and by
+reduced motion), travel ≤ 22px, nothing essential depends on motion.
 
 ---
 
-## 8. RTL and Persian
+## 8. Components (inventory)
 
-- `dir="rtl"` on `<html>`; layout uses logical properties
-  (`margin-inline-start`, `inset-inline-end`, `border-inline-end`) so mirroring is
-  automatic.
-- Latin fragments (handles, file names, numbers in code) are wrapped in
-  `dir="ltr"` spans.
-- Icons that imply direction (chevrons, arrows) are chosen for RTL: "forward" is
-  `chevronEnd` which draws left-pointing.
-- Punctuation: Persian comma «،», guillemets «» for quotations, ZWNJ (نیمفاصله)
-  used in compounds (`میشود`, `کتابخانه`).
-- Dates: Jalali, `۲۴ آبان ۱۴۰۵`, weekday-first in the dashboard header.
-- Numbers: Persian digits everywhere in UI; inputs accept both Persian and Latin
-  digits and normalise internally.
+Brand · nav item · sidebar student card · floating bottom nav · topbar (scroll-aware) ·
+page head · section head · hero · stat band · continue card · subject card · grade card ·
+track chip · chapter row · lesson row · editorial lesson block · TOC · breadcrumb ·
+progress bar · ring · area chart · empty state (6 scenes) · banner · chip · dot ·
+avatar · profile chip · menu · search box + results · buttons (primary/soft/ghost/quiet/danger,
+3 sizes) · icon button · input/select/field/error · segmented control · tabs · accordion ·
+quiz card · option · question navigator · table · skeleton · summary list · setting row ·
+modal · bottom sheet · confirm dialog · toast · creator card · link button.
+
+One implementation each, in `components.css` + `components.js`. Views compose, never clone.
 
 ---
 
-## 9. Accessibility
+## 9. RTL and Persian
 
-- Semantic landmarks: `aside`, `header`, `main#view` (`tabindex="-1"`), `nav`
-  with labels, `footer`.
-- Skip link to `#view` as the first focusable element.
-- Visible `:focus-visible` ring (2 px brand + 2 px offset), never removed.
-- Touch targets: 44 px minimum on coarse pointers (buttons, icon buttons, TOC
-  links, menu items, question navigator, profile chip); desktop may compress to
-  36 px for dense secondary actions.
-- Forms: explicit `<label for>`, `aria-invalid` semantics via error text with
-  `role="alert"`, errors announced through a polite live region.
-- All interactive elements are real `<button>`/`<a>`; no click-handled divs.
-- Every button performs an action; there are no decorative buttons.
-- Charts carry `role="img"` with a text alternative; the week chart also states
-  the total in its caption.
-- Motion respects the OS setting; contrast is measured, not assumed.
+Logical properties throughout (`margin-inline-start`, `inset-inline-end`,
+`border-inline-start`). Directional icons are chosen for RTL (chevronEnd points left).
+Latin fragments wrapped in `dir="ltr"`. The mobile bottom bar insets from both edges
+so it reads as a floating control rather than a full-width band.
 
 ---
 
-## 10. Do / don't
+## 10. Accessibility
+
+- Focus: 2px brand ring with 2px offset, never removed; `:focus-visible` only.
+- Targets: 44px minimum on coarse pointers (buttons, nav items, TOC, options, menu).
+- Landmarks + skip link; `main` receives focus after route change without stealing scroll.
+- Dialogs: `role="dialog"`, `aria-modal`, Escape at document level, focus trap, scroll lock, focus return.
+- Decorative progress bars inside links are `aria-hidden` with an `sr-only` percentage beside them.
+- Contrast measured, not assumed (table above). Meta text below 12px is never the only carrier of information.
+
+---
+
+## 11. Do / don't
 
 | Do | Don't |
 | --- | --- |
-| Use one blue for action, navy for structure | Colour headings or use blue for body text |
-| Let empty states explain the next step | Fill empty space with sample data |
-| Use the 4 px scale | Invent 13 px gaps |
-| One idea per card | Stack three actions of equal weight |
-| Keep the hero for greeting + one action | Put charts and tables inside the hero |
-| Prefer hairline borders over shadows | Glow, blur or gradient every surface |
-| Persian digits and Jalali dates | Latin digits in Persian sentences |
-| Test at 360 px first | Design desktop then squash |
+| Let the hero carry the page | Stack five equal cards above the fold |
+| Use one accent per subject | Colour every card differently |
+| Keep empty states explanatory and quiet | Fill them with sample lessons |
+| Animate the one thing that matters | Animate everything that mounts |
+| Use the 4px scale | Invent 13px gaps |
+| Prefer a hairline + one shadow | Glow or blur every surface |
+| Write for a student | Explain how the site is built |

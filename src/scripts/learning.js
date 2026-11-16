@@ -22,130 +22,91 @@
 
     var tabs =
       '<div class="segmented" role="tablist" aria-label="نمای کتابخانه">' +
-      '<a class="segmented__item' +
-      (scope === 'mine' ? ' is-active' : '') +
-      '" role="tab" aria-selected="' +
-      (scope === 'mine') +
-      '" href="#/library">پایهٔ من</a>' +
-      '<a class="segmented__item' +
-      (scope === 'all' ? ' is-active' : '') +
-      '" role="tab" aria-selected="' +
-      (scope === 'all') +
-      '" href="#/library?scope=all">همهٔ پایه‌ها</a>' +
+      '<a class="segmented__item' + (scope === 'mine' ? ' is-active' : '') + '" role="tab" aria-selected="' + (scope === 'mine') + '" href="#/library">پایهٔ من</a>' +
+      '<a class="segmented__item' + (scope === 'all' ? ' is-active' : '') + '" role="tab" aria-selected="' + (scope === 'all') + '" href="#/library?scope=all">همهٔ پایه‌ها</a>' +
       '</div>';
 
     var head = M.ui.pageHead({
       eyebrow: 'کتابخانه',
-      title: 'کتابخانهٔ درسی',
-      sub: 'ساختار کامل پایه‌ها و رشته‌ها آماده است. کتاب‌های رسمی پس از اعتبارسنجی منابع به همین ساختار افزوده می‌شوند.',
+      title: 'کتابخانهٔ درس‌ها',
+      sub: 'پایه و رشتهٔ خود را ببینید، کتاب را باز کنید و از فصل اول شروع کنید.',
       actions: tabs
     });
 
     var body;
+
     if (scope === 'mine') {
       var subjects = M.content.subjectsFor(p.grade, track);
-      body =
-        '<section class="section">' +
-        M.ui.sectionHead(
-          'پایهٔ ' + M.content.gradeLabel(p.grade) + (track ? ' — ' + M.content.trackLabel(track) : '')
-        ) +
+      var spotlight =
+        '<div class="spotlight">' +
+        '<div class="spotlight__num">' + util.toFa(p.grade) + '</div>' +
+        '<div style="min-width:0;flex:1 1 240px">' +
+        '<h2>پایهٔ ' + esc(M.content.gradeLabel(p.grade)) + (track ? ' — ' + esc(M.content.trackLabel(track)) : '') + '</h2>' +
+        '<p>' + (subjects.length ? util.toFa(subjects.length) + ' درس در این پایه' : 'هنوز کتابی برای این پایه ثبت نشده است') + '</p>' +
+        '</div>' +
+        (p.grade >= 10
+          ? '<div class="trackchips">' + M.store.TRACKS.map(function (t) {
+              return '<a class="trackchip" href="#/library/' + p.grade + '/' + t + '">' + esc(M.content.trackLabel(t)) + '</a>';
+            }).join('') + '</div>'
+          : '<a class="trackchip" href="#/library?scope=all">همهٔ پایه‌ها</a>') +
+        '</div>';
+
+      body = spotlight +
+        '<section class="section">' + M.ui.sectionHead('درس‌های من') +
         (subjects.length
-          ? '<div class="grid grid--subjects stagger">' +
-            subjects
-              .map(function (s) {
-                var pct = s.lessonCount ? (s.doneCount / s.lessonCount) * 100 : 0;
-                return (
-                  '<a class="subjectcard" href="#/subject/' +
-                  encodeURIComponent(s.id) +
-                  '"><div class="subjectcard__top"><span class="card__icon">' +
-                  M.icon('book', 18) +
-                  '</span><div style="min-width:0"><div class="subjectcard__title truncate">' +
-                  esc(s.title) +
-                  '</div><div class="subjectcard__meta">' +
-                  util.toFa(s.lessonCount) +
-                  ' درس</div></div></div>' +
-                  '<span class="sr-only">پیشرفت ' + util.fmtPct(pct) + '</span>' + M.ui.progress(pct, { size: 'sm', decorative: true }) +
-                  '</a>'
-                );
-              })
-              .join('') +
-            '</div>'
+          ? '<div class="grid grid--subjects stagger">' + subjects.map(function (s) {
+              var pct = s.lessonCount ? (s.doneCount / s.lessonCount) * 100 : 0;
+              return (
+                '<a class="subjectcard" href="#/subject/' + encodeURIComponent(s.id) + '">' +
+                '<div class="subjectcard__top">' + M.art.monogram(s.id, 46) +
+                '<div style="min-width:0"><div class="subjectcard__title truncate">' + esc(s.title) + '</div>' +
+                '<div class="subjectcard__meta">' + util.toFa(s.lessonCount) + ' درس</div></div></div>' +
+                '<div><div class="progress__label"><span>پیشرفت</span><b>' + util.fmtPct(pct) + '</b></div>' +
+                '<span class="sr-only">پیشرفت ' + util.fmtPct(pct) + '</span>' +
+                M.ui.progress(pct, { size: 'sm', decorative: true }) + '</div></a>'
+              );
+            }).join('') + '</div>'
           : M.ui.empty({
               icon: 'library',
               title: 'برای این پایه کتابی ثبت نشده است',
-              text: 'ساختار کتابخانه آماده است، اما محتوای درسی این پایه هنوز افزوده نشده. می‌توانید فهرست همهٔ پایه‌ها را ببینید.',
+              text: 'کتاب‌های این پایه هنوز به کتابخانه اضافه نشده‌اند. می‌توانید فهرست همهٔ پایه‌ها را ببینید.',
               actions: '<a class="btn btn--primary btn--sm" href="#/library?scope=all">دیدن همهٔ پایه‌ها</a>'
             })) +
-        '</section>' +
-        '<section class="section">' +
-        M.ui.banner({
-          type: 'info',
-          icon: 'shield',
-          text: 'همهٔ محتوای آموزشی در فاز بعدی از منابع رسمی کتاب‌های درسی گرفته و با ارجاع صفحه ثبت می‌شود. در این نسخه هیچ محتوای ساختگی وجود ندارد.'
-        }) +
         '</section>';
     } else {
       var groups = { middle: [7, 8, 9], high: [10, 11, 12] };
-      body = ['middle', 'high']
-        .map(function (cycle) {
-          return (
-            '<section class="section">' +
-            M.ui.sectionHead(CYCLE_LABEL[cycle]) +
-            '<div class="grid grid--grades stagger">' +
-            groups[cycle]
-              .map(function (g) {
-                var meta = M.content.gradeMeta[g];
-                var isMine = g === p.grade;
-                var tracks =
-                  g >= 10
-                    ? '<div class="trackchips">' +
-                      M.store.TRACKS.map(function (t) {
-                        return (
-                          '<a class="trackchip" href="#/library/' +
-                          g +
-                          '/' +
-                          t +
-                          '">' +
-                          esc(M.content.trackLabel(t)) +
-                          '</a>'
-                        );
-                      }).join('') +
-                      '</div>'
-                    : '<div class="trackchips"><a class="trackchip" href="#/library/' +
-                      g +
-                      '">مشاهدهٔ درس‌ها</a></div>';
-                return (
-                  '<div class="gradecard"><div class="row">' +
-                  '<span class="gradecard__num">' +
-                  util.toFa(g) +
-                  '</span>' +
-                  '<div class="gradecard__body"><h3>پایهٔ ' +
-                  esc(meta.label) +
-                  (isMine ? ' <span class="chip chip--brand" style="vertical-align:middle">پایهٔ شما</span>' : '') +
-                  '</h3><p>' +
-                  esc(meta.cycleLabel) +
-                  '</p></div></div>' +
-                  tracks +
-                  '</div>'
-                );
-              })
-              .join('') +
-            '</div></section>'
-          );
-        })
-        .join('');
+      body = ['middle', 'high'].map(function (cycle) {
+        return (
+          '<section class="section">' + M.ui.sectionHead(CYCLE_LABEL[cycle]) +
+          '<div class="grid grid--grades stagger">' +
+          groups[cycle].map(function (g) {
+            var meta = M.content.gradeMeta[g];
+            var isMine = g === p.grade;
+            var tracks = g >= 10
+              ? '<div class="trackchips">' + M.store.TRACKS.map(function (t) {
+                  return '<a class="trackchip" href="#/library/' + g + '/' + t + '">' + esc(M.content.trackLabel(t)) + '</a>';
+                }).join('') + '</div>'
+              : '<div class="trackchips"><a class="trackchip" href="#/library/' + g + '">مشاهدهٔ درس‌ها</a></div>';
+            return (
+              '<div class="gradecard"><div class="row">' +
+              '<span class="gradecard__num">' + util.toFa(g) + '</span>' +
+              '<div class="gradecard__body"><h3>پایهٔ ' + esc(meta.label) +
+              (isMine ? ' <span class="chip chip--brand" style="vertical-align:middle">پایهٔ شما</span>' : '') +
+              '</h3><p>' + esc(meta.cycleLabel) + '</p></div></div>' + tracks + '</div>'
+            );
+          }).join('') +
+          '</div></section>'
+        );
+      }).join('');
     }
 
     return {
       title: 'کتابخانه',
       nav: 'library',
       html: head + body,
-      onMount: function (root) {
-        M.ui.animateProgress(root);
-      }
+      onMount: function (root) { M.ui.animateProgress(root); }
     };
   };
-
   views.grade = function (params) {
     var grade = Number(params.grade);
     if (!M.content.gradeMeta[grade]) {
@@ -268,9 +229,6 @@
       '</span>' +
       (book.academicYear ? '<span class="chip">سال تحصیلی ' + esc(book.academicYear) + '</span>' : '') +
       (book.edition ? '<span class="chip chip--outline">نسخهٔ ' + esc(book.edition) + '</span>' : '') +
-      (book.demo || book.id === 'demo-book'
-        ? '<span class="chip chip--warn">نمونهٔ ساختاری — بدون محتوای آموزشی</span>'
-        : '') +
       '<span class="chip">' +
       util.toFa(progress.total) +
       ' درس</span>' +
@@ -573,7 +531,7 @@
             '</figure>'
         : '<div class="banner banner--warn">' +
             M.icon('alert', 16) +
-            '<span>تصویر خارجی مسدود شده است؛ در حالت آفلاین فقط تصویرهای درون‌برنامه‌ای مجازند.</span></div>';
+            '<span>این تصویر در دسترس نیست.</span></div>';
     }
     if (block.type === 'table' && block.head) {
       return (
@@ -627,23 +585,14 @@
         '</div>';
     }
     return (
-      '<section class="card card--pad" id="sec-' +
-      section.key +
-      '" data-section="' +
-      section.key +
-      '">' +
-      '<div class="card__head">' +
-      '<span class="card__icon">' +
-      M.icon(section.icon, 18) +
-      '</span>' +
-      '<h2 class="card__title">' +
-      esc(section.label) +
-      '</h2>' +
-      '<span class="chip chip--outline" style="margin-inline-start:auto">' +
-      util.toFa(index + 1) +
-      '</span>' +
+      '<section class="lsection" id="sec-' + section.key + '" data-section="' + section.key + '">' +
+      '<div class="lsection__head">' +
+      '<span class="lsection__idx">' + util.toFa(index + 1) + '</span>' +
+      '<h2 class="lsection__title">' + esc(section.label) + '</h2>' +
+      '<span class="chip ' + (section.hasContent ? 'chip--ok' : 'chip--outline') + ' push">' +
+      (section.hasContent ? 'آماده' : 'در راه') + '</span>' +
       '</div>' +
-      body +
+      '<div class="lsection__body">' + body + '</div>' +
       '</section>'
     );
   }
@@ -692,9 +641,6 @@
       ' بخش</span>' +
       (lesson.minutes ? '<span class="chip">' + util.toFa(lesson.minutes) + ' دقیقه</span>' : '') +
       (done ? '<span class="chip chip--ok">' + M.icon('check', 12) + ' خوانده‌شده</span>' : '') +
-      (book.demo || book.id === 'demo-book'
-        ? '<span class="chip chip--warn">نمونهٔ ساختاری</span>'
-        : '') +
       '</div>' +
       '</div>' +
       '<div class="row" style="gap:8px">' +
@@ -708,11 +654,6 @@
       '</button>' +
       '</div>' +
       '</div>' +
-      (book.demo || book.id === 'demo-book'
-        ? '<div class="banner banner--warn" style="margin-top:4px">' +
-          M.icon('alert', 16) +
-          '<span>این درس یک نمونهٔ ساختاری برای آزمون رابط است و هیچ محتوای آموزشی واقعی ندارد.</span></div>'
-        : '') +
       '</div>';
 
     var toc =

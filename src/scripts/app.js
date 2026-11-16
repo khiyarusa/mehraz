@@ -97,7 +97,8 @@
         .join('');
     }
 
-    app.renderStorage();
+    app.renderSideProfile();
+    app.bindTopbarScroll();
 
     var mobileBrand = document.getElementById('topbar-brand');
     if (mobileBrand) {
@@ -106,20 +107,29 @@
     }
   };
 
-  app.renderStorage = function () {
-    var host = document.getElementById('storage-chip');
-    if (!host) return;
-    var st = M.storage.status();
-    var ok = st.ok;
+  app.renderSideProfile = function () {
+    var host = document.getElementById('sidebar-profile');
+    var p = M.store.profile();
+    if (!host || !p) {
+      if (host) host.innerHTML = '';
+      return;
+    }
     host.innerHTML =
-      '<span class="dot ' +
-      (ok ? 'dot--ok' : 'dot--warn') +
-      '"></span>' +
-      '<span>' +
-      (ok
-        ? 'ذخیره‌سازی محلی: ' + esc(M.storage.label())
-        : 'ذخیره‌سازی دائمی در دسترس نیست') +
-      '</span>';
+      '<a class="side-profile" href="#/profile/edit">' +
+      M.ui.avatar(p.displayName, 'sm') +
+      '<span style="min-width:0"><span class="side-profile__name truncate">' + esc(p.displayName) + '</span>' +
+      '<span class="side-profile__meta">پایهٔ ' + esc(M.content.gradeLabel(p.grade)) + '</span></span>' +
+      '</a>';
+  };
+
+  app.bindTopbarScroll = function () {
+    var bar = document.getElementById('topbar');
+    if (!bar) return;
+    var onScroll = function () {
+      bar.classList.toggle('is-scrolled', window.scrollY > 6);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   };
 
   /* ---- global search ---------------------------------------------------- */
@@ -467,7 +477,7 @@
               modal.close();
               M.app.applyPrefs();
               if (!saved) {
-                M.ui.toast('بازیابی انجام شد اما ذخیره‌سازی دائمی ممکن نشد. لطفاً پشتیبان بگیرید.', {
+                M.ui.toast('ذخیرهٔ تغییرات ممکن نشد. برای نگه‌داشتن پیشرفت، یک نسخهٔ پشتیبان بگیرید.', {
                   type: 'warn',
                   ttl: 7000
                 });
@@ -514,15 +524,17 @@
         M.router.start();
 
         if (boot) {
-          boot.classList.add('is-hidden');
           window.setTimeout(function () {
-            if (boot.parentNode) boot.parentNode.removeChild(boot);
-          }, 420);
+            boot.classList.add('is-hidden');
+            window.setTimeout(function () {
+              if (boot.parentNode) boot.parentNode.removeChild(boot);
+            }, 620);
+          }, 380);
         }
 
         // post-boot notifications, only when they are actionable
         if (!M.storage.status().ok) {
-          M.ui.toast('ذخیره‌سازی دائمی در این مرورگر در دسترس نیست. برای نگه‌داشتن اطلاعات، پشتیبان بگیرید.', {
+          M.ui.toast('ذخیرهٔ تغییرات ممکن نشد. برای نگه‌داشتن پیشرفت، یک نسخهٔ پشتیبان بگیرید.', {
             type: 'warn',
             ttl: 9000,
             actionLabel: 'پشتیبان',
@@ -532,14 +544,15 @@
           });
         }
         if (M.store.futureData) {
-          M.ui.toast('داده‌های ذخیره‌شده از این نسخه جدیدتر است؛ ذخیره‌سازی خودکار خاموش شد.', {
-            type: 'danger',
+          M.ui.toast('این نسخه نمی‌تواند اطلاعات ساخته‌شده با نسخهٔ جدیدتر را تغییر دهد.', {
+            type: 'warn',
             ttl: 0
           });
         }
 
         M.bus.on('route:rendered', function () {
           app.renderProfileChip();
+          app.renderSideProfile();
           var chip = document.getElementById('profile-chip');
           if (chip) chip.hidden = !M.store.hasProfile();
         });
@@ -573,7 +586,7 @@
     });
     add({
       path: '#/dashboard',
-      title: 'داشبورد',
+      title: 'خانه',
       nav: 'dashboard',
       requiresProfile: true,
       view: guardless(M.views.dashboard)

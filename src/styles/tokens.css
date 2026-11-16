@@ -1,70 +1,91 @@
 /* ==========================================================================
-   MEHRAZ — design tokens
-   Single source of truth for colour, type, space, radius, elevation, motion.
-   Raw palette values come from the brand specification; semantic aliases are
-   what components must use so that the night theme stays consistent.
+   MEHRAZ — design tokens (v2)
+   One source of truth. Legacy semantic names are preserved so existing views
+   keep working; the values behind them are richer and higher-contrast.
    ========================================================================== */
 
 :root {
-  /* ---- raw brand palette ------------------------------------------------ */
-  --palette-bg: #ffffff;
-  --palette-navy: #14243b;
-  --palette-navy-deep: #0d1b2a;
-  --palette-blue: #2563eb;
-  --palette-blue-2: #3b82f6;
-  --palette-blue-soft: #eaf2ff;
-  --palette-text: #172033;
-  --palette-text-2: #64748b;
-  --palette-border: #e5eaf1;
-  --palette-surface: #f6f8fc;
-  --palette-success: #16876b;
-  --palette-warning: #d69e36;
-  --palette-danger: #d95353;
+  /* ---- ink scale (brand navy) ----------------------------------------- */
+  --ink-950: #060F1B;
+  --ink-900: #0A1727;
+  --ink-800: #102338;
+  --ink-700: #17314B;
+  --ink-600: #23415F;
 
-  /* ---- semantic surfaces (light) --------------------------------------- */
-  --bg: #ffffff;
-  --bg-sunken: #f6f8fc;
-  --bg-raised: #ffffff;
-  --bg-translucent: rgba(255, 255, 255, 0.82);
-  --bg-inset: #f1f4f9;
-  --surface: #ffffff;
-  --surface-2: #f6f8fc;
-  --surface-3: #eef2f8;
-  --border: #e5eaf1;
-  --border-strong: #d3dbe6;
+  /* ---- blue ------------------------------------------------------------ */
+  --blue-700: #1E51D6;
+  --blue-600: #2F6BFF;
+  --blue-500: #4D82FF;
+  --blue-400: #7FA6FF;
+  --blue-100: #E6EFFF;
+  --blue-050: #F3F7FF;
 
-  --txt-strong: #14243b;
-  --txt: #172033;
-  --txt-muted: #64748b;
-  --txt-faint: #8b98a9;
+  /* ---- functional accents (used sparingly, never as decoration) ------- */
+  --mint-600: #0B8F76;
+  --mint-100: #E4F6F1;
+  --amber-600: #B07B22;
+  --amber-100: #FBF1DE;
+  --violet-600: #6A5AD8;
+  --violet-100: #EFECFF;
+  --rose-600: #BE5568;
+  --rose-100: #FBECEF;
+
+  /* ---- surfaces -------------------------------------------------------- */
+  --paper: #FAFBFE;
+  --paper-2: #F3F6FC;
+  --surface: #FFFFFF;
+  --surface-2: #F7F9FD;
+  --surface-3: #EEF2F9;
+
+  --line: #E4EAF3;
+  --line-2: #EEF2F8;
+
+  /* ---- text ------------------------------------------------------------ */
+  --t-900: #0B1A2B;
+  --t-700: #22364C;
+  --t-500: #566A82;
+  --t-400: #7C8CA1;
+
+  /* ---- legacy semantic aliases (used across the app) ------------------ */
+  --bg: var(--paper);
+  --bg-sunken: var(--paper-2);
+  --bg-raised: var(--surface);
+  --bg-translucent: rgba(250, 251, 254, 0.82);
+  --bg-inset: var(--surface-2);
+
+  --border: var(--line);
+  --border-strong: #D3DCEA;
+
+  --txt-strong: var(--t-900);
+  --txt: #14263B;
+  --txt-muted: var(--t-500);
+  --txt-faint: var(--t-400);
   --txt-on-brand: #ffffff;
 
-  --brand: #2563eb;
-  --brand-hover: #1d4fd8;
-  --brand-2: #3b82f6;
-  --brand-soft: #eaf2ff;
-  --brand-soft-2: #dbe8ff;
-  --brand-line: #c3d8ff;
+  --brand: var(--blue-600);
+  --brand-hover: var(--blue-700);
+  --brand-2: var(--blue-500);
+  --brand-soft: var(--blue-100);
+  --brand-soft-2: #D5E4FF;
+  --brand-line: #C2D6FF;
 
-  --ok: #16876b;
-  --ok-soft: #e6f5f0;
-  --warn: #d69e36;
-  --warn-soft: #fdf4e3;
-  --danger: #d95353;
-  --danger-soft: #fdecec;
+  --ok: var(--mint-600);
+  --ok-soft: var(--mint-100);
+  --warn: var(--amber-600);
+  --warn-soft: var(--amber-100);
+  --danger: var(--rose-600);
+  --danger-soft: var(--rose-100);
 
-  --nav-navy: #14243b;
-  --nav-navy-deep: #0d1b2a;
-  --nav-text: #e8eefa;
+  --nav-navy: var(--ink-900);
+  --nav-navy-deep: var(--ink-950);
+  --nav-text: #E7EEF9;
 
-  /* ---- typography ------------------------------------------------------- */
-  /* No redistributable Persian webfont is bundled (see docs/DESIGN-SYSTEM.md).
-     This stack resolves to a high quality Persian-capable face on every
-     target platform: Windows (Segoe UI / Tahoma) and Android (Noto Naskh). */
+  /* ---- typography ------------------------------------------------------ */
   --font-sans: "Vazirmatn", "IRANSansX", "Segoe UI", "Noto Naskh Arabic",
     Tahoma, Roboto, "Droid Arabic Naskh", system-ui, -apple-system, sans-serif;
   --font-num: "Segoe UI", Tahoma, Roboto, system-ui, sans-serif;
 
+  --fs-10: 0.625rem;
   --fs-11: 0.6875rem;
   --fs-12: 0.75rem;
   --fs-13: 0.8125rem;
@@ -75,20 +96,21 @@
   --fs-20: 1.25rem;
   --fs-24: 1.5rem;
   --fs-28: 1.75rem;
-  --fs-34: 2.125rem;
-  --fs-44: 2.75rem;
+  --fs-32: 2rem;
+  --fs-38: 2.375rem;
 
   --fw-regular: 400;
   --fw-medium: 500;
   --fw-semibold: 600;
   --fw-bold: 700;
+  --fw-heavy: 800;
 
-  --lh-tight: 1.35;
+  --lh-tight: 1.3;
   --lh-snug: 1.55;
   --lh-body: 1.85;
   --lh-loose: 2;
 
-  /* ---- space (4px base) ------------------------------------------------- */
+  /* ---- space ----------------------------------------------------------- */
   --sp-1: 0.25rem;
   --sp-2: 0.5rem;
   --sp-3: 0.75rem;
@@ -102,36 +124,42 @@
   --sp-16: 4rem;
   --sp-20: 5rem;
 
-  /* ---- radius ----------------------------------------------------------- */
-  --r-xs: 6px;
-  --r-sm: 10px;
-  --r-md: 14px;
-  --r-lg: 18px;
-  --r-xl: 24px;
-  --r-2xl: 30px;
+  /* ---- radius ---------------------------------------------------------- */
+  --r-xs: 8px;
+  --r-sm: 11px;
+  --r-md: 15px;
+  --r-lg: 20px;
+  --r-xl: 26px;
+  --r-2xl: 34px;
   --r-pill: 999px;
 
-  /* ---- elevation -------------------------------------------------------- */
-  --sh-1: 0 1px 2px rgba(20, 36, 59, 0.04), 0 1px 3px rgba(20, 36, 59, 0.05);
-  --sh-2: 0 8px 24px -14px rgba(20, 36, 59, 0.28), 0 2px 6px rgba(20, 36, 59, 0.05);
-  --sh-3: 0 24px 60px -28px rgba(13, 27, 42, 0.42), 0 6px 18px -12px rgba(13, 27, 42, 0.2);
-  --sh-brand: 0 10px 24px -12px rgba(37, 99, 235, 0.55);
-  --ring: 0 0 0 3px rgba(37, 99, 235, 0.26);
+  /* ---- elevation ------------------------------------------------------- */
+  --sh-1: 0 1px 2px rgba(11, 26, 43, 0.05), 0 2px 8px -4px rgba(11, 26, 43, 0.08);
+  --sh-2: 0 12px 30px -18px rgba(11, 26, 43, 0.35), 0 2px 8px -4px rgba(11, 26, 43, 0.06);
+  --sh-3: 0 34px 70px -40px rgba(6, 15, 27, 0.55), 0 8px 24px -16px rgba(6, 15, 27, 0.25);
+  --sh-brand: 0 14px 30px -16px rgba(47, 107, 255, 0.65);
+  --sh-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --ring: 0 0 0 4px rgba(47, 107, 255, 0.18);
 
-  /* ---- layout ----------------------------------------------------------- */
-  --sidebar-w: 274px;
-  --content-max: 1120px;
-  --topbar-h: 68px;
-  --bottomnav-h: 66px;
+  /* ---- gradients ------------------------------------------------------- */
+  --grad-hero: radial-gradient(120% 130% at 88% -18%, #1B3A66 0%, #0D1E33 46%, #081524 100%);
+  --grad-brand: linear-gradient(135deg, #4D82FF, #2F6BFF 52%, #1E51D6);
+  --grad-line: linear-gradient(90deg, transparent, var(--line), transparent);
+
+  /* ---- layout ---------------------------------------------------------- */
+  --sidebar-w: 268px;
+  --content-max: 1160px;
+  --topbar-h: 72px;
+  --bottomnav-h: 68px;
   --tap: 44px;
 
-  /* ---- motion ----------------------------------------------------------- */
+  /* ---- motion ---------------------------------------------------------- */
   --d-instant: 90ms;
-  --d-fast: 140ms;
-  --d-base: 220ms;
-  --d-slow: 340ms;
-  --d-page: 420ms;
-  --d-hero: 700ms;
+  --d-fast: 150ms;
+  --d-base: 240ms;
+  --d-slow: 380ms;
+  --d-page: 460ms;
+  --d-hero: 900ms;
   --e-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   --e-inout: cubic-bezier(0.4, 0, 0.2, 1);
   --e-soft: cubic-bezier(0.16, 1, 0.3, 1);
@@ -140,44 +168,57 @@
 /* ---- night theme ------------------------------------------------------- */
 [data-theme="night"] {
   color-scheme: dark;
-  --bg: #0b1622;
-  --bg-sunken: #08111b;
-  --bg-raised: #101f2e;
-  --bg-translucent: rgba(11, 22, 34, 0.84);
-  --bg-inset: #0e1c29;
-  --surface: #101f2e;
-  --surface-2: #0e1c29;
-  --surface-3: #15263a;
-  --border: #1e3046;
-  --border-strong: #29415c;
+  --paper: #071220;
+  --paper-2: #050E1A;
+  --surface: #0C1B2B;
+  --surface-2: #0A1727;
+  --surface-3: #12263C;
+  --line: #1B3048;
+  --line-2: #16283C;
 
-  --txt-strong: #eaf1fb;
-  --txt: #dde7f4;
-  --txt-muted: #93a6bf;
-  --txt-faint: #70839c;
+  --t-900: #ECF3FC;
+  --t-700: #CFDCEC;
+  --t-500: #93A6BE;
+  --t-400: #73869F;
 
-  --brand: #4c8df6;
-  --brand-hover: #6ba3f8;
-  --brand-2: #6ba3f8;
-  --brand-soft: #152a45;
-  --brand-soft-2: #1b3455;
-  --brand-line: #27466c;
+  --txt-strong: var(--t-900);
+  --txt: #DCE7F4;
+  --txt-muted: var(--t-500);
+  --txt-faint: var(--t-400);
 
-  --ok: #43b795;
-  --ok-soft: #102c26;
-  --warn: #e0b055;
-  --warn-soft: #2c2415;
-  --danger: #e17b7b;
-  --danger-soft: #2d1a1c;
+  --border: var(--line);
+  --border-strong: #26405C;
+  --bg: var(--paper);
+  --bg-sunken: var(--paper-2);
+  --bg-raised: var(--surface);
+  --bg-translucent: rgba(7, 18, 32, 0.84);
+  --bg-inset: var(--surface-2);
 
-  --sh-1: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --sh-2: 0 10px 28px -16px rgba(0, 0, 0, 0.7);
-  --sh-3: 0 28px 64px -30px rgba(0, 0, 0, 0.85);
-  --ring: 0 0 0 3px rgba(107, 163, 248, 0.3);
-}
+  --brand: #6E9BFF;
+  --brand-hover: #8AAEFF;
+  --brand-2: #8AAEFF;
+  --brand-soft: #14294A;
+  --brand-soft-2: #1B365C;
+  --brand-line: #2B4C7A;
 
-[data-theme="night"] {
-  --nav-navy: #0a1420;
-  --nav-navy-deep: #07101a;
-  --nav-text: #dbe6f4;
+  --ok: #43BFA2;
+  --ok-soft: #0C2C27;
+  --warn: #D9A94F;
+  --warn-soft: #2B2415;
+  --danger: #E08494;
+  --danger-soft: #2C1A20;
+
+  --sh-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --sh-2: 0 14px 34px -20px rgba(0, 0, 0, 0.8);
+  --sh-3: 0 40px 80px -40px rgba(0, 0, 0, 0.9);
+  --sh-inset: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --sh-brand: 0 14px 30px -18px rgba(110, 155, 255, 0.5);
+  --ring: 0 0 0 4px rgba(110, 155, 255, 0.22);
+
+  --grad-hero: radial-gradient(120% 130% at 88% -18%, #16324F 0%, #0A1A2C 48%, #06101C 100%);
+  --grad-brand: linear-gradient(135deg, #7FA6FF, #4D82FF 52%, #2F6BFF);
+
+  --nav-navy: #050E1A;
+  --nav-navy-deep: #030A13;
+  --nav-text: #E2ECF9;
 }
