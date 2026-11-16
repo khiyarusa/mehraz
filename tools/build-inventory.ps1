@@ -1,4 +1,4 @@
-# =============================================================================
+﻿# =============================================================================
 #  MEHRAZ — official textbook inventory builder (development tooling)
 #
 #  Reads the official textbook portal's catalogue over plain HTTP and writes
@@ -80,18 +80,27 @@ $tracks = @(
     @{ key = 'humanities';   slug = '%D8%B9%D9%84%D9%88%D9%85-%D8%A7%D9%86%D8%B3%D8%A7%D9%86%DB%8C' }
 )
 $years = @(
-    @{ grade = 10; slug = '%D8%B3%D8%A7%D9%84-%D8%A7%D9%88%D9%84' },
-    @{ grade = 11; slug = '%D8%B3%D8%A7%D9%84-%D8%AF%D9%88%D9%85' },
-    @{ grade = 12; slug = '%D8%B3%D8%A7%D9%84-%D8%B3%D9%88%D9%85' }
+    @{ grade = 10; slug = '%D8%B3%D8%A7%D9%84-%D8%AF%D9%88%D9%85' },
+    @{ grade = 11; slug = '%D8%B3%D8%A7%D9%84-%D8%B3%D9%88%D9%85' }
+    
 )
 
+# The portal's year slugs are shifted by one grade: سال-دوم renders پایه دهم and
+# سال-سوم renders پایه یازدهم. Grade 12 is only reachable through the numeric
+# category nodes that the main menu links to.
+$grade12 = @(
+    @{ grade = 12; track = 'math';         name = 'grade-12-math-cat711';         url = "$base/category/%D8%AF%D9%88%D8%B1%D9%87/711" },
+    @{ grade = 12; track = 'experimental'; name = 'grade-12-experimental-cat712'; url = "$base/category/%D8%AF%D9%88%D8%B1%D9%87/712" },
+    @{ grade = 12; track = 'humanities';   name = 'grade-12-humanities-cat709';   url = "$base/category/%D8%AF%D9%88%D8%B1%D9%87/709" }
+)
+$targets += $grade12
 $prefix = "$base/category/%D8%AF%D9%88%D8%B1%D9%87/%D8%AF%D9%88%D8%B1%D9%87-%D8%A2%D9%85%D9%88%D8%B2%D8%B4-%D9%85%D8%AA%D9%88%D8%B3%D8%B7%D9%87/%D9%85%D8%AA%D9%88%D8%B3%D8%B7%D9%87-%D9%86%D8%B8%D8%B1%DB%8C"
 foreach ($t in $tracks) {
     foreach ($y in $years) {
         $targets += @{
             grade = $y.grade
             track = $t.key
-            name  = ('grade-{0}-{1}' -f $y.grade, $t.key)
+            name  = ('grade-{0}-{1}-y{2}' -f $y.grade, $t.key, $y.grade)
             url   = "$prefix/$($t.slug)/$($y.slug)"
         }
     }
@@ -114,7 +123,7 @@ foreach ($target in $targets) {
 
     $h1 = Clean-Text ([regex]::Match($html, '<h1[^>]*>([\s\S]*?)</h1>').Groups[1].Value)
     $h1Grade = $null
-    if ($h1 -match 'هفتم') { $h1Grade = 7 } elseif ($h1 -match 'هشتم') { $h1Grade = 8 } elseif ($h1 -match 'نهم') { $h1Grade = 9 } elseif ($h1 -match 'دهم') { $h1Grade = 10 } elseif ($h1 -match 'یازدهم') { $h1Grade = 11 } elseif ($h1 -match 'دوازدهم') { $h1Grade = 12 }
+    if ($h1 -match 'دوازدهم') { $h1Grade = 12 } elseif ($h1 -match 'یازدهم') { $h1Grade = 11 } elseif ($h1 -match 'دهم') { $h1Grade = 10 } elseif ($h1 -match 'نهم') { $h1Grade = 9 } elseif ($h1 -match 'هشتم') { $h1Grade = 8 } elseif ($h1 -match 'هفتم') { $h1Grade = 7 }
     $cells = [regex]::Matches($html, '<td class="col-\d+"[\s\S]*?</td>')
     $count = 0
 
@@ -143,7 +152,7 @@ foreach ($target in $targets) {
             bookPageUrl  = "$base$bookPage"
             code         = $code
             title        = $title
-            grade        = if ($h1Grade) { $h1Grade } else { $target.grade }
+            grade        = [int]$target.grade
             track        = $target.track
             categoryName = $target.name
             categoryH1   = $h1
@@ -185,6 +194,44 @@ foreach ($b in $books) {
     }
 }
 
+# ---- merge shared books across tracks -------------------------------------
+# General subjects are listed on every track page of a grade. One physical
+# textbook must stay one record; `tracks` lists every track it is required for.
+$byId = @{}
+$unique = New-Object System.Collections.Generic.List[object]
+foreach ($b in $books) {
+    $id = [string]$b.bookPageId
+    if ($byId.ContainsKey($id)) {
+        $rec = $byId[$id]
+        if ($b.track -and ($rec.tracks -notcontains $b.track)) { $rec.tracks += $b.track }
+        continue
+    }
+    $tracks = @()
+    if ($b.track) { $tracks += $b.track }
+    $b | Add-Member -NotePropertyName tracks -NotePropertyValue $tracks -Force
+    $byId[$id] = $b
+    $unique.Add($b)
+}
+foreach ($b in $unique) {
+    if ($b.tracks.Count -gt 1) { $b.track = $null }
+}
+$books = $unique
+Write-Host ("unique books after merge: " + $books.Count) -ForegroundColor Yellow
+
+# The portal lists general subjects only on the first track page of a grade.
+# They are required for every track, so mark them shared instead of belonging
+# to whichever page happened to list them first.
+$generalPattern = 'فارسی|نگارش|دین و زندگی|عربی|انگلیسی|هویت اجتماعی|سلامت و بهداشت|مدیریت خانواده|تعلیمات ادیان|ضمیمه دین|کتاب کار'
+$sharedCount = 0
+foreach ($b in $books) {
+    if ($b.grade -ge 10 -and $b.title -match $generalPattern) {
+        $b.tracks = @('math', 'experimental', 'humanities')
+        $b.track = $null
+        $sharedCount++
+    }
+}
+Write-Host ("shared general books: " + $sharedCount) -ForegroundColor Yellow
+
 # ---- write the inventory ---------------------------------------------------
 $doc = [ordered]@{
     schemaVersion  = 1
@@ -193,7 +240,7 @@ $doc = [ordered]@{
     sourcePortal   = 'http://chap.sch.ir'
     coverage       = 'partial'
     caveats        = @(
-        'The portal taxonomy is inconsistent: numeric /category/دوره/<id> nodes can resolve to special-education trees, and the نظری year terms are labelled one grade off (سال-دوم renders "پایه دهم", سال-سوم renders "پایه یازدهم").',
+        'The portal year terms are shifted: sal-dovom renders paye dahom and sal-savom renders paye yazdahom; sal-aval is empty. Grade 12 is reachable only through the numeric category nodes 711/712/709.'
         'Grade attribution is therefore taken from each listing page heading (gradeFromCatalogue) and a gradeConfidence flag records whether it matched the requested grade.',
         'Every official PDF inspected so far is a page-image scan with no text layer and no embedded fonts, so text extraction requires OCR. OCR is unavailable in this environment (no tesseract; Python and Node runtimes are non-functional), which is why no lesson content has been produced.'
     )

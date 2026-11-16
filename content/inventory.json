@@ -1,30 +1,22 @@
 {
     "schemaVersion":  1,
     "generator":  "tools/build-inventory.ps1",
-    "generatedAt":  "2026-11-16T12:26:04Z",
+    "generatedAt":  "2026-11-16T18:13:34Z",
     "sourcePortal":  "http://chap.sch.ir",
     "coverage":  "partial",
     "caveats":  [
-                    "The portal taxonomy is inconsistent: numeric /category/Ø¯ÙˆØ±Ù‡/\u003cid\u003e nodes can resolve to special-education trees, and the Ù†Ø¸Ø±ÛŒ year terms are labelled one grade off (Ø³Ø§Ù„-Ø¯ÙˆÙ… renders \"Ù¾Ø§ÛŒÙ‡ Ø¯Ù‡Ù…\", Ø³Ø§Ù„-Ø³ÙˆÙ… renders \"Ù¾Ø§ÛŒÙ‡ ÛŒØ§Ø²Ø¯Ù‡Ù…\").",
+                    "The portal year terms are shifted: sal-dovom renders paye dahom and sal-savom renders paye yazdahom; sal-aval is empty. Grade 12 is reachable only through the numeric category nodes 711/712/709.",
                     "Grade attribution is therefore taken from each listing page heading (gradeFromCatalogue) and a gradeConfidence flag records whether it matched the requested grade.",
                     "Every official PDF inspected so far is a page-image scan with no text layer and no embedded fonts, so text extraction requires OCR. OCR is unavailable in this environment (no tesseract; Python and Node runtimes are non-functional), which is why no lesson content has been produced."
                 ],
     "academicYear":  "1405-1406",
     "totals":  {
-                   "books":  103,
+                   "books":  130,
                    "specialEducation":  0,
-                   "gradeVerified":  48,
-                   "withPdf":  103,
+                   "gradeVerified":  130,
+                   "withPdf":  130,
                    "withoutPdf":  0,
                    "byGrade":  [
-                                   {
-                                       "grade":  10,
-                                       "count":  26
-                                   },
-                                   {
-                                       "grade":  11,
-                                       "count":  29
-                                   },
                                    {
                                        "grade":  7,
                                        "count":  16
@@ -36,6 +28,18 @@
                                    {
                                        "grade":  9,
                                        "count":  16
+                                   },
+                                   {
+                                       "grade":  12,
+                                       "count":  28
+                                   },
+                                   {
+                                       "grade":  10,
+                                       "count":  26
+                                   },
+                                   {
+                                       "grade":  11,
+                                       "count":  28
                                    }
                                ]
                },
@@ -59,55 +63,55 @@
                        "books":  16
                    },
                    {
-                       "target":  "grade-10-math",
+                       "target":  "grade-12-math-cat711",
                        "ok":  true,
-                       "h1":  "کتاب های ورودی بی اعتبار",
-                       "books":  0
+                       "h1":  "پایه دوازدهم",
+                       "books":  16
                    },
                    {
-                       "target":  "grade-11-math",
+                       "target":  "grade-12-experimental-cat712",
+                       "ok":  true,
+                       "h1":  "پایه دوازدهم",
+                       "books":  3
+                   },
+                   {
+                       "target":  "grade-12-humanities-cat709",
+                       "ok":  true,
+                       "h1":  "پایه دوازدهم",
+                       "books":  9
+                   },
+                   {
+                       "target":  "grade-10-math-y10",
                        "ok":  true,
                        "h1":  "پایه دهم",
                        "books":  16
                    },
                    {
-                       "target":  "grade-12-math",
+                       "target":  "grade-11-math-y11",
                        "ok":  true,
                        "h1":  "پایه یازدهم",
                        "books":  16
                    },
                    {
-                       "target":  "grade-10-experimental",
-                       "ok":  true,
-                       "h1":  "کتاب های ورودی بی اعتبار",
-                       "books":  0
-                   },
-                   {
-                       "target":  "grade-11-experimental",
+                       "target":  "grade-10-experimental-y10",
                        "ok":  true,
                        "h1":  "پایه دهم",
                        "books":  2
                    },
                    {
-                       "target":  "grade-12-experimental",
+                       "target":  "grade-11-experimental-y11",
                        "ok":  true,
                        "h1":  "پایه یازدهم",
                        "books":  4
                    },
                    {
-                       "target":  "grade-10-humanities",
-                       "ok":  true,
-                       "h1":  "کتاب های ورودی بی اعتبار",
-                       "books":  0
-                   },
-                   {
-                       "target":  "grade-11-humanities",
+                       "target":  "grade-10-humanities-y10",
                        "ok":  true,
                        "h1":  "پایه دهم",
                        "books":  8
                    },
                    {
-                       "target":  "grade-12-humanities",
+                       "target":  "grade-11-humanities-y11",
                        "ok":  true,
                        "h1":  "پایه یازدهم",
                        "books":  9
@@ -117,6 +121,8 @@
                   {
                       "bookPageId":  14195,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14195",
                       "code":  "701",
                       "title":  "آموزش قرآن (هفتم)",
@@ -130,12 +136,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14196,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14196",
                       "code":  "702",
                       "title":  "پیام های آسمان (هفتم)",
@@ -149,12 +158,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14197,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14197",
                       "code":  "703",
                       "title":  "فارسی (هفتم)",
@@ -168,12 +180,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14198,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14198",
                       "code":  "704",
                       "title":  "نگارش (هفتم)",
@@ -187,12 +202,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14199,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14199",
                       "code":  "705",
                       "title":  "ریاضی (هفتم)",
@@ -206,12 +224,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14200,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14200",
                       "code":  "706",
                       "title":  "علوم تجربی (هفتم)",
@@ -225,12 +246,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14201,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14201",
                       "code":  "707",
                       "title":  "مطالعات اجتماعی (هفتم)",
@@ -244,12 +268,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14202,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14202",
                       "code":  "708",
                       "title":  "فرهنگ و هنر (هفتم)",
@@ -263,12 +290,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14203,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14203",
                       "code":  "709",
                       "title":  "عربی (هفتم)",
@@ -282,12 +312,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14204,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14204",
                       "code":  "710",
                       "title":  "انگلیسی (1)",
@@ -301,12 +334,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14205,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14205",
                       "code":  "711",
                       "title":  "کتاب کار انگلیسی (1)",
@@ -320,12 +356,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14206,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14206",
                       "code":  "712",
                       "title":  "تفکر و سبک زندگی (پسران) - (هفتم)",
@@ -339,12 +378,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14207,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14207",
                       "code":  "713",
                       "title":  "تفکر و سبک زندگی (دختران) - (هفتم)",
@@ -358,12 +400,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14208,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14208",
                       "code":  "717",
                       "title":  "کار و فناوری (هفتم)",
@@ -377,12 +422,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  15055,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/15055",
                       "code":  "7171",
                       "title":  "کار و فناوری (اجرای آزمایشی) (پایه هفتم)",
@@ -396,12 +444,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14209,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  7,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14209",
                       "code":  "719",
                       "title":  "ضمیمه پیام های آسمان (اهل سنت) - هفتم",
@@ -415,12 +466,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  7,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14210,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14210",
                       "code":  "801",
                       "title":  "آموزش قرآن (هشتم)",
@@ -434,12 +488,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14217,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14217",
                       "code":  "802",
                       "title":  "پیام های آسمان (هشتم)",
@@ -453,12 +510,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14218,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14218",
                       "code":  "803",
                       "title":  "فارسی (هشتم)",
@@ -472,12 +532,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14219,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14219",
                       "code":  "804",
                       "title":  "نگارش (هشتم)",
@@ -491,12 +554,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14220,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14220",
                       "code":  "805",
                       "title":  "ریاضی (هشتم)",
@@ -510,12 +576,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14221,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14221",
                       "code":  "806",
                       "title":  "علوم تجربی (هشتم)",
@@ -529,12 +598,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14222,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14222",
                       "code":  "807",
                       "title":  "مطالعات اجتماعی (هشتم)",
@@ -548,12 +620,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14223,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14223",
                       "code":  "808",
                       "title":  "فرهنگ و هنر (هشتم)",
@@ -567,12 +642,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14224,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14224",
                       "code":  "809",
                       "title":  "عربی (هشتم)",
@@ -586,12 +664,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14225,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14225",
                       "code":  "810",
                       "title":  "انگلیسی (2)",
@@ -605,12 +686,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14226,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14226",
                       "code":  "811",
                       "title":  "کتاب کار انگلیسی (2)",
@@ -624,12 +708,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14227,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14227",
                       "code":  "812",
                       "title":  "تفکر و سبک زندگی (هشتم)",
@@ -643,12 +730,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14228,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14228",
                       "code":  "814",
                       "title":  "تفکر و سبک زندگی (پسران) - (هشتم)",
@@ -662,12 +752,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14229,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14229",
                       "code":  "817",
                       "title":  "کار و فناوری (هشتم)",
@@ -681,12 +774,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  15056,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/15056",
                       "code":  "8171",
                       "title":  "کار و فناوری (اجرای آزمایشی) (پایه هشتم)",
@@ -700,12 +796,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14230,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  8,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14230",
                       "code":  "819",
                       "title":  "ضمیمه پیام های آسمان (اهل سنت) - (هشتم)",
@@ -719,12 +818,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  8,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14236,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14236",
                       "code":  "901",
                       "title":  "آموزش قرآن (نهم)",
@@ -738,12 +840,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14237,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14237",
                       "code":  "902",
                       "title":  "پیام های آسمان (نهم)",
@@ -757,12 +862,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14238,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14238",
                       "code":  "903",
                       "title":  "فارسی (نهم)",
@@ -776,12 +884,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14239,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14239",
                       "code":  "904",
                       "title":  "نگارش (نهم)",
@@ -795,12 +906,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14240,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14240",
                       "code":  "905",
                       "title":  "ریاضی (نهم)",
@@ -814,12 +928,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14241,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14241",
                       "code":  "906",
                       "title":  "علوم تجربی (نهم)",
@@ -833,12 +950,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14242,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14242",
                       "code":  "907",
                       "title":  "مطالعات اجتماعی - (مدنی - تاریخ - جغرافیا) (نهم)",
@@ -852,12 +972,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14243,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14243",
                       "code":  "908",
                       "title":  "فرهنگ و هنر (نهم)",
@@ -871,12 +994,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14244,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14244",
                       "code":  "909",
                       "title":  "عربی (نهم)",
@@ -890,12 +1016,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14245,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14245",
                       "code":  "910",
                       "title":  "انگلیسی (3)",
@@ -909,12 +1038,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14246,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14246",
                       "code":  "911",
                       "title":  "کتاب کار انگلیسی (3)",
@@ -928,12 +1060,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  15012,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/15012",
                       "code":  "915",
                       "title":  "آمادگی دفاعی (نهم)",
@@ -947,12 +1082,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14247,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14247",
                       "code":  "917",
                       "title":  "کار و فناوری (نهم)",
@@ -966,12 +1104,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  15057,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/15057",
                       "code":  "9171",
                       "title":  "کار و فناوری (اجرای آزمایشی) (پایه نهم)",
@@ -985,12 +1126,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14248,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14248",
                       "code":  "919",
                       "title":  "ضمیمه پیام های آسمان (اهل سنت) - نهم",
@@ -1004,12 +1148,15 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
                   },
                   {
                       "bookPageId":  14249,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  9,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14249",
                       "code":  "920",
                       "title":  "تعلیمات ادیان الهی و اخلاق (ویژه اقلیت های دینی) - (نهم)",
@@ -1023,18 +1170,663 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  9,
-                      "gradeConfidence":  "verified"
+                      "tracks":  [
+
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14350,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14350",
+                      "code":  "112201",
+                      "title":  "فارسی (3)",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/710/C112201.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14351,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14351",
+                      "code":  "112202",
+                      "title":  "نگارش (3)",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/710/C112202.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14352,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14352",
+                      "code":  "112204",
+                      "title":  "دین و زندگی (3)",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/694/C112204.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14354,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14354",
+                      "code":  "112206",
+                      "title":  "عربی، زبان قرآن (3)",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/712/C112206.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14357,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14357",
+                      "code":  "112209",
+                      "title":  "فیزیک (3)",
+                      "grade":  12,
+                      "track":  "math",
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/711/C112209.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14358,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14358",
+                      "code":  "112210",
+                      "title":  "شیمی (3)",
+                      "grade":  12,
+                      "track":  "math",
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/712/C112210.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14361,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14361",
+                      "code":  "112213",
+                      "title":  "هندسه (3)",
+                      "grade":  12,
+                      "track":  "math",
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/711/C112213.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14362,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14362",
+                      "code":  "112214",
+                      "title":  "حسابان (2)",
+                      "grade":  12,
+                      "track":  "math",
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/711/C112214.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14363,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14363",
+                      "code":  "112215",
+                      "title":  "ریاضیات گسسته",
+                      "grade":  12,
+                      "track":  "math",
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/711/C112215.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14366,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14366",
+                      "code":  "112220",
+                      "title":  "هویت اجتماعی",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/694/C112220.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14371,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14371",
+                      "code":  "112228",
+                      "title":  "تعلیمات ادیان الهی و اخلاق (3) - ویژه اقلیت های دینی",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/694/C112228.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14372,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14372",
+                      "code":  "112230",
+                      "title":  "انگلیسی (3)",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/710/C112230.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14373,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14373",
+                      "code":  "112231",
+                      "title":  "کتاب کار انگلیسی (3)",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/710/C112231.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14377,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14377",
+                      "code":  "112240",
+                      "title":  "مدیریت خانواده و سبک زندگی (دختران)",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/694/C112240.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14380,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14380",
+                      "code":  "112245",
+                      "title":  "مدیریت خانواده و سبک زندگی (پسران)",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/694/C112245.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14381,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14381",
+                      "code":  "112268",
+                      "title":  "سلامت و بهداشت",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-math-cat711",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/694/C112268.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14359,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14359",
+                      "code":  "112211",
+                      "title":  "ریاضی (3)",
+                      "grade":  12,
+                      "track":  "experimental",
+                      "categoryName":  "grade-12-experimental-cat712",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/712/C112211.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "experimental"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14364,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14364",
+                      "code":  "112216",
+                      "title":  "زیست شناسی (3)",
+                      "grade":  12,
+                      "track":  "experimental",
+                      "categoryName":  "grade-12-experimental-cat712",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/712/C112216.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "experimental"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14379,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14379",
+                      "code":  "112244",
+                      "title":  "فیزیک (3)",
+                      "grade":  12,
+                      "track":  "experimental",
+                      "categoryName":  "grade-12-experimental-cat712",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/712/C112244.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "experimental"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14382,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14382",
+                      "code":  "112203",
+                      "title":  "علوم و فنون ادبی (3)",
+                      "grade":  12,
+                      "track":  "humanities",
+                      "categoryName":  "grade-12-humanities-cat709",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/43/C112203.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14353,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14353",
+                      "code":  "112205",
+                      "title":  "دین و زندگی (3)",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-humanities-cat709",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/709/C112205.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14355,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14355",
+                      "code":  "112207",
+                      "title":  "عربی، زبان قرآن (3)",
+                      "grade":  12,
+                      "track":  null,
+                      "categoryName":  "grade-12-humanities-cat709",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/709/C112207.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14360,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14360",
+                      "code":  "112212",
+                      "title":  "ریاضی و آمار (3)",
+                      "grade":  12,
+                      "track":  "humanities",
+                      "categoryName":  "grade-12-humanities-cat709",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/710/C112212.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14365,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14365",
+                      "code":  "112218",
+                      "title":  "جغرافیا (3) (کاربردی)",
+                      "grade":  12,
+                      "track":  "humanities",
+                      "categoryName":  "grade-12-humanities-cat709",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/709/C112218.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14977,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14977",
+                      "code":  "112219",
+                      "title":  "تاریخ (3) - ایران و جهان معاصر",
+                      "grade":  12,
+                      "track":  "humanities",
+                      "categoryName":  "grade-12-humanities-cat709",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/709/C112219.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14367,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14367",
+                      "code":  "112222",
+                      "title":  "جامعه شناسی (3)",
+                      "grade":  12,
+                      "track":  "humanities",
+                      "categoryName":  "grade-12-humanities-cat709",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/709/C112222.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14368,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14368",
+                      "code":  "112223",
+                      "title":  "تحلیل فرهنگی",
+                      "grade":  12,
+                      "track":  "humanities",
+                      "categoryName":  "grade-12-humanities-cat709",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/710/C112223.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "humanities"
+                                 ]
+                  },
+                  {
+                      "bookPageId":  14369,
+                      "specialEducation":  false,
+                      "gradeFromCatalogue":  12,
+                      "gradeConfidence":  "verified",
+                      "bookPageUrl":  "http://chap.sch.ir/books/14369",
+                      "code":  "112226",
+                      "title":  "فلسفه (2)",
+                      "grade":  12,
+                      "track":  "humanities",
+                      "categoryName":  "grade-12-humanities-cat709",
+                      "categoryH1":  "پایه دوازدهم",
+                      "academicYear":  "1405-1406",
+                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/710/C112226.pdf",
+                      "sizeBytes":  null,
+                      "sha256":  null,
+                      "hashStatus":  "pending",
+                      "sourceStatus":  "official-pdf-located",
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14253,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14253",
                       "code":  "110201",
                       "title":  "فارسی (1)",
                       "grade":  10,
-                      "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "track":  null,
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/43/C110201.pdf",
@@ -1042,18 +1834,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14255,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14255",
                       "code":  "110202",
                       "title":  "نگارش (1)",
                       "grade":  10,
-                      "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "track":  null,
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/43/C110202.pdf",
@@ -1061,18 +1858,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14256,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14256",
                       "code":  "110204",
                       "title":  "دین و زندگی (1)",
                       "grade":  10,
-                      "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "track":  null,
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/692/C110204.pdf",
@@ -1080,18 +1882,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14257,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14257",
                       "code":  "110206",
                       "title":  "عربی، زبان قرآن (1)",
                       "grade":  10,
-                      "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "track":  null,
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/40/C110206.pdf",
@@ -1099,18 +1906,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14284,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14284",
                       "code":  "110209",
                       "title":  "فیزیک (1)",
                       "grade":  10,
                       "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/30/C110209.pdf",
@@ -1118,18 +1930,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14258,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14258",
                       "code":  "110210",
                       "title":  "شیمی (1)",
                       "grade":  10,
                       "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/40/C110210.pdf",
@@ -1137,18 +1952,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14259,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14259",
                       "code":  "110211",
                       "title":  "ریاضی (1)",
                       "grade":  10,
                       "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/40/C110211.pdf",
@@ -1156,18 +1974,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14260,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14260",
                       "code":  "110213",
                       "title":  "هندسه (1)",
                       "grade":  10,
                       "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/29/C110213.pdf",
@@ -1175,18 +1996,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14974,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14974",
                       "code":  "110215",
                       "title":  "آمادگی دفاعی",
                       "grade":  10,
                       "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/694/C110215.pdf",
@@ -1194,18 +2018,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14261,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14261",
                       "code":  "110217",
                       "title":  "آزمایشگاه علوم تجربی (1)",
                       "grade":  10,
                       "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/40/C110217.pdf",
@@ -1213,18 +2040,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14262,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14262",
                       "code":  "110218",
                       "title":  "جغرافیای ایران",
                       "grade":  10,
                       "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/692/C110218.pdf",
@@ -1232,18 +2062,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14263,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14263",
                       "code":  "110222",
                       "title":  "هنر",
                       "grade":  10,
                       "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/693/C110222.pdf",
@@ -1251,18 +2084,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14264,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14264",
                       "code":  "110224",
                       "title":  "کارگاه کارآفرینی و تولید",
                       "grade":  10,
                       "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/43/C110224.pdf",
@@ -1270,18 +2106,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  15018,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/15018",
                       "code":  "110225",
                       "title":  "تفکر و سواد رسانه ای",
                       "grade":  10,
                       "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/693/C110225.pdf",
@@ -1289,18 +2128,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14347,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14347",
                       "code":  "110228",
                       "title":  "تعلیمات ادیان الهی و اخلاق (1) ـ ویژه اقلیت های دینی",
                       "grade":  10,
-                      "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "track":  null,
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/692/C110228.pdf",
@@ -1308,18 +2150,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14265,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14265",
                       "code":  "110230",
                       "title":  "انگلیسی (1)",
                       "grade":  10,
-                      "track":  "math",
-                      "categoryName":  "grade-11-math",
+                      "track":  null,
+                      "categoryName":  "grade-10-math-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/43/C110230.pdf",
@@ -1327,37 +2174,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
-                  },
-                  {
-                      "bookPageId":  14263,
-                      "specialEducation":  false,
-                      "bookPageUrl":  "http://chap.sch.ir/books/14263",
-                      "code":  "110222",
-                      "title":  "هنر",
-                      "grade":  11,
-                      "track":  "math",
-                      "categoryName":  "grade-12-math",
-                      "categoryH1":  "پایه یازدهم",
-                      "academicYear":  "1405-1406",
-                      "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/693/C110222.pdf",
-                      "sizeBytes":  null,
-                      "sha256":  null,
-                      "hashStatus":  "pending",
-                      "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14316,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14316",
                       "code":  "111201",
                       "title":  "فارسی (2)",
                       "grade":  11,
-                      "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "track":  null,
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/44/C111201.pdf",
@@ -1365,18 +2198,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14317,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14317",
                       "code":  "111202",
                       "title":  "نگارش (2)",
                       "grade":  11,
-                      "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "track":  null,
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/44/C111202.pdf",
@@ -1384,18 +2222,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14319,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14319",
                       "code":  "111204",
                       "title":  "دین و زندگی (2)",
                       "grade":  11,
-                      "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "track":  null,
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/693/C111204.pdf",
@@ -1403,18 +2246,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14320,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14320",
                       "code":  "111206",
                       "title":  "عربی، زبان قرآن (2)",
                       "grade":  11,
-                      "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "track":  null,
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/41/C111206.pdf",
@@ -1422,18 +2270,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14318,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14318",
                       "code":  "111209",
                       "title":  "فیزیک (2)",
                       "grade":  11,
                       "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/30/C111209.pdf",
@@ -1441,18 +2294,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14321,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14321",
                       "code":  "111210",
                       "title":  "شیمی (2)",
                       "grade":  11,
                       "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/41/C111210.pdf",
@@ -1460,18 +2316,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14322,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14322",
                       "code":  "111213",
                       "title":  "هندسه (2)",
                       "grade":  11,
                       "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/30/C111213.pdf",
@@ -1479,18 +2338,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14323,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14323",
                       "code":  "111214",
                       "title":  "حسابان (1)",
                       "grade":  11,
                       "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/30/C111214.pdf",
@@ -1498,18 +2360,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14324,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14324",
                       "code":  "111215",
                       "title":  "آمار و احتمال",
                       "grade":  11,
                       "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/30/C111215.pdf",
@@ -1517,18 +2382,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14325,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14325",
                       "code":  "111217",
                       "title":  "آزمایشگاه علوم تجربی (2)",
                       "grade":  11,
                       "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/41/C111217.pdf",
@@ -1536,18 +2404,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14975,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14975",
                       "code":  "111220",
                       "title":  "تاریخ معاصر ایران",
                       "grade":  11,
                       "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/693/C111220.pdf",
@@ -1555,18 +2426,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14326,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14326",
                       "code":  "111228",
                       "title":  "تعلیمات ادیان الهی و اخلاق (2) ـ ویژه اقلیت های دینی",
                       "grade":  11,
-                      "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "track":  null,
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/693/C111228.pdf",
@@ -1574,18 +2448,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14327,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14327",
                       "code":  "111230",
                       "title":  "انگلیسی (2)",
                       "grade":  11,
-                      "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "track":  null,
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/44/C111230.pdf",
@@ -1593,18 +2472,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14349,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14349",
                       "code":  "111231",
                       "title":  "کتاب کار انگلیسی (2)",
                       "grade":  11,
-                      "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "track":  null,
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1404-1405",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1404-1405/44/C111231_0.pdf",
@@ -1612,18 +2496,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14332,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14332",
                       "code":  "111237",
                       "title":  "زمین شناسی",
                       "grade":  11,
                       "track":  "math",
-                      "categoryName":  "grade-12-math",
+                      "categoryName":  "grade-11-math-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/41/C111237.pdf",
@@ -1631,18 +2520,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math"
+                                 ]
                   },
                   {
                       "bookPageId":  14267,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14267",
                       "code":  "110214",
                       "title":  "فیزیک (1)",
                       "grade":  10,
                       "track":  "experimental",
-                      "categoryName":  "grade-11-experimental",
+                      "categoryName":  "grade-10-experimental-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/40/C110214.pdf",
@@ -1650,18 +2542,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "experimental"
+                                 ]
                   },
                   {
                       "bookPageId":  14268,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14268",
                       "code":  "110216",
                       "title":  "زیست شناسی (1)",
                       "grade":  10,
                       "track":  "experimental",
-                      "categoryName":  "grade-11-experimental",
+                      "categoryName":  "grade-10-experimental-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/40/C110216.pdf",
@@ -1669,18 +2564,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "experimental"
+                                 ]
                   },
                   {
                       "bookPageId":  14330,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14330",
                       "code":  "111211",
                       "title":  "ریاضی (2)",
                       "grade":  11,
                       "track":  "experimental",
-                      "categoryName":  "grade-12-experimental",
+                      "categoryName":  "grade-11-experimental-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/41/C111211.pdf",
@@ -1688,18 +2586,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "experimental"
+                                 ]
                   },
                   {
                       "bookPageId":  14331,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14331",
                       "code":  "111216",
                       "title":  "زیست شناسی (2)",
                       "grade":  11,
                       "track":  "experimental",
-                      "categoryName":  "grade-12-experimental",
+                      "categoryName":  "grade-11-experimental-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/41/C111216.pdf",
@@ -1707,18 +2608,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "experimental"
+                                 ]
                   },
                   {
                       "bookPageId":  14328,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14328",
                       "code":  "111238",
                       "title":  "ضمیمه دین و زندگی (2) - ویژه اهل سنت",
                       "grade":  11,
-                      "track":  "experimental",
-                      "categoryName":  "grade-12-experimental",
+                      "track":  null,
+                      "categoryName":  "grade-11-experimental-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/41/C111238.pdf",
@@ -1726,18 +2630,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14333,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14333",
                       "code":  "111244",
                       "title":  "فیزیک (2)",
                       "grade":  11,
                       "track":  "experimental",
-                      "categoryName":  "grade-12-experimental",
+                      "categoryName":  "grade-11-experimental-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/41/C111244.pdf",
@@ -1745,18 +2654,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "experimental"
+                                 ]
                   },
                   {
                       "bookPageId":  14270,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14270",
                       "code":  "110203",
                       "title":  "علوم و فنون ادبی (1)",
                       "grade":  10,
                       "track":  "humanities",
-                      "categoryName":  "grade-11-humanities",
+                      "categoryName":  "grade-10-humanities-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/43/C110203.pdf",
@@ -1764,18 +2676,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14269,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14269",
                       "code":  "110205",
                       "title":  "دین و زندگی (1)",
                       "grade":  10,
-                      "track":  "humanities",
-                      "categoryName":  "grade-11-humanities",
+                      "track":  null,
+                      "categoryName":  "grade-10-humanities-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/37/C110205.pdf",
@@ -1783,18 +2698,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14271,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14271",
                       "code":  "110207",
                       "title":  "عربی، زبان قرآن (1)",
                       "grade":  10,
-                      "track":  "humanities",
-                      "categoryName":  "grade-11-humanities",
+                      "track":  null,
+                      "categoryName":  "grade-10-humanities-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/37/C110207.pdf",
@@ -1802,18 +2722,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14272,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14272",
                       "code":  "110212",
                       "title":  "ریاضی و آمار (1)",
                       "grade":  10,
                       "track":  "humanities",
-                      "categoryName":  "grade-11-humanities",
+                      "categoryName":  "grade-10-humanities-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/43/C110212.pdf",
@@ -1821,18 +2746,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14273,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14273",
                       "code":  "110219",
                       "title":  "تاریخ 1 (ایران و جهان باستان)",
                       "grade":  10,
                       "track":  "humanities",
-                      "categoryName":  "grade-11-humanities",
+                      "categoryName":  "grade-10-humanities-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/37/C110219.pdf",
@@ -1840,18 +2768,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14274,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14274",
                       "code":  "110220",
                       "title":  "جامعه شناسی (1)",
                       "grade":  10,
                       "track":  "humanities",
-                      "categoryName":  "grade-11-humanities",
+                      "categoryName":  "grade-10-humanities-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/43/C110220.pdf",
@@ -1859,18 +2790,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14275,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14275",
                       "code":  "110221",
                       "title":  "اقتصاد",
                       "grade":  10,
                       "track":  "humanities",
-                      "categoryName":  "grade-11-humanities",
+                      "categoryName":  "grade-10-humanities-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/43/C110221.pdf",
@@ -1878,18 +2812,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14276,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  10,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14276",
                       "code":  "110223",
                       "title":  "منطق",
                       "grade":  10,
                       "track":  "humanities",
-                      "categoryName":  "grade-11-humanities",
+                      "categoryName":  "grade-10-humanities-y10",
                       "categoryH1":  "پایه دهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/43/C110223.pdf",
@@ -1897,18 +2834,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  10,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14334,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14334",
                       "code":  "111203",
                       "title":  "علوم و فنون ادبی (2)",
                       "grade":  11,
                       "track":  "humanities",
-                      "categoryName":  "grade-12-humanities",
+                      "categoryName":  "grade-11-humanities-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/44/C111203.pdf",
@@ -1916,18 +2856,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14335,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14335",
                       "code":  "111205",
                       "title":  "دین و زندگی (2)",
                       "grade":  11,
-                      "track":  "humanities",
-                      "categoryName":  "grade-12-humanities",
+                      "track":  null,
+                      "categoryName":  "grade-11-humanities-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/38/C111205.pdf",
@@ -1935,18 +2878,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14336,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14336",
                       "code":  "111207",
                       "title":  "عربی، زبان قرآن (2)",
                       "grade":  11,
-                      "track":  "humanities",
-                      "categoryName":  "grade-12-humanities",
+                      "track":  null,
+                      "categoryName":  "grade-11-humanities-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/38/C111207.pdf",
@@ -1954,18 +2902,23 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "math",
+                                     "experimental",
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14337,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14337",
                       "code":  "111212",
                       "title":  "ریاضی و آمار (2)",
                       "grade":  11,
                       "track":  "humanities",
-                      "categoryName":  "grade-12-humanities",
+                      "categoryName":  "grade-11-humanities-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/44/C111212.pdf",
@@ -1973,18 +2926,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14348,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14348",
                       "code":  "111218",
                       "title":  "جغرافیای (2) ـ جغرافیای ناحیه ای",
                       "grade":  11,
                       "track":  "humanities",
-                      "categoryName":  "grade-12-humanities",
+                      "categoryName":  "grade-11-humanities-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/38/C111218.pdf",
@@ -1992,18 +2948,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14338,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14338",
                       "code":  "111219",
                       "title":  "تاریخ (2)",
                       "grade":  11,
                       "track":  "humanities",
-                      "categoryName":  "grade-12-humanities",
+                      "categoryName":  "grade-11-humanities-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/38/C111219.pdf",
@@ -2011,18 +2970,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14339,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14339",
                       "code":  "111222",
                       "title":  "جامعه شناسی (2)",
                       "grade":  11,
                       "track":  "humanities",
-                      "categoryName":  "grade-12-humanities",
+                      "categoryName":  "grade-11-humanities-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/38/C111222.pdf",
@@ -2030,18 +2992,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14340,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14340",
                       "code":  "111224",
                       "title":  "روان شناسی",
                       "grade":  11,
                       "track":  "humanities",
-                      "categoryName":  "grade-12-humanities",
+                      "categoryName":  "grade-11-humanities-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/44/C111224.pdf",
@@ -2049,18 +3014,21 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   },
                   {
                       "bookPageId":  14341,
                       "specialEducation":  false,
+                      "gradeFromCatalogue":  11,
+                      "gradeConfidence":  "verified",
                       "bookPageUrl":  "http://chap.sch.ir/books/14341",
                       "code":  "111226",
                       "title":  "فلسفه (1)",
                       "grade":  11,
                       "track":  "humanities",
-                      "categoryName":  "grade-12-humanities",
+                      "categoryName":  "grade-11-humanities-y11",
                       "categoryH1":  "پایه یازدهم",
                       "academicYear":  "1405-1406",
                       "pdfUrl":  "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/44/C111226.pdf",
@@ -2068,8 +3036,9 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
-                      "gradeFromCatalogue":  11,
-                      "gradeConfidence":  "taxonomy-mismatch"
+                      "tracks":  [
+                                     "humanities"
+                                 ]
                   }
               ]
 }
