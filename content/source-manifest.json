@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-16T12:10:00Z",
+  "purpose": "Fingerprints and structural classification of official textbook files pulled from the portal. The PDFs themselves are deliberately NOT committed and NOT shipped: they are source material for preparing original lessons, not distributable assets.",
+  "sourcePortal": "http://chap.sch.ir",
+  "academicYear": "1405-1406",
+  "method": "tools/inspect-pdf.ps1 — counts /BaseFont, /ToUnicode, /Subtype /Image and DCTDecode markers in the raw PDF objects.",
+  "files": [
+    {
+      "bookCode": "701",
+      "title": "آموزش قرآن (هفتم)",
+      "grade": 7,
+      "track": null,
+      "url": "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/555/C701.pdf",
+      "downloadedAt": "2026-11-16T11:58:00Z",
+      "bytes": 5050896,
+      "sha256": "a349cdd80fb743d14e22bfccca65e2e36dd9e07ab8e9170a462d1547bcf58a20",
+      "pagesApprox": null,
+      "fonts": 0,
+      "toUnicodeMaps": 0,
+      "images": 154,
+      "textLayer": "scan",
+      "extraction": {
+        "status": "blocked-needs-ocr",
+        "reason": "Page-image scan: no embedded fonts and no ToUnicode maps, so there is no text to extract."
+      }
+    },
+    {
+      "bookCode": "705",
+      "title": "ریاضی (هفتم)",
+      "grade": 7,
+      "track": null,
+      "url": "http://chap.sch.ir/sites/default/files/lbooks/1405-1406/555/C705.pdf",
+      "downloadedAt": "2026-11-16T12:02:00Z",
+      "bytes": 35916566,
+      "sha256": "bd29fabf28a0d9e36e18a47f4ad2940f901d85a8821c44ce09302fcfad847cb4",
+      "pagesApprox": 135,
+      "fonts": 0,
+      "toUnicodeMaps": 0,
+      "images": 190,
+      "textLayer": "scan",
+      "extraction": {
+        "status": "blocked-needs-ocr",
+        "reason": "Page-image scan: no embedded fonts and no ToUnicode maps, so there is no text to extract."
+      }
+    }
+  ],
+  "conclusion": "Every inspected official PDF is a page-image scan. Producing lesson text therefore requires OCR with Persian support. No OCR engine is available in the current build environment (no tesseract; the bundled Python and Node runtimes do not execute), so no lesson content has been authored. Authoring from memory instead of the controlling source would violate the project's source policy."
+}
