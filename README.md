@@ -117,6 +117,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build/build.ps1
 | [`docs/CONTENT-QA-REPORT.md`](docs/CONTENT-QA-REPORT.md) | بررسی‌های خودکار محتوا با PASS/FAIL |
 | [`docs/CURRICULUM-COVERAGE.md`](docs/CURRICULUM-COVERAGE.md) | پوشش واقعی هر کتاب و کل پایه‌ها |
 | [`docs/PHASE-03-DELIVERY.md`](docs/PHASE-03-DELIVERY.md) | وضعیت تحویل PROMPT 03 و موانع |
+| [`docs/GRADE-10-CURRICULUM.md`](docs/GRADE-10-CURRICULUM.md) | نقشهٔ پایهٔ دهم، وضعیت دانلود و OCR هر کتاب |
 | [`project-guidelines/AGENTS.md`](project-guidelines/AGENTS.md) | قواعد الزامی پروژه |
 
 ## اصول فنی

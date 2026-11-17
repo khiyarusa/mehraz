@@ -1,10 +1,10 @@
 # PROMPT 03 delivery status
 
-Generated: 2026-11-17T12:05:17Z
+Generated: 2026-11-17T16:34:45Z
 
 ## Done
 
-- Inventory reconciled to **130** records across six grades; grade 12
+- Inventory reconciled to **148** records across six grades; grade 12
   restored through the numeric category nodes.
 - Source transport audited; the certificate override was removed and HTTPS now
   fails closed. Every file is marked `unencrypted`.
@@ -22,7 +22,7 @@ Generated: 2026-11-17T12:05:17Z
 - 21 of 22 biology subsections.
 - Visual page verification, independent answer review, OCR accuracy measurement.
 - Formula rendering, simulation/lab components.
-- The remaining 129 catalogue books.
+- The remaining 147 catalogue books.
 
 ## Blockers
 

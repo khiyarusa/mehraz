@@ -356,12 +356,20 @@
     sectionPlan: function (lesson) {
       var provided = (lesson && lesson.sections) || {};
       return SECTIONS.map(function (spec) {
+        var data = provided[spec.key];
+        // A key that exists but carries no blocks must not render an empty panel.
+        var hasContent = !!(
+          data &&
+          ((Array.isArray(data.blocks) && data.blocks.length > 0) ||
+            typeof data === 'string' ||
+            (data.text && String(data.text).trim()))
+        );
         return {
           key: spec.key,
           label: spec.label,
           icon: spec.icon,
-          hasContent: !!provided[spec.key],
-          data: provided[spec.key] || null
+          hasContent: hasContent,
+          data: hasContent ? data : null
         };
       });
     },

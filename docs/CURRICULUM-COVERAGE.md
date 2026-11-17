@@ -1,6 +1,6 @@
 # Curriculum coverage
 
-Generated: 2026-11-17T12:05:17Z
+Generated: 2026-11-17T16:34:45Z
 
 ## Inventory vs production
 
@@ -10,7 +10,7 @@ Generated: 2026-11-17T12:05:17Z
 
 ## Totals
 
-- Catalogue records: **130**
+- Catalogue records: **148**
 - Books with any authored content: **1**
 - Chapters mapped: **1**
 - Lessons written: **1**
@@ -18,4 +18,4 @@ Generated: 2026-11-17T12:05:17Z
 - Lessons draft: **1**
 - Sections filled / empty (of 10 per lesson): **8 / 0**
 
-No percentage of overall curriculum completion is claimed: 129 catalogue books have no content at all.
+No percentage of overall curriculum completion is claimed: 147 catalogue books have no content at all.

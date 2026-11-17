@@ -115,6 +115,12 @@ foreach ($target in $targets) {
     Write-Host ("[{0}] {1}" -f $target.name, $target.url) -ForegroundColor Cyan
     try {
         $html = Get-Cached -Url $target.url -Name $target.name
+        # Drupal listings paginate; page 2 holds books that the first page hides.
+        for ($pg = 1; $pg -le 2; $pg++) {
+            try {
+                $html += Get-Cached -Url ($target.url + '?page=' + $pg) -Name ($target.name + '-p' + $pg)
+            } catch { break }
+        }
     } catch {
         Write-Host ("  FAILED: " + $_.Exception.Message) -ForegroundColor Red
         $report.Add([pscustomobject]@{ target = $target.name; ok = $false; error = $_.Exception.Message })
@@ -219,19 +225,9 @@ foreach ($b in $unique) {
 $books = $unique
 Write-Host ("unique books after merge: " + $books.Count) -ForegroundColor Yellow
 
-# The portal lists general subjects only on the first track page of a grade.
-# They are required for every track, so mark them shared instead of belonging
-# to whichever page happened to list them first.
-$generalPattern = 'فارسی|نگارش|دین و زندگی|عربی|انگلیسی|هویت اجتماعی|سلامت و بهداشت|مدیریت خانواده|تعلیمات ادیان|ضمیمه دین|کتاب کار'
-$sharedCount = 0
-foreach ($b in $books) {
-    if ($b.grade -ge 10 -and $b.title -match $generalPattern) {
-        $b.tracks = @('math', 'experimental', 'humanities')
-        $b.track = $null
-        $sharedCount++
-    }
-}
-Write-Host ("shared general books: " + $sharedCount) -ForegroundColor Yellow
+# Track membership comes from the listing pages where a book actually appeared.
+# An earlier title-regex pass guessed sharing and got 12 of 26 grade-10 records
+# wrong, so it was removed: shared books are the ones the portal repeats.
 
 # ---- write the inventory ---------------------------------------------------
 $doc = [ordered]@{

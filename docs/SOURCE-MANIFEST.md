@@ -1,16 +1,16 @@
 # Source manifest and transport audit
 
-Generated: 2026-11-17T12:05:17Z
+Generated: 2026-11-17T16:34:45Z
 Machine-readable source: `content/source-manifest.json`
 
 ## Files
 
 | Code | Title | Bytes | SHA-256 | Pages | Text layer | OCR | Transport |
 |---|---|---:|---|---:|---|---|---|
-| 701 | آموزش قرآن (هفتم) | 5050896 | a349cdd80fb7… |  | scan | blocked-needs-ocr | unencrypted |
-| 706 | علوم تجربی (هفتم) | 11795385 | da0b1c4277de… |  | scan | blocked-needs-ocr | unencrypted |
-| 705 | ریاضی (هفتم) | 35916566 | bd29fabf28a0… | 135 | scan | blocked-needs-ocr | unencrypted |
-| 110216 | زیست‌شناسی (1) | 6775781 | 58f6685b03e6… | 120 | scan | ocr-done-pilot | unencrypted |
+| 701 | آموزش قرآن (هفتم) | 5050896 | a349cdd80fb7â€¦ |  | scan | blocked-needs-ocr | unencrypted |
+| 706 | علوم تجربی (هفتم) | 11795385 | da0b1c4277deâ€¦ |  | scan | blocked-needs-ocr | unencrypted |
+| 705 | ریاضی (هفتم) | 35916566 | bd29fabf28a0â€¦ | 135 | scan | blocked-needs-ocr | unencrypted |
+| 110216 | زیست‌شناسی (1) | 6775781 | 58f6685b03e6â€¦ | 120 | scan | ocr-done-pilot | unencrypted |
 
 ## TLS audit (2026-11-17)
 

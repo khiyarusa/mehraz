@@ -122,6 +122,7 @@ if ($Force -and (Test-Path -LiteralPath $OutFile)) { Remove-Item -LiteralPath $O
 if (-not (Test-Path -LiteralPath $OutFile)) { [IO.File]::WriteAllBytes($OutFile, @()) }
 
 $rounds = 0
+$stall = 0
 $expectedTotal = $info.Length
 while ($true) {
     $have = (Get-Item -LiteralPath $OutFile).Length
@@ -129,13 +130,16 @@ while ($true) {
     if ($have -gt $expectedTotal) { throw "local file is larger than the remote resource ($have > $expectedTotal)" }
     if ($rounds -ge $MaxRounds) { throw "gave up after $MaxRounds rounds at $have/$expectedTotal" }
     $rounds++
+    $before = $have
 
-    $req = [Net.HttpWebRequest]::Create($Url)
-    $req.Timeout = 120000
-    $req.ReadWriteTimeout = 120000
-    $req.AddRange($have)
-    $resp = $req.GetResponse()
+    $resp = $null
     try {
+        $req = [Net.HttpWebRequest]::Create($Url)
+        $req.Timeout = 120000
+        $req.ReadWriteTimeout = 120000
+        $req.AddRange($have)
+        $resp = $req.GetResponse()
+
         $status = [int]$resp.StatusCode
         if ($status -ne 206) {
             throw "range request returned HTTP $status (expected 206) at offset $have; refusing to append a full body"
@@ -164,10 +168,25 @@ while ($true) {
         } finally {
             $fs.Close()
         }
-        if ($written -ne $chunkLength) { throw "wrote $written bytes for a $chunkLength-byte range" }
-        Write-Output ("  round {0}: +{1} bytes -> {2}/{3}" -f $rounds, $written, ((Get-Item $OutFile).Length), $expectedTotal)
+        if ($written -ne $chunkLength) {
+            Write-Output ("  round {0}: short read {1}/{2} bytes (connection closed); resuming" -f $rounds, $written, $chunkLength)
+        } else {
+            Write-Output ("  round {0}: +{1} bytes -> {2}/{3}" -f $rounds, $written, ((Get-Item $OutFile).Length), $expectedTotal)
+        }
+    } catch {
+        if ($resp) { $resp.Close(); $resp = $null }
+        Write-Output ("  round {0}: {1}" -f $rounds, $_.Exception.Message)
     } finally {
-        $resp.Close()
+        if ($resp) { $resp.Close() }
+    }
+
+    $after = (Get-Item -LiteralPath $OutFile).Length
+    if ($after -le $before) {
+        $stall++
+        if ($stall -ge 4) { throw "no progress after $stall rounds at $after/$expectedTotal" }
+        Start-Sleep -Seconds 2
+    } else {
+        $stall = 0
     }
 }
 

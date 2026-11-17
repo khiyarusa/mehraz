@@ -1,18 +1,18 @@
 {
-    "generatedAt":  "2026-11-17T12:05:17Z",
+    "generatedAt":  "2026-11-17T16:34:45Z",
     "academicYear":  "1405-1406",
     "inventory":  {
-                      "records":  130,
-                      "withPdfUrl":  130,
-                      "gradeVerified":  130,
+                      "records":  148,
+                      "withPdfUrl":  147,
+                      "gradeVerified":  148,
                       "byGrade":  [
                                       {
                                           "grade":  10,
-                                          "records":  26
+                                          "records":  27
                                       },
                                       {
                                           "grade":  11,
-                                          "records":  28
+                                          "records":  29
                                       },
                                       {
                                           "grade":  12,
@@ -20,20 +20,20 @@
                                       },
                                       {
                                           "grade":  7,
-                                          "records":  16
+                                          "records":  22
                                       },
                                       {
                                           "grade":  8,
-                                          "records":  16
+                                          "records":  22
                                       },
                                       {
                                           "grade":  9,
-                                          "records":  16
+                                          "records":  20
                                       }
                                   ],
                       "transport":  {
                                         "scheme":  "unencrypted",
-                                        "records":  130
+                                        "records":  148
                                     },
                       "note":  "Portal records are not proof of a legally required textbook list, and a resolved PDF URL is not a download."
                   },

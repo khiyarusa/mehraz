@@ -1,23 +1,23 @@
-# Official textbook inventory — status
+# Official textbook inventory â€” status
 
-Generated: 2026-11-17T12:05:17Z · academic year 1405-1406
+Generated: 2026-11-17T16:34:45Z Â· academic year 1405-1406
 Source: `content/inventory.json` (built by `tools/build-inventory.ps1`)
 
 ## Records
 
 | Grade | Records |
 |---|---:|
-| 10 | 26 |
-| 11 | 28 |
+| 10 | 27 |
+| 11 | 29 |
 | 12 | 28 |
-| 7 | 16 |
-| 8 | 16 |
-| 9 | 16 |
-| **Total** | **130** |
+| 7 | 22 |
+| 8 | 22 |
+| 9 | 20 |
+| **Total** | **148** |
 
-- Records with a resolved official PDF URL: **130**
-- Grade attribution confirmed against the listing-page heading: **130**
-- Transport: **** for all 130 records
+- Records with a resolved official PDF URL: **147**
+- Grade attribution confirmed against the listing-page heading: **148**
+- Transport: **** for all 148 records
 
 ## What these numbers do not prove
 
