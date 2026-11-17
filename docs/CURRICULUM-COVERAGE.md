@@ -1,6 +1,6 @@
 # Curriculum coverage
 
-Generated: 2026-11-17T11:47:41Z
+Generated: 2026-11-17T12:05:17Z
 
 ## Inventory vs production
 

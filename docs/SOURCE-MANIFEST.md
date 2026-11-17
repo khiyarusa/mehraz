@@ -1,6 +1,6 @@
 # Source manifest and transport audit
 
-Generated: 2026-11-17T11:47:41Z
+Generated: 2026-11-17T12:05:17Z
 Machine-readable source: `content/source-manifest.json`
 
 ## Files
@@ -25,6 +25,8 @@ Machine-readable source: `content/source-manifest.json`
 ## Consequence
 
 Files already on disk were downloaded over plain HTTP. Their SHA-256 proves what
-was received; it does not prove that the file came from the publisher. Any use
-of these files for publication must carry that limitation until a verified
-transport or an owner-approved exception exists.
+was received; it does not prove that the file came from the publisher. The owner
+approved a documented HTTP exception on 2026-11-17
+(`docs/SOURCE-TRANSPORT-EXCEPTION.md`); every file remains labelled
+**transport-unverified** and no UI or report claims publisher authentication.
+The exception is limited to `chap.sch.ir` and to local acquisition.

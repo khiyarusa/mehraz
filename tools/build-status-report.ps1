@@ -107,7 +107,7 @@ $status = [ordered]@{
         verifiedLessons  = $verifiedLessons
     }
     blockers             = @(
-        'The portal serves a certificate for *.roshd.ir on chap.sch.ir; strict TLS fails (name mismatch + chain error). No bypass is permitted, so source transport is unencrypted and unauthenticated.',
+        'Source transport: the portal serves a certificate for *.roshd.ir on chap.sch.ir; strict TLS fails. The owner approved a documented HTTP exception on 2026-11-17 (docs/SOURCE-TRANSPORT-EXCEPTION.md). Files stay labelled transport-unverified; no publisher authentication is claimed.',
         'Only 3 of 130 PDFs are downloaded; none is transport-authenticated.',
         'One lesson of the 22-subsection biology pilot exists; the other 21 are not written.'
     )
@@ -182,9 +182,11 @@ $fileRows
 ## Consequence
 
 Files already on disk were downloaded over plain HTTP. Their SHA-256 proves what
-was received; it does not prove that the file came from the publisher. Any use
-of these files for publication must carry that limitation until a verified
-transport or an owner-approved exception exists.
+was received; it does not prove that the file came from the publisher. The owner
+approved a documented HTTP exception on 2026-11-17
+(``docs/SOURCE-TRANSPORT-EXCEPTION.md``); every file remains labelled
+**transport-unverified** and no UI or report claims publisher authentication.
+The exception is limited to ``chap.sch.ir`` and to local acquisition.
 "@
 Write-Utf8 'docs/SOURCE-MANIFEST.md' $man
 
@@ -372,9 +374,10 @@ Generated: $($status.generatedAt)
 
 ## Blockers
 
-1. **Source authentication.** ``chap.sch.ir`` presents ``*.roshd.ir``; strict TLS
-   fails. An owner decision is required: accept transport-unverified files with a
-   documented exception, or supply a verified copy.
+1. **Source transport.** ``chap.sch.ir`` presents ``*.roshd.ir``; strict TLS fails.
+   The owner approved a documented HTTP exception on 2026-11-17
+   (``docs/SOURCE-TRANSPORT-EXCEPTION.md``). Files remain transport-unverified and
+   TLS is re-tested at every batch.
 2. **Scale.** Completing 130 books is a multi-week production task; each book needs
    OCR, visual checks, lesson writing and answer review.
 "@

@@ -1,6 +1,6 @@
 # PROMPT 03 delivery status
 
-Generated: 2026-11-17T11:47:41Z
+Generated: 2026-11-17T12:05:17Z
 
 ## Done
 
@@ -26,8 +26,9 @@ Generated: 2026-11-17T11:47:41Z
 
 ## Blockers
 
-1. **Source authentication.** `chap.sch.ir` presents `*.roshd.ir`; strict TLS
-   fails. An owner decision is required: accept transport-unverified files with a
-   documented exception, or supply a verified copy.
+1. **Source transport.** `chap.sch.ir` presents `*.roshd.ir`; strict TLS fails.
+   The owner approved a documented HTTP exception on 2026-11-17
+   (`docs/SOURCE-TRANSPORT-EXCEPTION.md`). Files remain transport-unverified and
+   TLS is re-tested at every batch.
 2. **Scale.** Completing 130 books is a multi-week production task; each book needs
    OCR, visual checks, lesson writing and answer review.

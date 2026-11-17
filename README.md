@@ -113,6 +113,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build/build.ps1
 | [`docs/CONTENT-INVENTORY.md`](docs/CONTENT-INVENTORY.md) | فهرست رسمی ۱۳۰ کتاب، پوشش پایه‌ها و رشته‌ها، وضعیت OCR |
 | [`docs/PILOT-01-BIOLOGY.md`](docs/PILOT-01-BIOLOGY.md) | پایلوت اول: زیست‌شناسی دهم، پوشش واقعی و محدودیت‌ها |
 | [`docs/SOURCE-MANIFEST.md`](docs/SOURCE-MANIFEST.md) | اثر انگشت فایل‌ها و ممیزی انتقال TLS |
+| [`docs/SOURCE-TRANSPORT-EXCEPTION.md`](docs/SOURCE-TRANSPORT-EXCEPTION.md) | استثنای مستند و تأییدشدهٔ انتقال HTTP |
 | [`docs/CONTENT-QA-REPORT.md`](docs/CONTENT-QA-REPORT.md) | بررسی‌های خودکار محتوا با PASS/FAIL |
 | [`docs/CURRICULUM-COVERAGE.md`](docs/CURRICULUM-COVERAGE.md) | پوشش واقعی هر کتاب و کل پایه‌ها |
 | [`docs/PHASE-03-DELIVERY.md`](docs/PHASE-03-DELIVERY.md) | وضعیت تحویل PROMPT 03 و موانع |

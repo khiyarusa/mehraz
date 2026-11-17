@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-11-17T11:47:41Z",
+    "generatedAt":  "2026-11-17T12:05:17Z",
     "academicYear":  "1405-1406",
     "inventory":  {
                       "records":  130,
@@ -58,7 +58,7 @@
                       "verifiedLessons":  0
                   },
     "blockers":  [
-                     "The portal serves a certificate for *.roshd.ir on chap.sch.ir; strict TLS fails (name mismatch + chain error). No bypass is permitted, so source transport is unencrypted and unauthenticated.",
+                     "Source transport: the portal serves a certificate for *.roshd.ir on chap.sch.ir; strict TLS fails. The owner approved a documented HTTP exception on 2026-11-17 (docs/SOURCE-TRANSPORT-EXCEPTION.md). Files stay labelled transport-unverified; no publisher authentication is claimed.",
                      "Only 3 of 130 PDFs are downloaded; none is transport-authenticated.",
                      "One lesson of the 22-subsection biology pilot exists; the other 21 are not written."
                  ]
