@@ -1,6 +1,11 @@
 # MEHRAZ — Content pipeline and source audit
 
-Status: **source audit complete (PROMPT 03 input); content production blocked on OCR and is not part of the current pre-release quality pass.**
+Status: **historical audit trail; superseded on 2026-11-17 for counts and tooling.**
+Canonical sources now: `content/status.json`, `docs/CONTENT-INVENTORY.md`,
+`docs/SOURCE-MANIFEST.md`, `docs/CURRICULUM-COVERAGE.md`. Corrections recorded
+here: 130 records (not 103), grade 12 restored through numeric category nodes,
+local Persian OCR is installed and working, and source transport is HTTP-only and
+unauthenticated.
 Date: 2026-11-16 · target academic year on the portal: **1405–1406**.
 
 This document records what was actually verified against the official textbook
@@ -55,16 +60,17 @@ Example: `…/lbooks/1405-1406/555/C705.pdf` (ریاضی هفتم).
 
 `tools/build-inventory.ps1` walks the category pages, reads every book card
 (title, official book code, book-page id, cover year) and then resolves the PDF
-URL from each book page. Output: `content/inventory.json` (103 books).
+URL from each book page. Output: `content/inventory.json` (130 books; rebuilt
+2026-11-17 after the grade-12 fix).
 
 | Grade | Books resolved | Confidence |
 | --- | --- | --- |
-| 7 | 16 | **verified** — listing heading matches, titles match the grade |
+| 7 | 16 | **verified** |
 | 8 | 16 | **verified** |
 | 9 | 16 | **verified** |
-| 10 | 26 | partial — 16 from the ریاضی‑فیزیک listing plus track-specific books |
-| 11 | 29 | partial — same pattern |
-| 12 | 0 | **not reachable** through the portal's current year terms |
+| 10 | 26 | **verified** — every listing heading matches its target grade |
+| 11 | 28 | **verified** — after the year-term correction |
+| 12 | 28 | **verified** — numeric category nodes 711 / 712 / 709 |
 
 Notes on the portal's taxonomy, recorded because they will waste someone's day
 otherwise:
@@ -75,9 +81,9 @@ otherwise:
 - The نظری year terms are labelled one grade off: `سال-دوم` renders "پایه دهم",
   `سال-سوم` renders "پایه یازدهم", and `سال-اول` renders an empty
   "کتاب های ورودی بی اعتبار" page.
-- Grade 12 books were not found under `سال-چهارم` or `پیش دانشگاهی` for this year.
-  Completing grade 12 (and confirming 10/11 track completeness) needs either the
-  portal's term IDs from its search form or a manual pass.
+- Grade 12 is reachable only through the numeric category nodes the main menu
+  links to (711 mathematics, 712 experimental, 709 humanities); the year-term
+  slugs stop at grade 11. This was fixed on 2026-11-17.
 
 `content/inventory.json` stores `gradeFromCatalogue` and `gradeConfidence`
 (`verified` / `taxonomy-mismatch` / `unknown`) per book so the uncertainty is

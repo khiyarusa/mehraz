@@ -839,8 +839,50 @@ img { max-width: 100%; height: auto; }
 .reviewrow__icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--surface-2); color: var(--txt-muted); flex: none; }
 .reviewrow--due .reviewrow__icon { background: var(--brand-soft); color: var(--brand); }
 
-/* ==========================================================================
-   ENTRY SURFACES — welcome and onboarding
+/* ---- activity engine ---------------------------------------------------- */
+.activity { display: flex; flex-direction: column; gap: 12px; }
+.activity + .activity { margin-block-start: 12px; }
+.activity__head { display: flex; align-items: flex-start; gap: 12px; }
+.activity__stage { display: grid; gap: 12px; }
+@media (min-width: 620px) { .activity__stage { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.activity__col, .activity__pool { display: flex; flex-direction: column; gap: 8px; }
+.activity__item {
+  min-height: var(--tap); padding: 10px 14px; text-align: start;
+  border: 1.5px solid var(--border); border-radius: var(--r-md);
+  background: var(--surface); color: var(--txt); font-size: var(--fs-12);
+  cursor: pointer; transition: border-color var(--d-1) var(--e-standard), background var(--d-1) var(--e-standard), transform var(--d-1) var(--e-standard);
+}
+.activity__item:hover { border-color: var(--brand-line); background: var(--brand-soft); }
+.activity__item:active { transform: scale(.99); }
+.activity__item.is-selected { border-color: var(--brand); box-shadow: var(--ring); background: var(--brand-soft); }
+.activity__item.is-done { border-color: var(--ok); background: var(--ok-soft); color: var(--ok); cursor: default; opacity: .85; }
+.activity__item.is-wrong { border-color: var(--danger); background: var(--danger-soft); }
+.activity__buckets { display: flex; flex-direction: column; gap: 10px; }
+.activity__bucket { border: 1.5px dashed var(--border-strong); border-radius: var(--r-md); padding: 10px; min-height: 76px; transition: border-color var(--d-1), background var(--d-1); }
+.activity__bucket.is-wrong { border-color: var(--danger); background: var(--danger-soft); }
+.activity__bucket-title { font-size: var(--fs-11); font-weight: var(--fw-bold); color: var(--txt-muted); margin-block-end: 8px; }
+.activity__bucket-body { display: flex; flex-wrap: wrap; gap: 6px; }
+.activity__bucket-body .activity__item { min-height: 36px; padding: 6px 10px; font-size: var(--fs-11); }
+.activity__status { min-height: 18px; }
+.activity__status.is-ok { color: var(--ok); }
+.activity__status.is-wrong { color: var(--danger); }
+.block-source { margin-block-start: 6px; font-size: 10px; color: var(--txt-faint); }
+
+/* ---- lesson exercises --------------------------------------------------- */
+.exercises { display: flex; flex-direction: column; gap: 12px; }
+.exercise { border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px 16px; background: var(--surface); }
+.exercise__head { display: flex; gap: 10px; align-items: flex-start; }
+.exercise__num {
+  flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--brand-soft); color: var(--brand); font-family: var(--font-num); font-size: var(--fs-11); font-weight: var(--fw-heavy);
+}
+.exercise__prompt { font-size: var(--fs-13); font-weight: var(--fw-semibold); color: var(--txt-strong); line-height: 1.9; }
+.exercise__options { margin: 10px 0 0; padding-inline-start: 22px; display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-12); color: var(--txt); list-style: decimal; }
+.exercise__answer { margin-block-start: 10px; border-block-start: 1px solid var(--line-2); padding-block-start: 8px; }
+.exercise__answer summary { cursor: pointer; font-size: var(--fs-11); color: var(--brand); font-weight: var(--fw-semibold); }
+.exercise__key { margin-block-start: 8px; font-size: var(--fs-12); }
+
+/* ---- entry surfaces ----------------------------------------------------
    These two screens are the whole product for the first minute. They get
    their own composition instead of borrowing the dashboard shell.
    ========================================================================== */

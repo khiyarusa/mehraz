@@ -162,6 +162,7 @@ foreach ($target in $targets) {
             sha256       = $null
             hashStatus   = 'pending'
             sourceStatus = 'catalogue'
+            transportSecurity = 'unencrypted'
         })
         $count++
     }
@@ -239,6 +240,8 @@ $doc = [ordered]@{
     generatedAt    = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
     sourcePortal   = 'http://chap.sch.ir'
     coverage       = 'partial'
+    sourceTransport = 'unencrypted'
+    sourceTransportNote = 'The portal refuses a valid TLS certificate for chap.sch.ir (served certificate is for *.roshd.ir). Catalogue metadata and PDF links were therefore read over plain HTTP and are marked unencrypted. File hashes prove identity of what was received, not publisher authentication.'
     caveats        = @(
         'The portal year terms are shifted: sal-dovom renders paye dahom and sal-savom renders paye yazdahom; sal-aval is empty. Grade 12 is reachable only through the numeric category nodes 711/712/709.'
         'Grade attribution is therefore taken from each listing page heading (gradeFromCatalogue) and a gradeConfidence flag records whether it matched the requested grade.',

@@ -18,10 +18,14 @@ self-contained HTML document. Opening `start.html` runs the whole application
 from `file://`; there is no server, no installation, no account and no network
 traffic. Student data stays on the device.
 
-**Current state: pre-release quality pass.** The foundation (PROMPT 01) and the
-visual layer (PROMPT 02) are in place. The catalogue ships **empty by design** —
-no lesson, exercise, exam question or textbook fact is included. Official
-educational content is PROMPT 03 and is explicitly out of scope for this pass.
+**Current state: pre-release quality pass plus the first PROMPT 03 pilot slice.**
+The foundation (PROMPT 01) and the visual layer (PROMPT 02) are in place. The
+catalogue contains **one draft lesson** from the Grade 10 Biology pilot
+(chapter 1, subsection 2) with an activity, four practice questions, a
+six-question chapter exam and a reconstructed diagram. It is marked ``draft`` in
+the interface until it passes visual and independent verification. The other
+129 catalogue books contain no content. Official content production remains
+PROMPT 03 work.
 
 <div dir="rtl">
 
@@ -43,11 +47,11 @@ educational content is PROMPT 03 and is explicitly out of scope for this pass.
 | ثبت‌نام با تقویم شمسی و اعتبارسنجی | آماده | کبیسه، روز نامعتبر، سال خارج از بازه |
 | داشبورد با آمار واقعی و حالت‌های خالی | آماده | اعداد از رکوردهای ذخیره‌شده |
 | کتابخانه، پایه، رشته، کتاب، فصل، درس | ساختار آماده، بدون محتوا | کاتالوگ خالی |
-| موتور آزمون (چهار نوع پرسش) | آماده، بدون پرسش | فقط با محتوای رسمی فعال می‌شود |
+| موتور آزمون (چهار نوع پرسش) | آماده، یک آزمون نمونه | فصل ۱ زیست‌شناسی دهم |
 | مرور و مسیر پیشرفت | آماده، بدون قاعدهٔ زمان‌بندی | زمان‌بندی مرور در PROMPT 03 |
 | پشتیبان JSON و بازیابی | آماده | آزمون رفت‌وبرگشت کامل |
 | تنظیمات، کاهش حرکت، حریم خصوصی | آماده | — |
-| محتوای درسی رسمی | PROMPT 03 | — |
+| محتوای درسی رسمی | در جریان — ۱ درس پیش‌نویس از ۲۲ گفتار پایلوت | [`docs/PILOT-01-BIOLOGY.md`](docs/PILOT-01-BIOLOGY.md) |
 
 > در این نسخه هیچ درس، تمرین یا مطلب درسی ساختگی وجود ندارد. جای هر بخش محتوایی،
 > یک حالت خالی روشن و یک اقدام مشخص نمایش داده می‌شود.
@@ -108,6 +112,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File build/build.ps1
 | [`docs/CONTENT-PIPELINE.md`](docs/CONTENT-PIPELINE.md) | وضعیت ممیزی منابع و خط‌لولهٔ محتوا |
 | [`docs/CONTENT-INVENTORY.md`](docs/CONTENT-INVENTORY.md) | فهرست رسمی ۱۳۰ کتاب، پوشش پایه‌ها و رشته‌ها، وضعیت OCR |
 | [`docs/PILOT-01-BIOLOGY.md`](docs/PILOT-01-BIOLOGY.md) | پایلوت اول: زیست‌شناسی دهم، پوشش واقعی و محدودیت‌ها |
+| [`docs/SOURCE-MANIFEST.md`](docs/SOURCE-MANIFEST.md) | اثر انگشت فایل‌ها و ممیزی انتقال TLS |
+| [`docs/CONTENT-QA-REPORT.md`](docs/CONTENT-QA-REPORT.md) | بررسی‌های خودکار محتوا با PASS/FAIL |
+| [`docs/CURRICULUM-COVERAGE.md`](docs/CURRICULUM-COVERAGE.md) | پوشش واقعی هر کتاب و کل پایه‌ها |
+| [`docs/PHASE-03-DELIVERY.md`](docs/PHASE-03-DELIVERY.md) | وضعیت تحویل PROMPT 03 و موانع |
 | [`project-guidelines/AGENTS.md`](project-guidelines/AGENTS.md) | قواعد الزامی پروژه |
 
 ## اصول فنی

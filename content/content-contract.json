@@ -74,7 +74,8 @@
         "alt": { "type": "string" },
         "caption": { "type": "string" },
         "head": { "type": "array", "items": { "type": "string" } },
-        "rows": { "type": "array", "items": { "type": "array", "items": { "type": "string" } } }
+        "rows": { "type": "array", "items": { "type": "array", "items": { "type": "string" } } },
+        "source": { "$ref": "#/$defs/source" }
       }
     },
     "section": {

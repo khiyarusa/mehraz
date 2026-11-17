@@ -1,9 +1,11 @@
 {
     "schemaVersion":  1,
     "generator":  "tools/build-inventory.ps1",
-    "generatedAt":  "2026-11-16T18:13:34Z",
+    "generatedAt":  "2026-11-17T11:31:03Z",
     "sourcePortal":  "http://chap.sch.ir",
     "coverage":  "partial",
+    "sourceTransport":  "unencrypted",
+    "sourceTransportNote":  "The portal refuses a valid TLS certificate for chap.sch.ir (served certificate is for *.roshd.ir). Catalogue metadata and PDF links were therefore read over plain HTTP and are marked unencrypted. File hashes prove identity of what was received, not publisher authentication.",
     "caveats":  [
                     "The portal year terms are shifted: sal-dovom renders paye dahom and sal-savom renders paye yazdahom; sal-aval is empty. Grade 12 is reachable only through the numeric category nodes 711/712/709.",
                     "Grade attribution is therefore taken from each listing page heading (gradeFromCatalogue) and a gradeConfidence flag records whether it matched the requested grade.",
@@ -136,6 +138,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -158,6 +161,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -180,6 +184,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -202,6 +207,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -224,6 +230,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -246,6 +253,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -268,6 +276,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -290,6 +299,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -312,6 +322,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -334,6 +345,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -356,6 +368,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -378,6 +391,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -400,6 +414,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -422,6 +437,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -444,6 +460,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -466,6 +483,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -488,6 +506,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -510,6 +529,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -532,6 +552,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -554,6 +575,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -576,6 +598,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -598,6 +621,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -620,6 +644,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -642,6 +667,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -664,6 +690,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -686,6 +713,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -708,6 +736,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -730,6 +759,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -752,6 +782,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -774,6 +805,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -796,6 +828,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -818,6 +851,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -840,6 +874,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -862,6 +897,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -884,6 +920,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -906,6 +943,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -928,6 +966,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -950,6 +989,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -972,6 +1012,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -994,6 +1035,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -1016,6 +1058,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -1038,6 +1081,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -1060,6 +1104,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -1082,6 +1127,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -1104,6 +1150,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -1126,6 +1173,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -1148,6 +1196,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -1170,6 +1219,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
 
                                  ]
@@ -1192,6 +1242,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1216,6 +1267,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1240,6 +1292,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1264,6 +1317,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1288,6 +1342,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -1310,6 +1365,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -1332,6 +1388,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -1354,6 +1411,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -1376,6 +1434,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -1398,6 +1457,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1422,6 +1482,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1446,6 +1507,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1470,6 +1532,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1494,6 +1557,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1518,6 +1582,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1542,6 +1607,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1566,6 +1632,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "experimental"
                                  ]
@@ -1588,6 +1655,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "experimental"
                                  ]
@@ -1610,6 +1678,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "experimental"
                                  ]
@@ -1632,6 +1701,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -1654,6 +1724,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1678,6 +1749,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1702,6 +1774,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -1724,6 +1797,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -1746,6 +1820,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -1768,6 +1843,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -1790,6 +1866,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -1812,6 +1889,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -1834,6 +1912,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1858,6 +1937,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1882,6 +1962,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1906,6 +1987,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -1930,6 +2012,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -1952,6 +2035,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -1974,6 +2058,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -1996,6 +2081,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2018,6 +2104,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2040,6 +2127,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2062,6 +2150,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2084,6 +2173,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2106,6 +2196,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2128,6 +2219,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2150,6 +2242,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2174,6 +2267,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2198,6 +2292,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2222,6 +2317,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2246,6 +2342,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2270,6 +2367,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2294,6 +2392,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2316,6 +2415,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2338,6 +2438,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2360,6 +2461,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2382,6 +2484,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2404,6 +2507,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2426,6 +2530,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2448,6 +2553,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2472,6 +2578,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2496,6 +2603,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2520,6 +2628,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math"
                                  ]
@@ -2542,6 +2651,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "experimental"
                                  ]
@@ -2564,6 +2674,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "experimental"
                                  ]
@@ -2586,6 +2697,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "experimental"
                                  ]
@@ -2608,6 +2720,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "experimental"
                                  ]
@@ -2630,6 +2743,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2654,6 +2768,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "experimental"
                                  ]
@@ -2676,6 +2791,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -2698,6 +2814,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2722,6 +2839,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2746,6 +2864,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -2768,6 +2887,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -2790,6 +2910,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -2812,6 +2933,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -2834,6 +2956,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -2856,6 +2979,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -2878,6 +3002,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2902,6 +3027,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "math",
                                      "experimental",
@@ -2926,6 +3052,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -2948,6 +3075,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -2970,6 +3098,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -2992,6 +3121,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -3014,6 +3144,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]
@@ -3036,6 +3167,7 @@
                       "sha256":  null,
                       "hashStatus":  "pending",
                       "sourceStatus":  "official-pdf-located",
+                      "transportSecurity":  "unencrypted",
                       "tracks":  [
                                      "humanities"
                                  ]

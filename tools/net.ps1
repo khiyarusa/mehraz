@@ -2,11 +2,11 @@
 #  MEHRAZ content pipeline — minimal HTTPS client
 #  Development tooling only. Never shipped, never used at runtime.
 #
-#  Why this exists: the official textbook portal presents a certificate issued
-#  for *.roshd.ir while serving chap.sch.ir, so Windows rejects it. .NET's
-#  HttpClient also fails to initialise in this host. A raw TLS stream with an
-#  explicit per-connection trust decision is the smallest reliable path, and it
-#  keeps the trust override scoped to this script instead of the whole machine.
+#  Strict transport policy: certificate chain, hostname and validity are always
+#  validated by the operating system. There is no override, no "ignore errors"
+#  switch and no silent fallback to plain HTTP. If the official portal cannot
+#  present a valid certificate for its own hostname, acquisition stops and the
+#  limitation is reported instead of being bypassed.
 # =============================================================================
 
 # SslStream lives in System.dll, which PowerShell has already loaded — no Add-Type needed.
@@ -18,8 +18,7 @@ function Get-HttpsRaw {
         [Parameter(Mandatory)][string]$ServerName,
         [string]$Path = '/',
         [int]$Port = 443,
-        [int]$TimeoutMs = 60000,
-        [switch]$AllowBadCertificate
+        [int]$TimeoutMs = 60000
     )
 
     $client = New-Object System.Net.Sockets.TcpClient
@@ -32,17 +31,15 @@ function Get-HttpsRaw {
         throw
     }
 
-    $callback = {
-        param($sender, $certificate, $chain, $errors)
-        return [bool]$AllowBadCertificate
-    }.GetNewClosure()
-
-    $ssl = New-Object System.Net.Security.SslStream($client.GetStream(), $false, $callback)
+    # No callback: SslStream uses the system policy (chain, hostname, validity).
+    $ssl = New-Object System.Net.Security.SslStream($client.GetStream(), $false)
     try {
         $ssl.AuthenticateAsClient($ServerName)
     } catch {
+        $msg = $_.Exception.Message
+        $inner = if ($_.Exception.InnerException) { $_.Exception.InnerException.Message } else { $msg }
         $ssl.Dispose(); $client.Close()
-        throw "TLS handshake failed for $ServerName : $($_.Exception.Message)"
+        throw "TLS validation failed for $ServerName`:$Port - $inner. Source transport is not authenticated; refusing to continue."
     }
     $ssl.ReadTimeout = $TimeoutMs
 
@@ -145,7 +142,7 @@ function Get-WebText {
     )
     $uri = [Uri]$Url
     $path = $uri.PathAndQuery
-    $raw = Get-HttpsRaw -ServerName $uri.Host -Path $path -TimeoutMs $TimeoutMs -AllowBadCertificate
+    $raw = Get-HttpsRaw -ServerName $uri.Host -Path $path -TimeoutMs $TimeoutMs
     $resp = Split-HttpResponse -Raw $raw
     if ($resp.Status -ne 200) { throw "HTTP $($resp.Status) for $Url" }
 
@@ -164,7 +161,7 @@ function Save-WebFile {
         [int]$TimeoutMs = 180000
     )
     $uri = [Uri]$Url
-    $raw = Get-HttpsRaw -ServerName $uri.Host -Path $uri.PathAndQuery -TimeoutMs $TimeoutMs -AllowBadCertificate
+    $raw = Get-HttpsRaw -ServerName $uri.Host -Path $uri.PathAndQuery -TimeoutMs $TimeoutMs
     $resp = Split-HttpResponse -Raw $raw
     if ($resp.Status -ne 200) { throw "HTTP $($resp.Status) for $Url" }
     $dir = Split-Path -Parent $OutFile

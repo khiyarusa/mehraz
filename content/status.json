@@ -1,0 +1,65 @@
+{
+    "generatedAt":  "2026-11-17T11:47:41Z",
+    "academicYear":  "1405-1406",
+    "inventory":  {
+                      "records":  130,
+                      "withPdfUrl":  130,
+                      "gradeVerified":  130,
+                      "byGrade":  [
+                                      {
+                                          "grade":  10,
+                                          "records":  26
+                                      },
+                                      {
+                                          "grade":  11,
+                                          "records":  28
+                                      },
+                                      {
+                                          "grade":  12,
+                                          "records":  28
+                                      },
+                                      {
+                                          "grade":  7,
+                                          "records":  16
+                                      },
+                                      {
+                                          "grade":  8,
+                                          "records":  16
+                                      },
+                                      {
+                                          "grade":  9,
+                                          "records":  16
+                                      }
+                                  ],
+                      "transport":  {
+                                        "scheme":  "unencrypted",
+                                        "records":  130
+                                    },
+                      "note":  "Portal records are not proof of a legally required textbook list, and a resolved PDF URL is not a download."
+                  },
+    "sources":  {
+                    "manifestRecords":  4,
+                    "downloaded":  4,
+                    "structurallyVerified":  2,
+                    "ocrCompleted":  1,
+                    "tlsAuthenticated":  0,
+                    "note":  "All current downloads used plain HTTP; identity is proven by hash, publisher authentication is not."
+                },
+    "catalogue":  {
+                      "books":  1,
+                      "chapters":  1,
+                      "lessons":  1,
+                      "sectionsFilled":  8,
+                      "sectionsEmpty":  0,
+                      "activities":  1,
+                      "lessonQuestions":  4,
+                      "examQuestions":  6,
+                      "draftLessons":  1,
+                      "verifiedLessons":  0
+                  },
+    "blockers":  [
+                     "The portal serves a certificate for *.roshd.ir on chap.sch.ir; strict TLS fails (name mismatch + chain error). No bypass is permitted, so source transport is unencrypted and unauthenticated.",
+                     "Only 3 of 130 PDFs are downloaded; none is transport-authenticated.",
+                     "One lesson of the 22-subsection biology pilot exists; the other 21 are not written."
+                 ]
+}

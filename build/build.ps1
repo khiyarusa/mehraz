@@ -1,4 +1,4 @@
-﻿# =============================================================================
+# =============================================================================
 #  MEHRAZ — development build (Windows PowerShell, no external dependencies)
 #  Combines src/ into the single distributable file: start.html
 #  The end user never runs this script; start.html is already complete.
@@ -15,7 +15,7 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 $styleFiles = @('tokens', 'layout', 'components', 'motion', 'responsive')
 $scriptFiles = @(
     'bootstrap', 'art', 'jalali', 'storage', 'state', 'content', 'backup',
-    'components', 'router', 'profile', 'dashboard', 'learning',
+    'components', 'activities', 'router', 'profile', 'dashboard', 'learning',
     'examination', 'review', 'settings', 'app'
 )
 

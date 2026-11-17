@@ -7,7 +7,8 @@ param(
     [Parameter(Mandatory = $true)][string]$OutDir,
     [int]$From = 0,
     [int]$To = -1,
-    [int]$Width = 2200
+    [int]$Width = 2200,
+    [switch]$ProbeOnly
 )
 
 $ErrorActionPreference = 'Stop'
@@ -44,6 +45,10 @@ $file = AwaitOp ([Windows.Storage.StorageFile]::GetFileFromPathAsync($pdfFull)) 
 $doc = AwaitOp ([Windows.Data.Pdf.PdfDocument]::LoadFromFileAsync($file)) ([Windows.Data.Pdf.PdfDocument])
 
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
+if ($ProbeOnly) {
+    Write-Output ('PROBE_PAGES=' + $doc.PageCount)
+    exit 0
+}
 $last = if ($To -lt 0) { $doc.PageCount - 1 } else { [Math]::Min($To, $doc.PageCount - 1) }
 Write-Output ("pages: {0}  rendering {1}..{2} at width {3}" -f $doc.PageCount, $From, $last, $Width)
 

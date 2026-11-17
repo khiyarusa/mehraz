@@ -504,6 +504,11 @@
   };
 
   /* ---- lesson ----------------------------------------------------------- */
+  function blockSource(block) {
+    if (!block || !block.source || !block.source.reference) return '';
+    return '<p class="block-source">منبع: ' + esc(block.source.reference) + '</p>';
+  }
+
   function renderBlock(block) {
     if (!block || typeof block !== 'object') return '';
     if (block.type === 'p') return '<p>' + esc(block.text || '') + '</p>';
@@ -531,7 +536,8 @@
             esc(block.alt || '') +
             '" loading="lazy" style="border-radius:var(--r-md)">' +
             (block.caption ? '<figcaption class="hint">' + esc(block.caption) + '</figcaption>' : '') +
-            '</figure>'
+            '</figure>' +
+            blockSource(block)
         : '<div class="banner banner--warn">' +
             M.icon('alert', 16) +
             '<span>این تصویر در دسترس نیست.</span></div>';
@@ -558,7 +564,8 @@
             );
           })
           .join('') +
-        '</tbody></table></div>'
+        '</tbody></table></div>' +
+        blockSource(block)
       );
     }
     return '';
@@ -566,7 +573,11 @@
 
   function renderSection(section, index) {
     var body;
-    if (section.hasContent && section.data) {
+    if (section.questions) {
+      body = renderExercises(section.questions);
+    } else if (section.activities) {
+      body = section.activities.map(function (a) { return M.activities.render(a); }).join('');
+    } else if (section.hasContent && section.data) {
       var data = section.data;
       if (Array.isArray(data.blocks)) {
         body = data.blocks.map(renderBlock).join('');
@@ -589,11 +600,56 @@
       '<div class="lsection__head">' +
       '<span class="lsection__idx">' + util.toFa(index + 1) + '</span>' +
       '<h2 class="lsection__title">' + esc(section.label) + '</h2>' +
-      '<span class="chip ' + (section.hasContent ? 'chip--ok' : 'chip--outline') + ' push">' +
-      (section.hasContent ? 'آماده' : 'به‌زودی') + '</span>' +
       '</div>' +
       '<div class="lsection__body">' + body + '</div>' +
       '</section>'
+    );
+  }
+
+  /* Exercises live on the lesson, not in the exam engine: the student answers,
+     then opens the explanation. The exam engine stays for timed assessment. */
+  function renderExercises(questions) {
+    return (
+      '<div class="exercises">' +
+      questions
+        .map(function (q, i) {
+          var answer = '';
+          if (q.type === 'mcq' || q.type === 'multi') {
+            var idxs = Array.isArray(q.correct) ? q.correct : [q.correct];
+            answer = idxs
+              .map(function (ix) {
+                return (q.options && q.options[ix]) || '';
+              })
+              .filter(Boolean)
+              .join('، ');
+          } else if (q.type === 'truefalse') {
+            answer = q.correct === 'true' ? 'درست' : 'نادرست';
+          } else {
+            answer = util.toFa(q.answer) + (q.unit ? ' ' + q.unit : '');
+          }
+          var options =
+            q.options && q.options.length
+              ? '<ol class="exercise__options" type="a">' +
+                q.options
+                  .map(function (o) {
+                    return '<li>' + esc(o) + '</li>';
+                  })
+                  .join('') +
+                '</ol>'
+              : '';
+          return (
+            '<article class="exercise">' +
+            '<div class="exercise__head"><span class="exercise__num">' + util.toFa(i + 1) + '</span>' +
+            '<p class="exercise__prompt">' + esc(q.prompt) + '</p></div>' +
+            options +
+            '<details class="exercise__answer"><summary>پاسخ و توضیح</summary>' +
+            '<p class="exercise__key">پاسخ: <b>' + esc(answer) + '</b></p>' +
+            (q.explanation ? '<p class="hint">' + esc(q.explanation) + '</p>' : '') +
+            '</details></article>'
+          );
+        })
+        .join('') +
+      '</div>'
     );
   }
 
@@ -610,6 +666,30 @@
     var chapter = row.chapter;
     var lesson = row.lesson;
     var plan = M.content.sectionPlan(lesson);
+    // Only sections with real material are rendered. Empty optional sections
+    // are not shown as a row of "coming soon" placeholders.
+    var visible = plan.filter(function (s) { return s.hasContent; });
+    if (lesson.activities && lesson.activities.length) {
+      var hasInteractive = visible.some(function (s) { return s.key === 'interactive'; });
+      if (!hasInteractive) {
+        var actAt = -1;
+        for (var ai = 0; ai < visible.length; ai += 1) {
+          if (visible[ai].key === 'exercises' || visible[ai].key === 'summary') { actAt = ai; break; }
+        }
+        var actSection = { key: 'interactive', label: 'آزمایش تعاملی', icon: 'play', hasContent: true, activities: lesson.activities };
+        if (actAt === -1) visible.push(actSection);
+        else visible.splice(actAt, 0, actSection);
+      }
+    }
+    if (lesson.questions && lesson.questions.length) {
+      var at = -1;
+      for (var vi = 0; vi < visible.length; vi += 1) {
+        if (visible[vi].key === 'summary') { at = vi; break; }
+      }
+      var exerciseSection = { key: 'exercises', label: 'تمرین‌ها', icon: 'edit', hasContent: true, questions: lesson.questions };
+      if (at === -1) visible.push(exerciseSection);
+      else visible.splice(at, 0, exerciseSection);
+    }
     var done = M.store.isLessonDone(lesson.id);
     var lessonIndex = (chapter.lessons || []).findIndex(function (l) {
       return l.id === lesson.id;
@@ -671,7 +751,7 @@
       '<aside class="toc" aria-label="فهرست بخش‌ها">' +
       '<div class="toc__title">بخش‌های درس</div>' +
       '<div class="toc__list">' +
-      plan
+      visible
         .map(function (s) {
           return (
             '<a class="toc__link" href="#sec-' +
@@ -697,7 +777,7 @@
 
     var sections =
       '<div class="stack" style="gap:14px">' +
-      plan.map(renderSection).join('') +
+      visible.map(renderSection).join('') +
       '<nav class="card card--pad" aria-label="پیمایش درس">' +
       '<div class="row row--wrap" style="gap:10px">' +
       (prev
@@ -733,6 +813,7 @@
       html: head + '<div class="lesson-layout" style="margin-top:20px">' + sections + toc + '</div>',
       onMount: function (root) {
         M.store.touchLesson(lesson.id);
+        M.activities.mount(root);
 
         var completeBtn = util.$('[data-complete]', root);
         if (completeBtn && !completeBtn.disabled) {

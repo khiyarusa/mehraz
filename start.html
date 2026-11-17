@@ -8,7 +8,7 @@
 <meta name="description" content="مهراز — فضای یادگیری برای دانش‌آموزان: درس، تمرین، آزمون و مرور در یک برنامهٔ آرام و منظم.">
 <meta name="robots" content="noindex, nofollow">
 <title>مهراز | فضای یادگیری</title>
-<!-- MEHRAZ 2026-11-16 22:46 -->
+<!-- MEHRAZ 2026-11-17 15:30 -->
 <style>
 /* ==================== tokens.css ==================== */
 /* ==========================================================================
@@ -1246,8 +1246,50 @@ img { max-width: 100%; height: auto; }
 .reviewrow__icon { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--surface-2); color: var(--txt-muted); flex: none; }
 .reviewrow--due .reviewrow__icon { background: var(--brand-soft); color: var(--brand); }
 
-/* ==========================================================================
-   ENTRY SURFACES — welcome and onboarding
+/* ---- activity engine ---------------------------------------------------- */
+.activity { display: flex; flex-direction: column; gap: 12px; }
+.activity + .activity { margin-block-start: 12px; }
+.activity__head { display: flex; align-items: flex-start; gap: 12px; }
+.activity__stage { display: grid; gap: 12px; }
+@media (min-width: 620px) { .activity__stage { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.activity__col, .activity__pool { display: flex; flex-direction: column; gap: 8px; }
+.activity__item {
+  min-height: var(--tap); padding: 10px 14px; text-align: start;
+  border: 1.5px solid var(--border); border-radius: var(--r-md);
+  background: var(--surface); color: var(--txt); font-size: var(--fs-12);
+  cursor: pointer; transition: border-color var(--d-1) var(--e-standard), background var(--d-1) var(--e-standard), transform var(--d-1) var(--e-standard);
+}
+.activity__item:hover { border-color: var(--brand-line); background: var(--brand-soft); }
+.activity__item:active { transform: scale(.99); }
+.activity__item.is-selected { border-color: var(--brand); box-shadow: var(--ring); background: var(--brand-soft); }
+.activity__item.is-done { border-color: var(--ok); background: var(--ok-soft); color: var(--ok); cursor: default; opacity: .85; }
+.activity__item.is-wrong { border-color: var(--danger); background: var(--danger-soft); }
+.activity__buckets { display: flex; flex-direction: column; gap: 10px; }
+.activity__bucket { border: 1.5px dashed var(--border-strong); border-radius: var(--r-md); padding: 10px; min-height: 76px; transition: border-color var(--d-1), background var(--d-1); }
+.activity__bucket.is-wrong { border-color: var(--danger); background: var(--danger-soft); }
+.activity__bucket-title { font-size: var(--fs-11); font-weight: var(--fw-bold); color: var(--txt-muted); margin-block-end: 8px; }
+.activity__bucket-body { display: flex; flex-wrap: wrap; gap: 6px; }
+.activity__bucket-body .activity__item { min-height: 36px; padding: 6px 10px; font-size: var(--fs-11); }
+.activity__status { min-height: 18px; }
+.activity__status.is-ok { color: var(--ok); }
+.activity__status.is-wrong { color: var(--danger); }
+.block-source { margin-block-start: 6px; font-size: 10px; color: var(--txt-faint); }
+
+/* ---- lesson exercises --------------------------------------------------- */
+.exercises { display: flex; flex-direction: column; gap: 12px; }
+.exercise { border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px 16px; background: var(--surface); }
+.exercise__head { display: flex; gap: 10px; align-items: flex-start; }
+.exercise__num {
+  flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--brand-soft); color: var(--brand); font-family: var(--font-num); font-size: var(--fs-11); font-weight: var(--fw-heavy);
+}
+.exercise__prompt { font-size: var(--fs-13); font-weight: var(--fw-semibold); color: var(--txt-strong); line-height: 1.9; }
+.exercise__options { margin: 10px 0 0; padding-inline-start: 22px; display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-12); color: var(--txt); list-style: decimal; }
+.exercise__answer { margin-block-start: 10px; border-block-start: 1px solid var(--line-2); padding-block-start: 8px; }
+.exercise__answer summary { cursor: pointer; font-size: var(--fs-11); color: var(--brand); font-weight: var(--fw-semibold); }
+.exercise__key { margin-block-start: 8px; font-size: var(--fs-12); }
+
+/* ---- entry surfaces ----------------------------------------------------
    These two screens are the whole product for the first minute. They get
    their own composition instead of borrowing the dashboard shell.
    ========================================================================== */
@@ -1902,260 +1944,530 @@ img { max-width: 100%; height: auto; }
 <script>
 /* Embedded content catalogue (phase 01: intentionally empty). */
 window.MEHRAZ_CONTENT = {
-  "schemaVersion": 1,
-  "updatedAt": "2026-11-16T18:30:00Z",
-  "generator": "prompt-03-pilot-01",
-  "books": [
-    {
-      "id": "bio-10-1405",
-      "title": "زیست‌شناسی (۱)",
-      "grade": 10,
-      "track": "experimental",
-      "subject": { "id": "biology", "title": "زیست‌شناسی", "icon": "layers" },
-      "academicYear": "1405-1406",
-      "edition": "1405-1406",
-      "volume": 1,
-      "verification": {
-        "status": "draft",
-        "checkedAt": null,
-        "checkedBy": null
-      },
-      "source": {
-        "kind": "textbook",
-        "publisher": "سازمان پژوهش و برنامه‌ریزی آموزشی",
-        "title": "زیست‌شناسی (۱) ـ پایهٔ دهم",
-        "academicYear": "1405-1406",
-        "edition": "1405-1406",
-        "url": "http://chap.sch.ir/books/14268",
-        "reference": "کتاب رسمی، فصل ۱",
-        "pages": "1-16",
-        "verifiedAt": null,
-        "verifiedBy": null
-      },
-      "chapters": [
-        {
-          "id": "ch-01",
-          "order": 1,
-          "title": "دنیای زنده",
-          "pageFrom": 1,
-          "pageTo": null,
-          "source": {
-            "kind": "textbook",
-            "publisher": "سازمان پژوهش و برنامه‌ریزی آموزشی",
-            "title": "زیست‌شناسی (۱) ـ پایهٔ دهم",
-            "academicYear": "1405-1406",
-            "url": "http://chap.sch.ir/books/14268",
-            "reference": "فصل ۱، دنیای زنده",
-            "pages": "1-16"
-          },
-          "lessons": [
-            {
-              "id": "l-gostare-hayat",
-              "order": 1,
-              "title": "گسترهٔ حیات: هفت ویژگی جانداران",
-              "minutes": 25,
-              "pageFrom": 7,
-              "pageTo": 8,
-              "objectives": [
-                { "id": "obj-1", "text": "هفت ویژگی مشترک جانداران را نام ببرد.", "bloom": "remember" },
-                { "id": "obj-2", "text": "هر ویژگی را با یک نمونهٔ روشن توضیح دهد.", "bloom": "understand" },
-                { "id": "obj-3", "text": "تفاوت رشد و نمو را تشخیص دهد.", "bloom": "analyze" }
-              ],
-              "verification": {
-                "status": "draft",
-                "checkedAt": null,
-                "checkedBy": null,
-                "notes": "متن از OCR صفحات رسمی استخراج شده است؛ بازبینی چشمی صفحه و اعتبارسنجی مستقل هنوز انجام نشده است."
-              },
-              "source": {
-                "kind": "textbook",
-                "publisher": "سازمان پژوهش و برنامه‌ریزی آموزشی",
-                "title": "زیست‌شناسی (۱) ـ پایهٔ دهم",
-                "academicYear": "1405-1406",
-                "edition": "1405-1406",
-                "url": "http://chap.sch.ir/books/14268",
-                "reference": "فصل ۱، گفتار ۲ (گسترهٔ حیات)، صفحهٔ ۷",
-                "pages": "7-8"
-              },
-              "sections": {
-                "intro": {
-                  "blocks": [
-                    { "type": "p", "text": "سنگ، آب و درخت هر سه در طبیعت هستند؛ اما فقط یکی از آن‌ها زنده است. چه چیزی یک موجود را زنده می‌کند؟ زیست‌شناسان برای پاسخ دادن به این پرسش، هفت ویژگی مشترک را در نظر می‌گیرند که همهٔ جانداران آن‌ها را با هم دارند." },
-                    { "type": "p", "text": "در این درس این هفت ویژگی را یکی‌یکی می‌شناسیم و برای هرکدام نمونه‌ای می‌بینیم. هدف این نیست که نام‌ها را حفظ کنید؛ هدف این است که بتوانید با نگاه به یک موجود، زنده بودن آن را توضیح دهید." }
-                  ]
-                },
-                "objectives": {
-                  "blocks": [
-                    { "type": "list", "items": [
-                      "هفت ویژگی مشترک جانداران را نام ببرید.",
-                      "برای هر ویژگی یک نمونهٔ روشن بیان کنید.",
-                      "تفاوت رشد و نمو را توضیح دهید."
-                    ] }
-                  ]
-                },
-                "explanation": {
-                  "blocks": [
-                    { "type": "p", "text": "۱. نظم و ترتیب. یکی از ویژگی‌های جالب حیات، سطوح سازمان‌یابی آن است. همهٔ جانداران سطحی از سازمان‌یابی دارند و منظم‌اند: از مولکول‌ها و یاخته‌ها گرفته تا بافت، اندام، دستگاه و در نهایت خود جاندار." },
-                    { "type": "p", "text": "۲. هم‌ایستایی (هومئوستازی). محیط جانداران همواره در تغییر است؛ اما جاندار می‌تواند وضع درونی پیکر خود را در محدودهٔ ثابتی نگه دارد. برای نمونه، وقتی سدیم خون افزایش می‌یابد، دفع آن از طریق ادرار زیاد می‌شود. مجموعه اعمالی را که برای پایدار نگه داشتن وضعیت درونی جاندار انجام می‌شود، هم‌ایستایی می‌نامند." },
-                    { "type": "p", "text": "۳. رشد و نمو. جانداران رشد و نمو می‌کنند. رشد به معنی بزرگ شدن است و شامل افزایش برگشت‌ناپذیر ابعاد یا تعداد یاخته‌ها می‌شود. نمو به معنی عبور از مرحله‌ای به مرحلهٔ دیگری از زندگی است؛ مثلاً تشکیل گل در گیاه نمونه‌ای از نمو است." },
-                    { "type": "p", "text": "۴. فرایند جذب و استفاده از انرژی. جانداران انرژی می‌گیرند، از آن برای انجام فعالیت‌های زیستی خود استفاده می‌کنند و بخشی از آن را به‌صورت گرما از دست می‌دهند. مثلاً گنجشک غذا می‌خورد و از انرژی آن برای گرم کردن بدن و نیز برای پرواز و جست‌وجوی غذا استفاده می‌کند." },
-                    { "type": "p", "text": "۵. تولیدمثل. جانداران موجوداتی کم و بیش شبیه خود را به وجود می‌آورند. یوزپلنگ همیشه از یوزپلنگ زاده می‌شود." },
-                    { "type": "p", "text": "۶. پاسخ به محیط. همهٔ جانداران به محرک‌های محیطی پاسخ می‌دهند؛ مثلاً ساقهٔ گیاهان به‌سمت نور خم می‌شود." },
-                    { "type": "p", "text": "۷. سازش با محیط. این ویژگی باعث می‌شود جمعیتی از جانداران با محیطی که در آن زندگی می‌کنند، متناسب و در آن ماندگار باشند. مثلاً گیاهانی که بومی مناطق خشک هستند، برای حفظ آب برگ‌هایی با پوستک ضخیم دارند. نمونهٔ دیگر موهای سفید خرس قطبی است که به استتار این جانور در محیط برفی کمک می‌کند." },
-                    { "type": "note", "text": "این هفت ویژگی با هم معنا دارند: یک موجود زنده همهٔ آن‌ها را با هم دارد، نه فقط یکی از آن‌ها را. اگر موجودی یکی از این ویژگی‌ها را نداشته باشد، زنده بودن آن زیر پرسش می‌رود.", "tone": "info" }
-                  ]
-                },
-                "keyConcepts": {
-                  "blocks": [
-                    { "type": "list", "items": [
-                      "هم‌ایستایی: مجموعه اعمالی که وضعیت درونی جاندار را در محدودهٔ ثابت نگه می‌دارد.",
-                      "رشد: بزرگ شدن و افزایش برگشت‌ناپذیر ابعاد یا تعداد یاخته‌ها.",
-                      "نمو: عبور از مرحله‌ای از زندگی به مرحلهٔ دیگر؛ مانند گل دادن گیاه.",
-                      "سازش: متناسب شدن جمعیت جانداران با محیط زندگی و ماندگار شدن در آن."
-                    ] }
-                  ]
-                },
-                "examples": {
-                  "blocks": [
-                    { "type": "list", "items": [
-                      "افزایش دفع سدیم از راه ادرار، نمونهٔ هم‌ایستایی است.",
-                      "تشکیل گل در گیاه، نمونهٔ نمو است.",
-                      "خم شدن ساقهٔ گیاه به‌سمت نور، نمونهٔ پاسخ به محیط است.",
-                      "پوستک ضخیم برگ گیاهان مناطق خشک و موهای سفید خرس قطبی، نمونهٔ سازش با محیط‌اند."
-                    ] }
-                  ]
-                },
-                "illustrations": {
-                  "blocks": [
-                    { "type": "table", "head": ["ویژگی", "نمونه‌ای که در کتاب آمده است"], "rows": [
-                      ["نظم و ترتیب", "سطحی از سازمان‌یابی در همهٔ جانداران"],
-                      ["هم‌ایستایی", "افزایش دفع سدیم از راه ادرار"],
-                      ["رشد و نمو", "تشکیل گل در گیاه (نمو)"],
-                      ["جذب و استفاده از انرژی", "گنجشک: گرما، پرواز و جست‌وجوی غذا"],
-                      ["تولیدمثل", "زاده شدن یوزپلنگ از یوزپلنگ"],
-                      ["پاسخ به محیط", "خم شدن ساقه به‌سمت نور"],
-                      ["سازش با محیط", "پوستک ضخیم برگ در مناطق خشک؛ موی سفید خرس قطبی"]
-                    ] }
-                  ]
-                },
-                "summary": {
-                  "blocks": [
-                    { "type": "list", "items": [
-                      "جانداران هفت ویژگی مشترک دارند: نظم و ترتیب، هم‌ایستایی، رشد و نمو، جذب و استفاده از انرژی، تولیدمثل، پاسخ به محیط و سازش با محیط.",
-                      "هم‌ایستایی وضعیت درونی را پایدار نگه می‌دارد.",
-                      "رشد، بزرگ شدن است؛ نمو، گذر از یک مرحلهٔ زندگی به مرحلهٔ دیگر.",
-                      "سازش، تناسب جمعیت با محیط و ماندگاری در آن است."
-                    ] }
-                  ]
-                },
-                "references": {
-                  "blocks": [
-                    { "type": "p", "text": "منبع: کتاب رسمی زیست‌شناسی (۱)، پایهٔ دهم، فصل ۱ (دنیای زنده)، گفتار ۲ (گسترهٔ حیات)، صفحهٔ ۷. ادامهٔ بحث سطوح سازمان‌یابی در صفحهٔ ۸ آمده است." }
-                  ]
-                }
-              }
-            }
-          ],
-          "exams": [
-            {
-              "id": "ex-ch01-seven",
-              "title": "آزمون گفتار ۲: هفت ویژگی جانداران",
-              "description": "شش پرسش کوتاه برای سنجش فهم هفت ویژگی مشترک جانداران.",
-              "durationMinutes": 8,
-              "passPercent": 60,
-              "source": {
-                "kind": "textbook",
-                "publisher": "سازمان پژوهش و برنامه‌ریزی آموزشی",
-                "title": "زیست‌شناسی (۱) ـ پایهٔ دهم",
-                "academicYear": "1405-1406",
-                "url": "http://chap.sch.ir/books/14268",
-                "reference": "فصل ۱، گفتار ۲، صفحهٔ ۷",
-                "pages": "7"
-              },
-              "questions": [
-                {
-                  "id": "q-seven-01",
-                  "type": "mcq",
-                  "prompt": "کدام گزینه جزو هفت ویژگی مشترک جانداران نیست؟",
-                  "options": ["نظم و ترتیب", "هم‌ایستایی", "تولیدمثل", "داشتن هستهٔ یاخته‌ای"],
-                  "correct": 3,
-                  "explanation": "هفت ویژگی کتاب عبارت‌اند از نظم و ترتیب، هم‌ایستایی، رشد و نمو، جذب و استفاده از انرژی، تولیدمثل، پاسخ به محیط و سازش با محیط. داشتن هستهٔ یاخته‌ای در این فهرست نیست.",
-                  "topicId": "t-seven-features",
-                  "topic": "هفت ویژگی جانداران",
-                  "difficulty": "easy",
-                  "points": 1,
-                  "source": { "kind": "textbook", "reference": "فصل ۱، گفتار ۲، صفحهٔ ۷", "pages": "7" }
-                },
-                {
-                  "id": "q-seven-02",
-                  "type": "mcq",
-                  "prompt": "وقتی سدیم خون افزایش می‌یابد و دفع آن از راه ادرار زیاد می‌شود، این نمونهٔ کدام ویژگی است؟",
-                  "options": ["رشد و نمو", "هم‌ایستایی", "سازش با محیط", "تولیدمثل"],
-                  "correct": 1,
-                  "explanation": "هم‌ایستایی مجموعه اعمالی است که وضعیت درونی جاندار را در محدودهٔ ثابت نگه می‌دارد؛ تنظیم سدیم خون با افزایش دفع آن، نمونهٔ همین ویژگی است.",
-                  "topicId": "t-seven-features",
-                  "topic": "هفت ویژگی جانداران",
-                  "difficulty": "medium",
-                  "points": 1,
-                  "source": { "kind": "textbook", "reference": "فصل ۱، گفتار ۲، صفحهٔ ۷", "pages": "7" }
-                },
-                {
-                  "id": "q-seven-03",
-                  "type": "mcq",
-                  "prompt": "تشکیل گل در گیاه، نمونهٔ کدام ویژگی است؟",
-                  "options": ["رشد", "نمو", "پاسخ به محیط", "سازش با محیط"],
-                  "correct": 1,
-                  "explanation": "نمو به معنی عبور از مرحله‌ای به مرحلهٔ دیگری از زندگی است؛ تشکیل گل در گیاه نمونهٔ آن است. رشد، بزرگ شدن و افزایش برگشت‌ناپذیر ابعاد یا تعداد یاخته‌هاست.",
-                  "topicId": "t-seven-features",
-                  "topic": "هفت ویژگی جانداران",
-                  "difficulty": "medium",
-                  "points": 1,
-                  "source": { "kind": "textbook", "reference": "فصل ۱، گفتار ۲، صفحهٔ ۷", "pages": "7" }
-                },
-                {
-                  "id": "q-seven-04",
-                  "type": "truefalse",
-                  "prompt": "رشد به معنای عبور از یک مرحلهٔ زندگی به مرحلهٔ دیگر است.",
-                  "correct": "false",
-                  "explanation": "این تعریف مربوط به نمو است. رشد به معنی بزرگ شدن و شامل افزایش برگشت‌ناپذیر ابعاد یا تعداد یاخته‌هاست.",
-                  "topicId": "t-seven-features",
-                  "topic": "هفت ویژگی جانداران",
-                  "difficulty": "easy",
-                  "points": 1,
-                  "source": { "kind": "textbook", "reference": "فصل ۱، گفتار ۲، صفحهٔ ۷", "pages": "7" }
-                },
-                {
-                  "id": "q-seven-05",
-                  "type": "truefalse",
-                  "prompt": "همهٔ جانداران به محرک‌های محیطی پاسخ می‌دهند.",
-                  "correct": "true",
-                  "explanation": "پاسخ به محیط یکی از هفت ویژگی مشترک جانداران است؛ کتاب خم شدن ساقهٔ گیاه به‌سمت نور را نمونهٔ آن می‌آورد.",
-                  "topicId": "t-seven-features",
-                  "topic": "هفت ویژگی جانداران",
-                  "difficulty": "easy",
-                  "points": 1,
-                  "source": { "kind": "textbook", "reference": "فصل ۱، گفتار ۲، صفحهٔ ۷", "pages": "7" }
-                },
-                {
-                  "id": "q-seven-06",
-                  "type": "mcq",
-                  "prompt": "موهای سفید خرس قطبی که به استتار آن در محیط برفی کمک می‌کند، نمونهٔ کدام ویژگی است؟",
-                  "options": ["نظم و ترتیب", "سازش با محیط", "هم‌ایستایی", "تولیدمثل"],
-                  "correct": 1,
-                  "explanation": "سازش با محیط باعث می‌شود جمعیت جانداران با محیط زندگی خود متناسب و در آن ماندگار شوند؛ استتار خرس قطبی در برف نمونهٔ آن است.",
-                  "topicId": "t-seven-features",
-                  "topic": "هفت ویژگی جانداران",
-                  "difficulty": "medium",
-                  "points": 1,
-                  "source": { "kind": "textbook", "reference": "فصل ۱، گفتار ۲، صفحهٔ ۷", "pages": "7" }
-                }
+    "schemaVersion":  1,
+    "updatedAt":  "2026-11-16T18:30:00Z",
+    "generator":  "prompt-03-pilot-01",
+    "books":  [
+                  {
+                      "id":  "bio-10-1405",
+                      "title":  "زیست‌شناسی (۱)",
+                      "grade":  10,
+                      "track":  "experimental",
+                      "subject":  {
+                                      "id":  "biology",
+                                      "title":  "زیست‌شناسی",
+                                      "icon":  "layers"
+                                  },
+                      "academicYear":  "1405-1406",
+                      "edition":  "1405-1406",
+                      "volume":  1,
+                      "verification":  {
+                                           "status":  "draft",
+                                           "checkedAt":  null,
+                                           "checkedBy":  null
+                                       },
+                      "source":  {
+                                     "kind":  "textbook",
+                                     "publisher":  "سازمان پژوهش و برنامه‌ریزی آموزشی",
+                                     "title":  "زیست‌شناسی (۱) ـ پایهٔ دهم",
+                                     "academicYear":  "1405-1406",
+                                     "edition":  "1405-1406",
+                                     "url":  "http://chap.sch.ir/books/14268",
+                                     "reference":  "کتاب رسمی، فصل ۱",
+                                     "pages":  "1-16",
+                                     "verifiedAt":  null,
+                                     "verifiedBy":  null
+                                 },
+                      "chapters":  [
+                                       {
+                                           "id":  "ch-01",
+                                           "order":  1,
+                                           "title":  "دنیای زنده",
+                                           "pageFrom":  1,
+                                           "pageTo":  null,
+                                           "source":  {
+                                                          "kind":  "textbook",
+                                                          "publisher":  "سازمان پژوهش و برنامه‌ریزی آموزشی",
+                                                          "title":  "زیست‌شناسی (۱) ـ پایهٔ دهم",
+                                                          "academicYear":  "1405-1406",
+                                                          "url":  "http://chap.sch.ir/books/14268",
+                                                          "reference":  "فصل ۱، دنیای زنده",
+                                                          "pages":  "1-16"
+                                                      },
+                                           "lessons":  [
+                                                           {
+                                                               "id":  "l-gostare-hayat",
+                                                               "order":  1,
+                                                               "title":  "گسترهٔ حیات: هفت ویژگی جانداران",
+                                                               "minutes":  25,
+                                                               "pageFrom":  7,
+                                                               "pageTo":  8,
+                                                               "objectives":  [
+                                                                                  {
+                                                                                      "id":  "obj-1",
+                                                                                      "text":  "هفت ویژگی مشترک جانداران را نام ببرد.",
+                                                                                      "bloom":  "remember"
+                                                                                  },
+                                                                                  {
+                                                                                      "id":  "obj-2",
+                                                                                      "text":  "هر ویژگی را با یک نمونهٔ روشن توضیح دهد.",
+                                                                                      "bloom":  "understand"
+                                                                                  },
+                                                                                  {
+                                                                                      "id":  "obj-3",
+                                                                                      "text":  "تفاوت رشد و نمو را تشخیص دهد.",
+                                                                                      "bloom":  "analyze"
+                                                                                  }
+                                                                              ],
+                                                               "verification":  {
+                                                                                    "status":  "draft",
+                                                                                    "checkedAt":  null,
+                                                                                    "checkedBy":  null,
+                                                                                    "notes":  "متن از OCR صفحات رسمی استخراج شده است؛ بازبینی چشمی صفحه و اعتبارسنجی مستقل هنوز انجام نشده است."
+                                                                                },
+                                                               "source":  {
+                                                                              "kind":  "textbook",
+                                                                              "publisher":  "سازمان پژوهش و برنامه‌ریزی آموزشی",
+                                                                              "title":  "زیست‌شناسی (۱) ـ پایهٔ دهم",
+                                                                              "academicYear":  "1405-1406",
+                                                                              "edition":  "1405-1406",
+                                                                              "url":  "http://chap.sch.ir/books/14268",
+                                                                              "reference":  "فصل ۱، گفتار ۲ (گسترهٔ حیات)، صفحهٔ ۷",
+                                                                              "pages":  "7-8"
+                                                                          },
+                                                               "sections":  {
+                                                                                "intro":  {
+                                                                                              "blocks":  [
+                                                                                                             {
+                                                                                                                 "type":  "p",
+                                                                                                                 "text":  "سنگ، آب و درخت هر سه در طبیعت هستند؛ اما فقط یکی از آن‌ها زنده است. چه چیزی یک موجود را زنده می‌کند؟ زیست‌شناسان برای پاسخ دادن به این پرسش، هفت ویژگی مشترک را در نظر می‌گیرند که همهٔ جانداران آن‌ها را با هم دارند."
+                                                                                                             },
+                                                                                                             {
+                                                                                                                 "type":  "p",
+                                                                                                                 "text":  "در این درس این هفت ویژگی را یکی‌یکی می‌شناسیم و برای هرکدام نمونه‌ای می‌بینیم. هدف این نیست که نام‌ها را حفظ کنید؛ هدف این است که بتوانید با نگاه به یک موجود، زنده بودن آن را توضیح دهید."
+                                                                                                             }
+                                                                                                         ]
+                                                                                          },
+                                                                                "objectives":  {
+                                                                                                   "blocks":  [
+                                                                                                                  {
+                                                                                                                      "type":  "list",
+                                                                                                                      "items":  [
+                                                                                                                                    "هفت ویژگی مشترک جانداران را نام ببرید.",
+                                                                                                                                    "برای هر ویژگی یک نمونهٔ روشن بیان کنید.",
+                                                                                                                                    "تفاوت رشد و نمو را توضیح دهید."
+                                                                                                                                ]
+                                                                                                                  }
+                                                                                                              ]
+                                                                                               },
+                                                                                "explanation":  {
+                                                                                                    "blocks":  [
+                                                                                                                   {
+                                                                                                                       "type":  "p",
+                                                                                                                       "text":  "۱. نظم و ترتیب. یکی از ویژگی‌های جالب حیات، سطوح سازمان‌یابی آن است. همهٔ جانداران سطحی از سازمان‌یابی دارند و منظم‌اند: از مولکول‌ها و یاخته‌ها گرفته تا بافت، اندام، دستگاه و در نهایت خود جاندار."
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "type":  "p",
+                                                                                                                       "text":  "۲. هم‌ایستایی (هومئوستازی). محیط جانداران همواره در تغییر است؛ اما جاندار می‌تواند وضع درونی پیکر خود را در محدودهٔ ثابتی نگه دارد. برای نمونه، وقتی سدیم خون افزایش می‌یابد، دفع آن از طریق ادرار زیاد می‌شود. مجموعه اعمالی را که برای پایدار نگه داشتن وضعیت درونی جاندار انجام می‌شود، هم‌ایستایی می‌نامند."
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "type":  "p",
+                                                                                                                       "text":  "۳. رشد و نمو. جانداران رشد و نمو می‌کنند. رشد به معنی بزرگ شدن است و شامل افزایش برگشت‌ناپذیر ابعاد یا تعداد یاخته‌ها می‌شود. نمو به معنی عبور از مرحله‌ای به مرحلهٔ دیگری از زندگی است؛ مثلاً تشکیل گل در گیاه نمونه‌ای از نمو است."
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "type":  "p",
+                                                                                                                       "text":  "۴. فرایند جذب و استفاده از انرژی. جانداران انرژی می‌گیرند، از آن برای انجام فعالیت‌های زیستی خود استفاده می‌کنند و بخشی از آن را به‌صورت گرما از دست می‌دهند. مثلاً گنجشک غذا می‌خورد و از انرژی آن برای گرم کردن بدن و نیز برای پرواز و جست‌وجوی غذا استفاده می‌کند."
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "type":  "p",
+                                                                                                                       "text":  "۵. تولیدمثل. جانداران موجوداتی کم و بیش شبیه خود را به وجود می‌آورند. یوزپلنگ همیشه از یوزپلنگ زاده می‌شود."
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "type":  "p",
+                                                                                                                       "text":  "۶. پاسخ به محیط. همهٔ جانداران به محرک‌های محیطی پاسخ می‌دهند؛ مثلاً ساقهٔ گیاهان به‌سمت نور خم می‌شود."
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "type":  "p",
+                                                                                                                       "text":  "۷. سازش با محیط. این ویژگی باعث می‌شود جمعیتی از جانداران با محیطی که در آن زندگی می‌کنند، متناسب و در آن ماندگار باشند. مثلاً گیاهانی که بومی مناطق خشک هستند، برای حفظ آب برگ‌هایی با پوستک ضخیم دارند. نمونهٔ دیگر موهای سفید خرس قطبی است که به استتار این جانور در محیط برفی کمک می‌کند."
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "type":  "note",
+                                                                                                                       "text":  "این هفت ویژگی با هم معنا دارند: یک موجود زنده همهٔ آن‌ها را با هم دارد، نه فقط یکی از آن‌ها را. اگر موجودی یکی از این ویژگی‌ها را نداشته باشد، زنده بودن آن زیر پرسش می‌رود.",
+                                                                                                                       "tone":  "info"
+                                                                                                                   }
+                                                                                                               ]
+                                                                                                },
+                                                                                "keyConcepts":  {
+                                                                                                    "blocks":  [
+                                                                                                                   {
+                                                                                                                       "type":  "list",
+                                                                                                                       "items":  [
+                                                                                                                                     "هم‌ایستایی: مجموعه اعمالی که وضعیت درونی جاندار را در محدودهٔ ثابت نگه می‌دارد.",
+                                                                                                                                     "رشد: بزرگ شدن و افزایش برگشت‌ناپذیر ابعاد یا تعداد یاخته‌ها.",
+                                                                                                                                     "نمو: عبور از مرحله‌ای از زندگی به مرحلهٔ دیگر؛ مانند گل دادن گیاه.",
+                                                                                                                                     "سازش: متناسب شدن جمعیت جانداران با محیط زندگی و ماندگار شدن در آن."
+                                                                                                                                 ]
+                                                                                                                   }
+                                                                                                               ]
+                                                                                                },
+                                                                                "examples":  {
+                                                                                                 "blocks":  [
+                                                                                                                {
+                                                                                                                    "type":  "list",
+                                                                                                                    "items":  [
+                                                                                                                                  "افزایش دفع سدیم از راه ادرار، نمونهٔ هم‌ایستایی است.",
+                                                                                                                                  "تشکیل گل در گیاه، نمونهٔ نمو است.",
+                                                                                                                                  "خم شدن ساقهٔ گیاه به‌سمت نور، نمونهٔ پاسخ به محیط است.",
+                                                                                                                                  "پوستک ضخیم برگ گیاهان مناطق خشک و موهای سفید خرس قطبی، نمونهٔ سازش با محیط‌اند."
+                                                                                                                              ]
+                                                                                                                }
+                                                                                                            ]
+                                                                                             },
+                                                                                "illustrations":  {
+                                                                                                      "blocks":  [
+                                                                                                                     {
+                                                                                                                         "type":  "figure",
+                                                                                                                         "src":  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MjAgNjUwIiB3aWR0aD0iNzIwIiBoZWlnaHQ9IjY1MCIgcm9sZT0iaW1nIiBmb250LWZhbWlseT0iVmF6aXJtYXRuLCBJUkFOU2Fuc1gsIFRhaG9tYSwgc2Fucy1zZXJpZiIgZGlyZWN0aW9uPSJydGwiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI3MjAiIGhlaWdodD0iNjUwIiBmaWxsPSIjRkFGQkZFIi8+PHJlY3QgeD0iNDAiIHk9IjI0IiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4IiByeD0iMTQiIGZpbGw9IiNGM0Y3RkYiIHN0cm9rZT0iI0MyRDZGRiIvPjx0ZXh0IHg9IjUyIiB5PSI0NCIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzJGNkJGRiIgZm9udC13ZWlnaHQ9IjcwMCI+MTwvdGV4dD48dGV4dCB4PSI2NjQiIHk9IjQ1IiBmb250LXNpemU9IjE0IiBmaWxsPSIjMEIxQTJCIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0iZW5kIj7bjNin2K7YqtmHPC90ZXh0Pjx0ZXh0IHg9IjY2NCIgeT0iNjIiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzU2NkE4MiIgdGV4dC1hbmNob3I9ImVuZCI+2qnZiNqG2qnigIzYqtix24zZhiDZiNin2K3YryDYstmG2K/Zh9ibINmH2YXZh9mUINis2KfZhtiv2KfYsdin2YYg2KfYsiDbjNin2K7YqtmHINiz2KfYrtiq2Ycg2LTYr9mH4oCM2KfZhtivLjwvdGV4dD48bGluZSB4MT0iMzYwIiB5MT0iNzIiIHgyPSIzNjAiIHkyPSI4NSIgc3Ryb2tlPSIjN0ZBNkZGIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI0MCIgeT0iODUiIHdpZHRoPSI2NDAiIGhlaWdodD0iNDgiIHJ4PSIxNCIgZmlsbD0iI0YzRjdGRiIgc3Ryb2tlPSIjQzJENkZGIi8+PHRleHQgeD0iNTIiIHk9IjEwNSIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzJGNkJGRiIgZm9udC13ZWlnaHQ9IjcwMCI+MjwvdGV4dD48dGV4dCB4PSI2NjQiIHk9IjEwNiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzBCMUEyQiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9ImVuZCI+2KjYp9mB2Ko8L3RleHQ+PHRleHQgeD0iNjY0IiB5PSIxMjMiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzU2NkE4MiIgdGV4dC1hbmNob3I9ImVuZCI+2q/YsdmI2YfbjCDYp9iyINuM2KfYrtiq2YfigIzZh9in24wg2YfZhdin2YbZhtivINqp2Ycg24zaqSDaqdin2LEg2LHYpyDYp9mG2KzYp9mFINmF24zigIzYr9mH2YbYry48L3RleHQ+PGxpbmUgeDE9IjM2MCIgeTE9IjEzMyIgeDI9IjM2MCIgeTI9IjE0NiIgc3Ryb2tlPSIjN0ZBNkZGIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI0MCIgeT0iMTQ2IiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4IiByeD0iMTQiIGZpbGw9IiNGM0Y3RkYiIHN0cm9rZT0iI0MyRDZGRiIvPjx0ZXh0IHg9IjUyIiB5PSIxNjYiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyRjZCRkYiIGZvbnQtd2VpZ2h0PSI3MDAiPjM8L3RleHQ+PHRleHQgeD0iNjY0IiB5PSIxNjciIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMwQjFBMkIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJlbmQiPtin2YbYr9in2YU8L3RleHQ+PHRleHQgeD0iNjY0IiB5PSIxODQiIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzU2NkE4MiIgdGV4dC1hbmNob3I9ImVuZCI+2KfYsiDahtmG2K8g2KjYp9mB2Kog2YXYrtiq2YTZgSDYs9in2K7YqtmHINmF24zigIzYtNmI2K/YmyDZhdin2YbZhtivINin2LPYqtiu2YjYp9mGLjwvdGV4dD48bGluZSB4MT0iMzYwIiB5MT0iMTk0IiB4Mj0iMzYwIiB5Mj0iMjA3IiBzdHJva2U9IiM3RkE2RkYiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjQwIiB5PSIyMDciIHdpZHRoPSI2NDAiIGhlaWdodD0iNDgiIHJ4PSIxNCIgZmlsbD0iI0YzRjdGRiIgc3Ryb2tlPSIjQzJENkZGIi8+PHRleHQgeD0iNTIiIHk9IjIyNyIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzJGNkJGRiIgZm9udC13ZWlnaHQ9IjcwMCI+NDwvdGV4dD48dGV4dCB4PSI2NjQiIHk9IjIyOCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzBCMUEyQiIgZm9udC13ZWlnaHQ9IjcwMCIgdGV4dC1hbmNob3I9ImVuZCI+2K/Ys9iq2q/Yp9mHPC90ZXh0Pjx0ZXh0IHg9IjY2NCIgeT0iMjQ1IiBmb250LXNpemU9IjEwLjUiIGZpbGw9IiM1NjZBODIiIHRleHQtYW5jaG9yPSJlbmQiPtin2LIg2obZhtivINin2YbYr9in2YUg2LPYp9iu2KrZhyDZhduM4oCM2LTZiNiv2Jsg2YXYp9mG2YbYryDYr9iz2Krar9in2Ycg2K3Ysdqp2KrbjC48L3RleHQ+PGxpbmUgeDE9IjM2MCIgeTE9IjI1NSIgeDI9IjM2MCIgeTI9IjI2OCIgc3Ryb2tlPSIjN0ZBNkZGIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI0MCIgeT0iMjY4IiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4IiByeD0iMTQiIGZpbGw9IiNFNkVGRkYiIHN0cm9rZT0iI0MyRDZGRiIvPjx0ZXh0IHg9IjUyIiB5PSIyODgiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyRjZCRkYiIGZvbnQtd2VpZ2h0PSI3MDAiPjU8L3RleHQ+PHRleHQgeD0iNjY0IiB5PSIyODkiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMwQjFBMkIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJlbmQiPtmB2LHYrzwvdGV4dD48dGV4dCB4PSI2NjQiIHk9IjMwNiIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjNTY2QTgyIiB0ZXh0LWFuY2hvcj0iZW5kIj7bjNqpINis2KfZhtiv2KfYsSDaqdin2YXZhNibINmF2KfZhtmG2K8g24zaqSDar9mI2LLZhi48L3RleHQ+PGxpbmUgeDE9IjM2MCIgeTE9IjMxNiIgeDI9IjM2MCIgeTI9IjMyOSIgc3Ryb2tlPSIjN0ZBNkZGIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI0MCIgeT0iMzI5IiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4IiByeD0iMTQiIGZpbGw9IiNFNkVGRkYiIHN0cm9rZT0iI0MyRDZGRiIvPjx0ZXh0IHg9IjUyIiB5PSIzNDkiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyRjZCRkYiIGZvbnQtd2VpZ2h0PSI3MDAiPjY8L3RleHQ+PHRleHQgeD0iNjY0IiB5PSIzNTAiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMwQjFBMkIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJlbmQiPtis2YXYuduM2Ko8L3RleHQ+PHRleHQgeD0iNjY0IiB5PSIzNjciIGZvbnQtc2l6ZT0iMTAuNSIgZmlsbD0iIzU2NkE4MiIgdGV4dC1hbmNob3I9ImVuZCI+2KfZgdix2KfYryDZh9mF2KfZhtmG2K8g2qnZhyDYr9ixINuM2qkg2KzYpyDYstmG2K/ar9uMINmF24zigIzaqdmG2YbYry48L3RleHQ+PGxpbmUgeDE9IjM2MCIgeTE9IjM3NyIgeDI9IjM2MCIgeTI9IjM5MCIgc3Ryb2tlPSIjN0ZBNkZGIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI0MCIgeT0iMzkwIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4IiByeD0iMTQiIGZpbGw9IiNFNkVGRkYiIHN0cm9rZT0iI0MyRDZGRiIvPjx0ZXh0IHg9IjUyIiB5PSI0MTAiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyRjZCRkYiIGZvbnQtd2VpZ2h0PSI3MDAiPjc8L3RleHQ+PHRleHQgeD0iNjY0IiB5PSI0MTEiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMwQjFBMkIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJlbmQiPtin2KzYqtmF2KfYuTwvdGV4dD48dGV4dCB4PSI2NjQiIHk9IjQyOCIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjNTY2QTgyIiB0ZXh0LWFuY2hvcj0iZW5kIj7YrNmF2LnbjNiq4oCM2YfYp9uMINqv2YjZhtin2q/ZiNmGINqp2Ycg2KjYpyDZh9mFINiq2LnYp9mF2YQg2K/Yp9ix2YbYry48L3RleHQ+PGxpbmUgeDE9IjM2MCIgeTE9IjQzOCIgeDI9IjM2MCIgeTI9IjQ1MSIgc3Ryb2tlPSIjN0ZBNkZGIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI0MCIgeT0iNDUxIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4IiByeD0iMTQiIGZpbGw9IiNENUU0RkYiIHN0cm9rZT0iI0MyRDZGRiIvPjx0ZXh0IHg9IjUyIiB5PSI0NzEiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyRjZCRkYiIGZvbnQtd2VpZ2h0PSI3MDAiPjg8L3RleHQ+PHRleHQgeD0iNjY0IiB5PSI0NzIiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiMwQjFBMkIiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJlbmQiPtio2YjZheKAjNiz2KfYstqv2KfZhjwvdGV4dD48dGV4dCB4PSI2NjQiIHk9IjQ4OSIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjNTY2QTgyIiB0ZXh0LWFuY2hvcj0iZW5kIj7YudmI2KfZhdmEINiy2YbYr9mHINmIINi624zYsdiy2YbYr9mH2ZQg2YXYrduM2Lcg2Ygg2KrYo9ir24zYsdmH2KfbjCDZhdiq2YLYp9io2YQg2KLZhuKAjNmH2KcuPC90ZXh0PjxsaW5lIHgxPSIzNjAiIHkxPSI0OTkiIHgyPSIzNjAiIHkyPSI1MTIiIHN0cm9rZT0iIzdGQTZGRiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iNDAiIHk9IjUxMiIgd2lkdGg9IjY0MCIgaGVpZ2h0PSI0OCIgcng9IjE0IiBmaWxsPSIjRDVFNEZGIiBzdHJva2U9IiNDMkQ2RkYiLz48dGV4dCB4PSI1MiIgeT0iNTMyIiBmb250LXNpemU9IjExIiBmaWxsPSIjMkY2QkZGIiBmb250LXdlaWdodD0iNzAwIj45PC90ZXh0Pjx0ZXh0IHg9IjY2NCIgeT0iNTMzIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMEIxQTJCIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0iZW5kIj7YstuM2LPYquKAjNio2YjZhTwvdGV4dD48dGV4dCB4PSI2NjQiIHk9IjU1MCIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjNTY2QTgyIiB0ZXh0LWFuY2hvcj0iZW5kIj7ahtmG2K8g2KjZiNmF4oCM2LPYp9iy2q/Yp9mGINio2Kcg2KfZgtmE24zZhSDZiCDZvtix2KfaqdmG2K/ar9uMINis2KfZhtiv2KfYsdin2YYg2YXYtNin2KjZhy48L3RleHQ+PGxpbmUgeDE9IjM2MCIgeTE9IjU2MCIgeDI9IjM2MCIgeTI9IjU3MyIgc3Ryb2tlPSIjN0ZBNkZGIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSI0MCIgeT0iNTczIiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4IiByeD0iMTQiIGZpbGw9IiNENUU0RkYiIHN0cm9rZT0iI0MyRDZGRiIvPjx0ZXh0IHg9IjUyIiB5PSI1OTMiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9IiMyRjZCRkYiIGZvbnQtd2VpZ2h0PSI3MDAiPjEwPC90ZXh0Pjx0ZXh0IHg9IjY2NCIgeT0iNTk0IiBmb250LXNpemU9IjE0IiBmaWxsPSIjMEIxQTJCIiBmb250LXdlaWdodD0iNzAwIiB0ZXh0LWFuY2hvcj0iZW5kIj7YstuM2LPYquKAjNqp2LHZhzwvdGV4dD48dGV4dCB4PSI2NjQiIHk9IjYxMSIgZm9udC1zaXplPSIxMC41IiBmaWxsPSIjNTY2QTgyIiB0ZXh0LWFuY2hvcj0iZW5kIj7Zh9mF2YfZlCDYstuM2LPYquKAjNio2YjZheKAjNmH2KfbjCDYstmF24zZhi48L3RleHQ+PC9zdmc+",
+                                                                                                                         "alt":  "نمودار سطوح سازمان‌یابی حیات از یاخته تا زیست‌کره",
+                                                                                                                         "caption":  "سطوح سازمان‌یابی حیات؛ بازسازی مفهومی از شکل ۳ کتاب (صفحهٔ ۸).",
+                                                                                                                         "source":  {
+                                                                                                                                        "kind":  "textbook",
+                                                                                                                                        "reference":  "فصل ۱، صفحهٔ ۸، شکل ۳",
+                                                                                                                                        "pages":  "8"
+                                                                                                                                    }
+                                                                                                                     },
+                                                                                                                     {
+                                                                                                                         "type":  "table",
+                                                                                                                         "head":  [
+                                                                                                                                      "ویژگی",
+                                                                                                                                      "نمونه‌ای که در کتاب آمده است"
+                                                                                                                                  ],
+                                                                                                                         "rows":  [
+                                                                                                                                      [
+                                                                                                                                          "نظم و ترتیب",
+                                                                                                                                          "سطحی از سازمان‌یابی در همهٔ جانداران"
+                                                                                                                                      ],
+                                                                                                                                      [
+                                                                                                                                          "هم‌ایستایی",
+                                                                                                                                          "افزایش دفع سدیم از راه ادرار"
+                                                                                                                                      ],
+                                                                                                                                      [
+                                                                                                                                          "رشد و نمو",
+                                                                                                                                          "تشکیل گل در گیاه (نمو)"
+                                                                                                                                      ],
+                                                                                                                                      [
+                                                                                                                                          "جذب و استفاده از انرژی",
+                                                                                                                                          "گنجشک: گرما، پرواز و جست‌وجوی غذا"
+                                                                                                                                      ],
+                                                                                                                                      [
+                                                                                                                                          "تولیدمثل",
+                                                                                                                                          "زاده شدن یوزپلنگ از یوزپلنگ"
+                                                                                                                                      ],
+                                                                                                                                      [
+                                                                                                                                          "پاسخ به محیط",
+                                                                                                                                          "خم شدن ساقه به‌سمت نور"
+                                                                                                                                      ],
+                                                                                                                                      [
+                                                                                                                                          "سازش با محیط",
+                                                                                                                                          "پوستک ضخیم برگ در مناطق خشک؛ موی سفید خرس قطبی"
+                                                                                                                                      ]
+                                                                                                                                  ]
+                                                                                                                     }
+                                                                                                                 ]
+                                                                                                  },
+                                                                                "summary":  {
+                                                                                                "blocks":  [
+                                                                                                               {
+                                                                                                                   "type":  "list",
+                                                                                                                   "items":  [
+                                                                                                                                 "جانداران هفت ویژگی مشترک دارند: نظم و ترتیب، هم‌ایستایی، رشد و نمو، جذب و استفاده از انرژی، تولیدمثل، پاسخ به محیط و سازش با محیط.",
+                                                                                                                                 "هم‌ایستایی وضعیت درونی را پایدار نگه می‌دارد.",
+                                                                                                                                 "رشد، بزرگ شدن است؛ نمو، گذر از یک مرحلهٔ زندگی به مرحلهٔ دیگر.",
+                                                                                                                                 "سازش، تناسب جمعیت با محیط و ماندگاری در آن است."
+                                                                                                                             ]
+                                                                                                               }
+                                                                                                           ]
+                                                                                            },
+                                                                                "references":  {
+                                                                                                   "blocks":  [
+                                                                                                                  {
+                                                                                                                      "type":  "p",
+                                                                                                                      "text":  "منبع: کتاب رسمی زیست‌شناسی (۱)، پایهٔ دهم، فصل ۱ (دنیای زنده)، گفتار ۲ (گسترهٔ حیات)، صفحهٔ ۷. ادامهٔ بحث سطوح سازمان‌یابی در صفحهٔ ۸ آمده است."
+                                                                                                                  }
+                                                                                                              ]
+                                                                                               }
+                                                                            },
+                                                               "activities":  [
+                                                                                  {
+                                                                                      "id":  "act-match-seven",
+                                                                                      "kind":  "game",
+                                                                                      "title":  "هر ویژگی را به نمونهٔ خودش وصل کنید",
+                                                                                      "instructions":  "یک ویژگی از ستون راست را انتخاب کنید، سپس نمونهٔ متناظر را در ستون چپ بزنید.",
+                                                                                      "embed":  "dom",
+                                                                                      "component":  "match",
+                                                                                      "config":  {
+                                                                                                     "pairs":  [
+                                                                                                                   {
+                                                                                                                       "left":  "نظم و ترتیب",
+                                                                                                                       "right":  "سطوح سازمان‌یابی در همهٔ جانداران"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "left":  "هم‌ایستایی",
+                                                                                                                       "right":  "افزایش دفع سدیم از راه ادرار"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "left":  "رشد",
+                                                                                                                       "right":  "افزایش برگشت‌ناپذیر ابعاد یا تعداد یاخته‌ها"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "left":  "نمو",
+                                                                                                                       "right":  "تشکیل گل در گیاه"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "left":  "تولیدمثل",
+                                                                                                                       "right":  "زاده شدن یوزپلنگ از یوزپلنگ"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "left":  "پاسخ به محیط",
+                                                                                                                       "right":  "خم شدن ساقه به‌سمت نور"
+                                                                                                                   },
+                                                                                                                   {
+                                                                                                                       "left":  "سازش با محیط",
+                                                                                                                       "right":  "موهای سفید خرس قطبی در برف"
+                                                                                                                   }
+                                                                                                               ]
+                                                                                                 },
+                                                                                      "source":  {
+                                                                                                     "kind":  "textbook",
+                                                                                                     "reference":  "فصل ۱، گفتار ۲، صفحهٔ ۷",
+                                                                                                     "pages":  "7"
+                                                                                                 }
+                                                                                  }
+                                                                              ],
+                                                               "questions":  [
+                                                                                 {
+                                                                                     "id":  "q-prac-01",
+                                                                                     "type":  "truefalse",
+                                                                                     "prompt":  "همهٔ جانداران هفت ویژگی مشترک را با هم دارند.",
+                                                                                     "correct":  "true",
+                                                                                     "explanation":  "کتاب می‌گوید جانداران همهٔ این هفت ویژگی را با هم دارند، نه فقط یکی از آن‌ها را.",
+                                                                                     "topicId":  "t-seven-features",
+                                                                                     "topic":  "هفت ویژگی جانداران",
+                                                                                     "difficulty":  "easy",
+                                                                                     "points":  1,
+                                                                                     "source":  {
+                                                                                                    "kind":  "textbook",
+                                                                                                    "reference":  "فصل ۱، صفحهٔ ۷",
+                                                                                                    "pages":  "7"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "q-prac-02",
+                                                                                     "type":  "mcq",
+                                                                                     "prompt":  "کدام مورد نمونهٔ «پاسخ به محیط» است؟",
+                                                                                     "options":  [
+                                                                                                     "خم شدن ساقهٔ گیاه به‌سمت نور",
+                                                                                                     "تشکیل گل در گیاه",
+                                                                                                     "زاده شدن یوزپلنگ از یوزپلنگ",
+                                                                                                     "افزایش تعداد یاخته‌ها"
+                                                                                                 ],
+                                                                                     "correct":  0,
+                                                                                     "explanation":  "پاسخ به محیط یعنی واکنش به محرک بیرونی؛ خم شدن ساقه به‌سمت نور نمونهٔ آن است.",
+                                                                                     "topicId":  "t-seven-features",
+                                                                                     "topic":  "هفت ویژگی جانداران",
+                                                                                     "difficulty":  "easy",
+                                                                                     "points":  1,
+                                                                                     "source":  {
+                                                                                                    "kind":  "textbook",
+                                                                                                    "reference":  "فصل ۱، صفحهٔ ۷",
+                                                                                                    "pages":  "7"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "q-prac-03",
+                                                                                     "type":  "mcq",
+                                                                                     "prompt":  "کدام گزینه «رشد» را درست تعریف می‌کند؟",
+                                                                                     "options":  [
+                                                                                                     "عبور از یک مرحلهٔ زندگی به مرحلهٔ دیگر",
+                                                                                                     "افزایش برگشت‌ناپذیر ابعاد یا تعداد یاخته‌ها",
+                                                                                                     "متناسب شدن با محیط",
+                                                                                                     "تولید موجودی شبیه خود"
+                                                                                                 ],
+                                                                                     "correct":  1,
+                                                                                     "explanation":  "رشد یعنی بزرگ شدن و افزایش برگشت‌ناپذیر ابعاد یا تعداد یاخته‌ها؛ گزینهٔ اول تعریف نمو است.",
+                                                                                     "topicId":  "t-seven-features",
+                                                                                     "topic":  "هفت ویژگی جانداران",
+                                                                                     "difficulty":  "medium",
+                                                                                     "points":  1,
+                                                                                     "source":  {
+                                                                                                    "kind":  "textbook",
+                                                                                                    "reference":  "فصل ۱، صفحهٔ ۷",
+                                                                                                    "pages":  "7"
+                                                                                                }
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "q-prac-04",
+                                                                                     "type":  "truefalse",
+                                                                                     "prompt":  "سازش با محیط فقط در گیاهان دیده می‌شود.",
+                                                                                     "correct":  "false",
+                                                                                     "explanation":  "سازش در جانوران هم دیده می‌شود؛ کتاب موهای سفید خرس قطبی را نمونهٔ آن می‌آورد.",
+                                                                                     "topicId":  "t-seven-features",
+                                                                                     "topic":  "هفت ویژگی جانداران",
+                                                                                     "difficulty":  "medium",
+                                                                                     "points":  1,
+                                                                                     "source":  {
+                                                                                                    "kind":  "textbook",
+                                                                                                    "reference":  "فصل ۱، صفحهٔ ۷",
+                                                                                                    "pages":  "7"
+                                                                                                }
+                                                                                 }
+                                                                             ]
+                                                           }
+                                                       ],
+                                           "exams":  [
+                                                         {
+                                                             "id":  "ex-ch01-seven",
+                                                             "title":  "آزمون گفتار ۲: هفت ویژگی جانداران",
+                                                             "description":  "شش پرسش کوتاه برای سنجش فهم هفت ویژگی مشترک جانداران.",
+                                                             "durationMinutes":  8,
+                                                             "passPercent":  60,
+                                                             "source":  {
+                                                                            "kind":  "textbook",
+                                                                            "publisher":  "سازمان پژوهش و برنامه‌ریزی آموزشی",
+                                                                            "title":  "زیست‌شناسی (۱) ـ پایهٔ دهم",
+                                                                            "academicYear":  "1405-1406",
+                                                                            "url":  "http://chap.sch.ir/books/14268",
+                                                                            "reference":  "فصل ۱، گفتار ۲، صفحهٔ ۷",
+                                                                            "pages":  "7"
+                                                                        },
+                                                             "questions":  [
+                                                                               {
+                                                                                   "id":  "q-seven-01",
+                                                                                   "type":  "mcq",
+                                                                                   "prompt":  "کدام گزینه جزو هفت ویژگی مشترک جانداران نیست؟",
+                                                                                   "options":  [
+                                                                                                   "نظم و ترتیب",
+                                                                                                   "هم‌ایستایی",
+                                                                                                   "تولیدمثل",
+                                                                                                   "داشتن هستهٔ یاخته‌ای"
+                                                                                               ],
+                                                                                   "correct":  3,
+                                                                                   "explanation":  "هفت ویژگی کتاب عبارت‌اند از نظم و ترتیب، هم‌ایستایی، رشد و نمو، جذب و استفاده از انرژی، تولیدمثل، پاسخ به محیط و سازش با محیط. داشتن هستهٔ یاخته‌ای در این فهرست نیست.",
+                                                                                   "topicId":  "t-seven-features",
+                                                                                   "topic":  "هفت ویژگی جانداران",
+                                                                                   "difficulty":  "easy",
+                                                                                   "points":  1,
+                                                                                   "source":  {
+                                                                                                  "kind":  "textbook",
+                                                                                                  "reference":  "فصل ۱، گفتار ۲، صفحهٔ ۷",
+                                                                                                  "pages":  "7"
+                                                                                              }
+                                                                               },
+                                                                               {
+                                                                                   "id":  "q-seven-02",
+                                                                                   "type":  "mcq",
+                                                                                   "prompt":  "وقتی سدیم خون افزایش می‌یابد و دفع آن از راه ادرار زیاد می‌شود، این نمونهٔ کدام ویژگی است؟",
+                                                                                   "options":  [
+                                                                                                   "رشد و نمو",
+                                                                                                   "هم‌ایستایی",
+                                                                                                   "سازش با محیط",
+                                                                                                   "تولیدمثل"
+                                                                                               ],
+                                                                                   "correct":  1,
+                                                                                   "explanation":  "هم‌ایستایی مجموعه اعمالی است که وضعیت درونی جاندار را در محدودهٔ ثابت نگه می‌دارد؛ تنظیم سدیم خون با افزایش دفع آن، نمونهٔ همین ویژگی است.",
+                                                                                   "topicId":  "t-seven-features",
+                                                                                   "topic":  "هفت ویژگی جانداران",
+                                                                                   "difficulty":  "medium",
+                                                                                   "points":  1,
+                                                                                   "source":  {
+                                                                                                  "kind":  "textbook",
+                                                                                                  "reference":  "فصل ۱، گفتار ۲، صفحهٔ ۷",
+                                                                                                  "pages":  "7"
+                                                                                              }
+                                                                               },
+                                                                               {
+                                                                                   "id":  "q-seven-03",
+                                                                                   "type":  "mcq",
+                                                                                   "prompt":  "تشکیل گل در گیاه، نمونهٔ کدام ویژگی است؟",
+                                                                                   "options":  [
+                                                                                                   "رشد",
+                                                                                                   "نمو",
+                                                                                                   "پاسخ به محیط",
+                                                                                                   "سازش با محیط"
+                                                                                               ],
+                                                                                   "correct":  1,
+                                                                                   "explanation":  "نمو به معنی عبور از مرحله‌ای به مرحلهٔ دیگری از زندگی است؛ تشکیل گل در گیاه نمونهٔ آن است. رشد، بزرگ شدن و افزایش برگشت‌ناپذیر ابعاد یا تعداد یاخته‌هاست.",
+                                                                                   "topicId":  "t-seven-features",
+                                                                                   "topic":  "هفت ویژگی جانداران",
+                                                                                   "difficulty":  "medium",
+                                                                                   "points":  1,
+                                                                                   "source":  {
+                                                                                                  "kind":  "textbook",
+                                                                                                  "reference":  "فصل ۱، گفتار ۲، صفحهٔ ۷",
+                                                                                                  "pages":  "7"
+                                                                                              }
+                                                                               },
+                                                                               {
+                                                                                   "id":  "q-seven-04",
+                                                                                   "type":  "truefalse",
+                                                                                   "prompt":  "رشد به معنای عبور از یک مرحلهٔ زندگی به مرحلهٔ دیگر است.",
+                                                                                   "correct":  "false",
+                                                                                   "explanation":  "این تعریف مربوط به نمو است. رشد به معنی بزرگ شدن و شامل افزایش برگشت‌ناپذیر ابعاد یا تعداد یاخته‌هاست.",
+                                                                                   "topicId":  "t-seven-features",
+                                                                                   "topic":  "هفت ویژگی جانداران",
+                                                                                   "difficulty":  "easy",
+                                                                                   "points":  1,
+                                                                                   "source":  {
+                                                                                                  "kind":  "textbook",
+                                                                                                  "reference":  "فصل ۱، گفتار ۲، صفحهٔ ۷",
+                                                                                                  "pages":  "7"
+                                                                                              }
+                                                                               },
+                                                                               {
+                                                                                   "id":  "q-seven-05",
+                                                                                   "type":  "truefalse",
+                                                                                   "prompt":  "همهٔ جانداران به محرک‌های محیطی پاسخ می‌دهند.",
+                                                                                   "correct":  "true",
+                                                                                   "explanation":  "پاسخ به محیط یکی از هفت ویژگی مشترک جانداران است؛ کتاب خم شدن ساقهٔ گیاه به‌سمت نور را نمونهٔ آن می‌آورد.",
+                                                                                   "topicId":  "t-seven-features",
+                                                                                   "topic":  "هفت ویژگی جانداران",
+                                                                                   "difficulty":  "easy",
+                                                                                   "points":  1,
+                                                                                   "source":  {
+                                                                                                  "kind":  "textbook",
+                                                                                                  "reference":  "فصل ۱، گفتار ۲، صفحهٔ ۷",
+                                                                                                  "pages":  "7"
+                                                                                              }
+                                                                               },
+                                                                               {
+                                                                                   "id":  "q-seven-06",
+                                                                                   "type":  "mcq",
+                                                                                   "prompt":  "موهای سفید خرس قطبی که به استتار آن در محیط برفی کمک می‌کند، نمونهٔ کدام ویژگی است؟",
+                                                                                   "options":  [
+                                                                                                   "نظم و ترتیب",
+                                                                                                   "سازش با محیط",
+                                                                                                   "هم‌ایستایی",
+                                                                                                   "تولیدمثل"
+                                                                                               ],
+                                                                                   "correct":  1,
+                                                                                   "explanation":  "سازش با محیط باعث می‌شود جمعیت جانداران با محیط زندگی خود متناسب و در آن ماندگار شوند؛ استتار خرس قطبی در برف نمونهٔ آن است.",
+                                                                                   "topicId":  "t-seven-features",
+                                                                                   "topic":  "هفت ویژگی جانداران",
+                                                                                   "difficulty":  "medium",
+                                                                                   "points":  1,
+                                                                                   "source":  {
+                                                                                                  "kind":  "textbook",
+                                                                                                  "reference":  "فصل ۱، گفتار ۲، صفحهٔ ۷",
+                                                                                                  "pages":  "7"
+                                                                                              }
+                                                                               }
+                                                                           ]
+                                                         }
+                                                     ]
+                                       }
+                                   ]
+                  }
               ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
 };
 /* ==================== bootstrap.js ==================== */
 /* ==========================================================================
@@ -4996,6 +5308,229 @@ window.MEHRAZ_CONTENT = {
   };
 })(window, document);
 
+/* ==================== activities.js ==================== */
+/* ==========================================================================
+   MEHRAZ — activity registry
+   Content describes an activity as data. Only components registered here can
+   run, and every component is bundled code reviewed with the application.
+   Nothing in the content catalogue is ever evaluated as script.
+   ========================================================================== */
+(function (window, document) {
+  'use strict';
+
+  var M = window.MEHRAZ;
+  var util = M.util;
+  var esc = util.esc;
+
+  var registry = {};
+  var activities = (M.activities = {
+    registry: registry,
+
+    register: function (name, factory) {
+      registry[name] = factory;
+    },
+
+    render: function (activity) {
+      if (!activity || !registry[activity.component]) return '';
+      var config = activity.config || {};
+      return (
+        '<div class="activity card card--pad" data-activity data-component="' +
+        esc(activity.component) +
+        '" data-config="' +
+        esc(JSON.stringify(config)) +
+        '">' +
+        '<div class="activity__head">' +
+        '<span class="card__icon">' +
+        M.icon(activity.kind === 'game' ? 'target' : activity.kind === 'experiment' ? 'play' : 'sparkles', 18) +
+        '</span>' +
+        '<div><div class="card__title">' +
+        esc(activity.title || '') +
+        '</div>' +
+        (activity.instructions ? '<div class="card__text">' + esc(activity.instructions) + '</div>' : '') +
+        '</div></div>' +
+        '<div class="activity__stage" data-activity-stage></div>' +
+        '<p class="activity__status hint" data-activity-status aria-live="polite"></p>' +
+        '</div>'
+      );
+    },
+
+    mount: function (root) {
+      util.$$('[data-activity]', root).forEach(function (host) {
+        var name = host.getAttribute('data-component');
+        var factory = registry[name];
+        var stage = util.$('[data-activity-stage]', host);
+        var status = util.$('[data-activity-status]', host);
+        if (!factory || !stage) return;
+        var config;
+        try {
+          config = JSON.parse(host.getAttribute('data-config') || '{}');
+        } catch (err) {
+          M.diag.record('note', 'activity config rejected: ' + err.message);
+          return;
+        }
+        try {
+          factory(stage, config, function (msg, ok) {
+            if (!status) return;
+            status.textContent = msg;
+            status.className = 'activity__status hint' + (ok === false ? ' is-wrong' : ok === true ? ' is-ok' : '');
+          });
+        } catch (err) {
+          M.diag.record('error', 'activity failed: ' + err.message, { component: name });
+        }
+      });
+    }
+  });
+
+  /* ---- shared helpers ---------------------------------------------------- */
+  function shuffle(list, seed) {
+    var out = list.slice();
+    var s = seed || 7;
+    for (var i = out.length - 1; i > 0; i -= 1) {
+      s = (s * 9301 + 49297) % 233280;
+      var j = Math.floor((s / 233280) * (i + 1));
+      var tmp = out[i];
+      out[i] = out[j];
+      out[j] = tmp;
+    }
+    return out;
+  }
+
+  function button(label, cls) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'activity__item ' + (cls || '');
+    b.textContent = label;
+    return b;
+  }
+
+  /* ---- match: pair two columns ------------------------------------------ */
+  activities.register('match', function (stage, config, report) {
+    var pairs = Array.isArray(config.pairs) ? config.pairs : [];
+    if (pairs.length < 2) return;
+
+    var left = document.createElement('div');
+    left.className = 'activity__col';
+    var right = document.createElement('div');
+    right.className = 'activity__col';
+
+    var rights = shuffle(pairs.map(function (p, i) { return { text: p.right, i: i }; }), 11);
+    var selected = null;
+    var solved = 0;
+
+    function update() {
+      if (solved === pairs.length) report('همهٔ جفت‌ها درست شد. عالی بود.', true);
+    }
+
+    pairs.forEach(function (p, i) {
+      var b = button(p.left);
+      b.setAttribute('data-side', 'left');
+      b.setAttribute('data-i', String(i));
+      b.addEventListener('click', function () {
+        util.$$('.activity__item.is-selected', stage).forEach(function (el) {
+          el.classList.remove('is-selected');
+        });
+        b.classList.add('is-selected');
+        selected = { i: i, el: b };
+      });
+      left.appendChild(b);
+    });
+
+    rights.forEach(function (r) {
+      var b = button(r.text);
+      b.setAttribute('data-side', 'right');
+      b.setAttribute('data-i', String(r.i));
+      b.addEventListener('click', function () {
+        if (!selected) {
+          report('اول یک مورد از ستون راست را انتخاب کنید.', null);
+          return;
+        }
+        if (selected.i === r.i) {
+          selected.el.classList.add('is-done');
+          selected.el.disabled = true;
+          b.classList.add('is-done');
+          b.disabled = true;
+          selected.el.classList.remove('is-selected');
+          selected = null;
+          solved += 1;
+          report('درست بود.', true);
+          update();
+        } else {
+          b.classList.add('is-wrong');
+          window.setTimeout(function () { b.classList.remove('is-wrong'); }, 700);
+          report('این جفت درست نیست؛ دوباره نگاه کنید.', false);
+        }
+      });
+      right.appendChild(b);
+    });
+
+    stage.appendChild(left);
+    stage.appendChild(right);
+  });
+
+  /* ---- classify: put each item in the right bucket ---------------------- */
+  activities.register('classify', function (stage, config, report) {
+    var buckets = Array.isArray(config.buckets) ? config.buckets : [];
+    var items = Array.isArray(config.items) ? config.items : [];
+    if (!buckets.length || !items.length) return;
+
+    var pool = document.createElement('div');
+    pool.className = 'activity__pool';
+    var board = document.createElement('div');
+    board.className = 'activity__buckets';
+    var pending = null;
+    var solved = 0;
+
+    var bucketEls = {};
+    buckets.forEach(function (bk) {
+      var col = document.createElement('div');
+      col.className = 'activity__bucket';
+      var title = document.createElement('div');
+      title.className = 'activity__bucket-title';
+      title.textContent = bk.label;
+      var body = document.createElement('div');
+      body.className = 'activity__bucket-body';
+      col.appendChild(title);
+      col.appendChild(body);
+      col.addEventListener('click', function () {
+        if (!pending) {
+          report('اول یک مورد را از فهرست بالا انتخاب کنید.', null);
+          return;
+        }
+        if (pending.bucket === bk.id) {
+          pending.el.classList.add('is-done');
+          pending.el.disabled = true;
+          body.appendChild(pending.el);
+          solved += 1;
+          pending = null;
+          report('درست بود.', true);
+          if (solved === items.length) report('همهٔ موارد دسته‌بندی شدند.', true);
+        } else {
+          col.classList.add('is-wrong');
+          window.setTimeout(function () { col.classList.remove('is-wrong'); }, 700);
+          report('این مورد به این دسته تعلق ندارد.', false);
+        }
+      });
+      bucketEls[bk.id] = body;
+      board.appendChild(col);
+    });
+
+    items.forEach(function (it) {
+      var b = button(it.text);
+      b.addEventListener('click', function () {
+        util.$$('.activity__item.is-selected', stage).forEach(function (el) {
+          el.classList.remove('is-selected');
+        });
+        b.classList.add('is-selected');
+        pending = { el: b, bucket: it.bucket };
+      });
+      pool.appendChild(b);
+    });
+
+    stage.appendChild(pool);
+    stage.appendChild(board);
+  });
+})(window, document);
+
 /* ==================== router.js ==================== */
 /* ==========================================================================
    MEHRAZ — router
@@ -6590,6 +7125,11 @@ window.MEHRAZ_CONTENT = {
   };
 
   /* ---- lesson ----------------------------------------------------------- */
+  function blockSource(block) {
+    if (!block || !block.source || !block.source.reference) return '';
+    return '<p class="block-source">منبع: ' + esc(block.source.reference) + '</p>';
+  }
+
   function renderBlock(block) {
     if (!block || typeof block !== 'object') return '';
     if (block.type === 'p') return '<p>' + esc(block.text || '') + '</p>';
@@ -6617,7 +7157,8 @@ window.MEHRAZ_CONTENT = {
             esc(block.alt || '') +
             '" loading="lazy" style="border-radius:var(--r-md)">' +
             (block.caption ? '<figcaption class="hint">' + esc(block.caption) + '</figcaption>' : '') +
-            '</figure>'
+            '</figure>' +
+            blockSource(block)
         : '<div class="banner banner--warn">' +
             M.icon('alert', 16) +
             '<span>این تصویر در دسترس نیست.</span></div>';
@@ -6644,7 +7185,8 @@ window.MEHRAZ_CONTENT = {
             );
           })
           .join('') +
-        '</tbody></table></div>'
+        '</tbody></table></div>' +
+        blockSource(block)
       );
     }
     return '';
@@ -6652,7 +7194,11 @@ window.MEHRAZ_CONTENT = {
 
   function renderSection(section, index) {
     var body;
-    if (section.hasContent && section.data) {
+    if (section.questions) {
+      body = renderExercises(section.questions);
+    } else if (section.activities) {
+      body = section.activities.map(function (a) { return M.activities.render(a); }).join('');
+    } else if (section.hasContent && section.data) {
       var data = section.data;
       if (Array.isArray(data.blocks)) {
         body = data.blocks.map(renderBlock).join('');
@@ -6675,11 +7221,56 @@ window.MEHRAZ_CONTENT = {
       '<div class="lsection__head">' +
       '<span class="lsection__idx">' + util.toFa(index + 1) + '</span>' +
       '<h2 class="lsection__title">' + esc(section.label) + '</h2>' +
-      '<span class="chip ' + (section.hasContent ? 'chip--ok' : 'chip--outline') + ' push">' +
-      (section.hasContent ? 'آماده' : 'به‌زودی') + '</span>' +
       '</div>' +
       '<div class="lsection__body">' + body + '</div>' +
       '</section>'
+    );
+  }
+
+  /* Exercises live on the lesson, not in the exam engine: the student answers,
+     then opens the explanation. The exam engine stays for timed assessment. */
+  function renderExercises(questions) {
+    return (
+      '<div class="exercises">' +
+      questions
+        .map(function (q, i) {
+          var answer = '';
+          if (q.type === 'mcq' || q.type === 'multi') {
+            var idxs = Array.isArray(q.correct) ? q.correct : [q.correct];
+            answer = idxs
+              .map(function (ix) {
+                return (q.options && q.options[ix]) || '';
+              })
+              .filter(Boolean)
+              .join('، ');
+          } else if (q.type === 'truefalse') {
+            answer = q.correct === 'true' ? 'درست' : 'نادرست';
+          } else {
+            answer = util.toFa(q.answer) + (q.unit ? ' ' + q.unit : '');
+          }
+          var options =
+            q.options && q.options.length
+              ? '<ol class="exercise__options" type="a">' +
+                q.options
+                  .map(function (o) {
+                    return '<li>' + esc(o) + '</li>';
+                  })
+                  .join('') +
+                '</ol>'
+              : '';
+          return (
+            '<article class="exercise">' +
+            '<div class="exercise__head"><span class="exercise__num">' + util.toFa(i + 1) + '</span>' +
+            '<p class="exercise__prompt">' + esc(q.prompt) + '</p></div>' +
+            options +
+            '<details class="exercise__answer"><summary>پاسخ و توضیح</summary>' +
+            '<p class="exercise__key">پاسخ: <b>' + esc(answer) + '</b></p>' +
+            (q.explanation ? '<p class="hint">' + esc(q.explanation) + '</p>' : '') +
+            '</details></article>'
+          );
+        })
+        .join('') +
+      '</div>'
     );
   }
 
@@ -6696,6 +7287,30 @@ window.MEHRAZ_CONTENT = {
     var chapter = row.chapter;
     var lesson = row.lesson;
     var plan = M.content.sectionPlan(lesson);
+    // Only sections with real material are rendered. Empty optional sections
+    // are not shown as a row of "coming soon" placeholders.
+    var visible = plan.filter(function (s) { return s.hasContent; });
+    if (lesson.activities && lesson.activities.length) {
+      var hasInteractive = visible.some(function (s) { return s.key === 'interactive'; });
+      if (!hasInteractive) {
+        var actAt = -1;
+        for (var ai = 0; ai < visible.length; ai += 1) {
+          if (visible[ai].key === 'exercises' || visible[ai].key === 'summary') { actAt = ai; break; }
+        }
+        var actSection = { key: 'interactive', label: 'آزمایش تعاملی', icon: 'play', hasContent: true, activities: lesson.activities };
+        if (actAt === -1) visible.push(actSection);
+        else visible.splice(actAt, 0, actSection);
+      }
+    }
+    if (lesson.questions && lesson.questions.length) {
+      var at = -1;
+      for (var vi = 0; vi < visible.length; vi += 1) {
+        if (visible[vi].key === 'summary') { at = vi; break; }
+      }
+      var exerciseSection = { key: 'exercises', label: 'تمرین‌ها', icon: 'edit', hasContent: true, questions: lesson.questions };
+      if (at === -1) visible.push(exerciseSection);
+      else visible.splice(at, 0, exerciseSection);
+    }
     var done = M.store.isLessonDone(lesson.id);
     var lessonIndex = (chapter.lessons || []).findIndex(function (l) {
       return l.id === lesson.id;
@@ -6757,7 +7372,7 @@ window.MEHRAZ_CONTENT = {
       '<aside class="toc" aria-label="فهرست بخش‌ها">' +
       '<div class="toc__title">بخش‌های درس</div>' +
       '<div class="toc__list">' +
-      plan
+      visible
         .map(function (s) {
           return (
             '<a class="toc__link" href="#sec-' +
@@ -6783,7 +7398,7 @@ window.MEHRAZ_CONTENT = {
 
     var sections =
       '<div class="stack" style="gap:14px">' +
-      plan.map(renderSection).join('') +
+      visible.map(renderSection).join('') +
       '<nav class="card card--pad" aria-label="پیمایش درس">' +
       '<div class="row row--wrap" style="gap:10px">' +
       (prev
@@ -6819,6 +7434,7 @@ window.MEHRAZ_CONTENT = {
       html: head + '<div class="lesson-layout" style="margin-top:20px">' + sections + toc + '</div>',
       onMount: function (root) {
         M.store.touchLesson(lesson.id);
+        M.activities.mount(root);
 
         var completeBtn = util.$('[data-complete]', root);
         if (completeBtn && !completeBtn.disabled) {
