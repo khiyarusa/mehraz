@@ -1,16 +1,16 @@
 # Content QA report
 
-Generated: 2026-11-18T17:27:52Z · automated checks only
+Generated: 2026-11-18T17:59:10Z · automated checks only
 
 | Check | Result | Detail |
 |---|---|---|
 | catalog.json parses | PASS | loaded |
 | unique book ids | PASS | 1 books |
-| unique ids across books/chapters/lessons | PASS | 5 ids |
+| unique ids across books/chapters/lessons | PASS | 7 ids |
 | every lesson has a source locator | PASS | 0 missing |
 | every exam question has an explanation | PASS | 0 missing |
 | every exam question has a source | PASS | 0 missing |
-| no lesson is published as verified without evidence | PASS | 0 verified, 2 draft |
+| no lesson is published as verified without evidence | PASS | 0 verified, 3 draft |
 | downloaded files structurally verified | FAIL | 2/4 |
 | source transport authenticated | FAIL | 0/4 over TLS |
 

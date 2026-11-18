@@ -1,6 +1,6 @@
 # Grade 10 Experimental Sciences — selected scope
 
-Generated: 2026-11-18T17:46:09Z
+Generated: 2026-11-18T17:59:11Z
 
 | Code | Title | Subject | Scope | Pages |
 |---|---|---|---|---:|

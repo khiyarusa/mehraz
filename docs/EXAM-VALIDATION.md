@@ -1,6 +1,6 @@
 # Examination validation
 
-Generated: 2026-11-18T17:27:52Z
+Generated: 2026-11-18T17:59:10Z
 
 | Question | Type | Exam | Checks | Source pages |
 |---|---|---|---|---|
@@ -22,10 +22,15 @@ Generated: 2026-11-18T17:27:52Z
 | q-cell-ex-03 | truefalse | ex-ch01-cell | automated | 11 |
 | q-cell-ex-04 | mcq | ex-ch01-cell | automated | 8 |
 | q-cell-ex-05 | mcq | ex-ch01-cell | automated | 11 |
+| q-dig-ex-01 | mcq | ex-ch02-digestive | automated | 18 |
+| q-dig-ex-02 | mcq | ex-ch02-digestive | automated | 21 |
+| q-dig-ex-03 | mcq | ex-ch02-digestive | automated | 20-23 |
+| q-dig-ex-04 | truefalse | ex-ch02-digestive | automated | 19 |
+| q-dig-ex-05 | mcq | ex-ch02-digestive | automated | 23 |
 
-- Exam questions: **18**
-- Lesson practice questions: **14**
-- Questions with explanation + source + answer: **18**
+- Exam questions: **23**
+- Lesson practice questions: **18**
+- Questions with explanation + source + answer: **23**
 - Independent human verification: **NOT TESTED**
 
 The automated column only confirms that fields exist and that the answer is

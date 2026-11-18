@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-11-18T17:46:09Z",
+    "generatedAt":  "2026-11-18T17:59:11Z",
     "scope":  "grade-10 experimental (selected)",
     "totals":  {
                    "includedBooks":  10,
@@ -26,7 +26,7 @@
                       "lessonsReviewed":  0,
                       "lessonsVerified":  0,
                       "status":  "source_downloaded",
-                      "updatedAt":  "2026-11-18T17:46:09Z"
+                      "updatedAt":  "2026-11-18T17:59:11Z"
                   },
                   {
                       "bookCode":  "110202",
@@ -44,7 +44,7 @@
                       "lessonsReviewed":  0,
                       "lessonsVerified":  0,
                       "status":  "source_downloaded",
-                      "updatedAt":  "2026-11-18T17:46:09Z"
+                      "updatedAt":  "2026-11-18T17:59:11Z"
                   },
                   {
                       "bookCode":  "110206",
@@ -62,7 +62,7 @@
                       "lessonsReviewed":  0,
                       "lessonsVerified":  0,
                       "status":  "source_downloaded",
-                      "updatedAt":  "2026-11-18T17:46:09Z"
+                      "updatedAt":  "2026-11-18T17:59:11Z"
                   },
                   {
                       "bookCode":  "110210",
@@ -80,7 +80,7 @@
                       "lessonsReviewed":  0,
                       "lessonsVerified":  0,
                       "status":  "source_downloaded",
-                      "updatedAt":  "2026-11-18T17:46:09Z"
+                      "updatedAt":  "2026-11-18T17:59:11Z"
                   },
                   {
                       "bookCode":  "110211",
@@ -98,7 +98,7 @@
                       "lessonsReviewed":  0,
                       "lessonsVerified":  0,
                       "status":  "source_downloaded",
-                      "updatedAt":  "2026-11-18T17:46:09Z"
+                      "updatedAt":  "2026-11-18T17:59:11Z"
                   },
                   {
                       "bookCode":  "110217",
@@ -116,7 +116,7 @@
                       "lessonsReviewed":  0,
                       "lessonsVerified":  0,
                       "status":  "source_downloaded",
-                      "updatedAt":  "2026-11-18T17:46:09Z"
+                      "updatedAt":  "2026-11-18T17:59:11Z"
                   },
                   {
                       "bookCode":  "110230",
@@ -134,7 +134,7 @@
                       "lessonsReviewed":  0,
                       "lessonsVerified":  0,
                       "status":  "source_downloaded",
-                      "updatedAt":  "2026-11-18T17:46:09Z"
+                      "updatedAt":  "2026-11-18T17:59:11Z"
                   },
                   {
                       "bookCode":  "110231",
@@ -152,7 +152,7 @@
                       "lessonsReviewed":  0,
                       "lessonsVerified":  0,
                       "status":  "source_downloaded",
-                      "updatedAt":  "2026-11-18T17:46:09Z"
+                      "updatedAt":  "2026-11-18T17:59:11Z"
                   },
                   {
                       "bookCode":  "110214",
@@ -170,7 +170,7 @@
                       "lessonsReviewed":  0,
                       "lessonsVerified":  0,
                       "status":  "source_downloaded",
-                      "updatedAt":  "2026-11-18T17:46:09Z"
+                      "updatedAt":  "2026-11-18T17:59:11Z"
                   },
                   {
                       "bookCode":  "110216",
@@ -188,7 +188,7 @@
                       "lessonsReviewed":  0,
                       "lessonsVerified":  0,
                       "status":  "source_downloaded",
-                      "updatedAt":  "2026-11-18T17:46:09Z"
+                      "updatedAt":  "2026-11-18T17:59:11Z"
                   }
               ]
 }
