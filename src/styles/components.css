@@ -863,10 +863,32 @@ img { max-width: 100%; height: auto; }
 .activity__bucket-title { font-size: var(--fs-11); font-weight: var(--fw-bold); color: var(--txt-muted); margin-block-end: 8px; }
 .activity__bucket-body { display: flex; flex-wrap: wrap; gap: 6px; }
 .activity__bucket-body .activity__item { min-height: 36px; padding: 6px 10px; font-size: var(--fs-11); }
+.activity__sequence { display: flex; flex-direction: column; gap: 8px; padding: 10px; min-height: 76px; border: 1.5px dashed var(--border-strong); border-radius: var(--r-md); }
+.activity__sequence .activity__item.is-done { opacity: 1; }
 .activity__status { min-height: 18px; }
 .activity__status.is-ok { color: var(--ok); }
 .activity__status.is-wrong { color: var(--danger); }
 .block-source { margin-block-start: 6px; font-size: 10px; color: var(--txt-faint); }
+
+/* ---- formula block ------------------------------------------------------ */
+.formula {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-inline-start: 3px solid var(--brand);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+.formula__text {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: center;
+  font-family: var(--font-num);
+  font-size: var(--fs-16);
+  line-height: 2.1;
+  color: var(--txt-strong);
+  overflow-x: auto;
+}
+.formula__note { margin-block-start: 8px; font-size: var(--fs-11); line-height: 1.8; color: var(--txt-muted); }
 
 /* ---- lesson exercises --------------------------------------------------- */
 .exercises { display: flex; flex-direction: column; gap: 12px; }

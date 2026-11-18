@@ -20,11 +20,11 @@ traffic. Student data stays on the device.
 
 **Current state: pre-release quality pass plus the first PROMPT 03 pilot slice.**
 The foundation (PROMPT 01) and the visual layer (PROMPT 02) are in place. The
-catalogue contains **one draft lesson** from the Grade 10 Biology pilot
-(chapter 1, subsection 2) with an activity, four practice questions, a
-six-question chapter exam and a reconstructed diagram. It is marked ``draft`` in
-the interface until it passes visual and independent verification. The other
-129 catalogue books contain no content. Official content production remains
+catalogue contains the **first chapter of the Grade 10 Biology pilot** — three
+lessons, each with an activity, practice questions, a chapter exam and source
+references. Two are `draft`; «یاخته و بافت در بدن انسان» is `reviewed` after the
+rendered pages 8 and 11 were read and compared with the text. The other
+147 catalogue books contain no content. Official content production remains
 PROMPT 03 work.
 
 <div dir="rtl">

@@ -1,0 +1,579 @@
+{
+  "generatedAt": "2026-11-18T20:43:10Z",
+  "method": "OCR candidate lines; not yet verified against printed TOC",
+  "books": [
+    {
+      "code": "110201",
+      "title": "فارسی (1)",
+      "status": "candidates-found",
+      "confidence": "low",
+      "chapters": [
+        {
+          "label": "فصل یکم: ادبیات تعلیمی",
+          "sections": [
+            { "label": "درس دوم: از آموختن. ننگ مدار" }
+          ]
+        },
+        {
+          "label": "فصل دوم: ادبیات پایداری",
+          "sections": [
+            { "label": "درس سوم: پاسداری از حقیقت" },
+            { "label": "درس چهارم: درس آزاد (ادبیات بومی ۱)" },
+            { "label": "درس پنجم: بیداد ظالمان" }
+          ]
+        },
+        {
+          "label": "فصل سوم: ادبیات غنایی",
+          "sections": [
+            { "label": "درس ششم: مهر و وفا" },
+            { "label": "درس هفتم: جمال و کمال" }
+          ]
+        },
+        {
+          "label": "فصل چهارم: ادبیات سفر و زندگی",
+          "sections": [
+            { "label": "درس هشتم: سفر به بصره" }
+          ]
+        },
+        {
+          "label": "فصل ششسم: ادبیات حماسی",
+          "sections": [
+            { "label": "درس دوازدهم: رستم و اشکبوس" },
+            { "label": "درس سیزدهم: گردآفرید" }
+          ]
+        },
+        {
+          "label": "فصل هفتم: ادبیات داستانی",
+          "sections": [
+            { "label": "درس چهاردهم: طوطی و بقال" },
+            { "label": "درس پانزدهم: درس آزاد (ادبیات بومی ۲)" },
+            { "label": "درس شانزدهم: خسرو" }
+          ]
+        },
+        {
+          "label": "فصل هشتم: ادبیات جهان",
+          "sections": [
+            { "label": "درس هفدهم: سپیده دم" },
+            { "label": "درس هجدهم: عظمت نگاه" }
+          ]
+        }
+      ],
+      "notes": "toc-index kept only one فصل line for this book; the other six فصل lines were copied directly from raw OCR pages 0004-0005. No page numbers survived OCR on these lines. فصل پنجم is absent at the page break (page-0006 prose says the book has eight فصل and names the fifth ادبیات انقلاب اسلامی, but that label is not quoted as a chapter line). Also missing: درس یکم under فصل یکم, درس نهم, and the repeated کارگاه متن پژوهی lines, which were left out. 'فصل ششسم' is kept as OCR'd (apparent typo for ششم)."
+    },
+    {
+      "code": "110202",
+      "title": "نگارش (1)",
+      "status": "candidates-found",
+      "confidence": "low",
+      "chapters": [],
+      "sections": [
+        { "label": "درس اوّل: پرورش موضوع", "pageHint": "۱۴" },
+        { "label": "درس دوم: عینک نوشتن", "pageHint": "۳۸" },
+        { "label": "درس سوم: نوشته‌های عینی", "pageHint": "۳" },
+        { "label": "درس چهارم: نوشته‌های گزارش‌گونه", "pageHint": "۵۸" },
+        { "label": "درس پنجم: نوشتة ذهنی (۱) جانشین سازی", "pageHint": "۷۴" },
+        { "label": "درس ششم: نوشتة ذهنی (۲) سنجش و مقایسه", "pageHint": "۸۶" },
+        { "label": "درس هفتم: نوشتةٌ ذهنی(۳) ناسازی معنایی یا تضاد مفاهیم", "pageHint": "۱۰۰" },
+        { "label": "درس هشتم: نوشته‌های داستان گونه", "pageHint": "۱۲" }
+      ],
+      "notes": "No فصل line in OCR: the book numbers its eight lessons directly, so they are kept in book-level sections rather than forced into chapters. Trailing page numbers are partly truncated (درس سوم ۳, درس هشتم ۱۲). The 'کارگاه نوشتن' lines that follow every lesson were left out."
+    },
+    {
+      "code": "110203",
+      "title": "علوم و فنون ادبی (1)",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [
+        {
+          "label": "فصل یکم:",
+          "sections": [
+            { "label": "درس یکم: مبانی تحلیل متن" },
+            { "label": "درس دوم: سازه‌ها و عوامل تأثیرگذار در شعر فارسی" },
+            { "label": "درس سوم: واج آرایی» واژه آرایی" }
+          ]
+        },
+        {
+          "label": "فصل دوم:",
+          "sections": [
+            { "label": "درس چهارم: تاریخ ادبیات پیش از اسلام و قرن‌های اوّلیه هجری" },
+            { "label": "درس پنجم: هماهنگی پاره‌های کلام" },
+            { "label": "درس ششم: سجع و انواع آن" }
+          ]
+        },
+        {
+          "label": "فصل سوم:",
+          "sections": [
+            { "label": "درس هفتم: سبک و سبک شناسی (سبک خراسانی)" },
+            { "label": "درس هشتم: وزن شعر فارسی" },
+            { "label": "درس نهم: موازنه و ترصیح" }
+          ]
+        },
+        {
+          "label": "فصل چهارم:",
+          "sections": [
+            { "label": "درس دهم: زبان و ادبیات فارسی در سده‌های پنجم و ششم و ویژگی‌های سبکی آن" },
+            { "label": "درس دوازدهم: جناس و انواع آن" }
+          ]
+        }
+      ],
+      "notes": "The chapter titles themselves did not survive OCR: the فصل lines read only 'فصل یکم:' etc., so the labels are kept exactly as read and no title was supplied. درس یازدهم is missing between درس دهم and درس دوازدهم. درس یکم and درس هفتم are not in toc-index and were recovered from the raw page. Four کارگاه تحلیل lines were left out."
+    },
+    {
+      "code": "110204",
+      "title": "دین و زندگی (1)",
+      "status": "no-toc-detected",
+      "confidence": "low",
+      "chapters": [],
+      "notes": "No TOC line anywhere in OCR pages 0001-0008: page-0004 is unreadable noise, pages 0006-0007 are a teacher's note, page-0003 is the copyright page. The only toc-index entry is a sentence from that note, not a heading. More OCR pages (or a re-scan of the TOC page) are needed."
+    },
+    {
+      "code": "110205",
+      "title": "دین و زندگی (1)",
+      "status": "no-toc-detected",
+      "confidence": "low",
+      "chapters": [],
+      "notes": "Same front matter as 110204 and the same result: no TOC line in OCR pages 0001-0008. The single toc-index entry is a teacher's-note sentence. More OCR pages are needed; do not assume the two codes share a chapter list."
+    },
+    {
+      "code": "110206",
+      "title": "عربی، زبان قرآن (1)",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [],
+      "notes": "Raw page-0004 does hold an Arabic-script TOC (الدرس ...), but only page numbers and fragments survived, while toc-index captured prose from the teacher's note on page-0005 instead. No lesson or chapter title can be quoted without guessing, so none is listed. Needs a higher-resolution re-OCR of page-0004."
+    },
+    {
+      "code": "110207",
+      "title": "عربی، زبان قرآن (1)",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [],
+      "notes": "The TOC on page-0004 is heavily garbled: only 'درس السایغ' and 'درس القّامن' (seventh and eighth lesson) are legible, with junk page numbers (۹ 0, 06). Those fragments are not promoted to titles. Needs re-OCR."
+    },
+    {
+      "code": "110209",
+      "title": "فیزیک (1)",
+      "status": "candidates-found",
+      "confidence": "medium",
+      "chapters": [
+        { "label": "فصل ۱ : فیزیک و اندازه گیری", "pageHint": "۱" },
+        { "label": "فصل ۲ : ویژگی‌های فیزیکی مواد", "pageHint": "۳" },
+        { "label": "فصل ۳ : کار» انرژی و توان", "pageHint": "۵۳" },
+        { "label": "فصل ۴: دما و کرما" },
+        { "label": "فصل ۵ : ترمودینامیک", "pageHint": "۱۳۷" }
+      ],
+      "notes": "All five chapter lines are readable. OCR errors kept verbatim: 'کرما' for گرما, and فصل ۲ page number ۳ which is probably ۲۳. The 'پرسش‌ها و مسئله‌های فصل' lines were left out."
+    },
+    {
+      "code": "110210",
+      "title": "شیمی (1)",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [
+        { "label": "فصل اوّل: کیهان ژادگاه عتصور ها", "pageHint": "۹" }
+      ],
+      "notes": "Only one chapter line came through OCR (page-0004); the rest of that TOC page is blank in the text. The label is badly garbled and must be checked against the printed TOC before use. The two toc-index entries about the book's authors are not TOC lines."
+    },
+    {
+      "code": "110211",
+      "title": "ریاضی (1)",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [
+        { "label": "فصل ۳: توان‌های گویا و عبارت‌های جبر", "pageHint": "۳" },
+        {
+          "label": "فصل ۷: آمار و اختمال",
+          "pageHint": "۱۳",
+          "sections": [
+            { "label": "درس اوّل : احتمال يا اندازه گیری شانس", "pageHint": "۱۴۲" },
+            { "label": "درس دوم : مقدمه‌ای پر علم آمار» جامعه و تمونه", "pageHint": "۱۵۲" },
+            { "label": "درس سوم : متغیر و انواع آن", "pageHint": "۱۵۹" }
+          ]
+        }
+      ],
+      "sections": [
+        { "label": "درس دوم : متمم یک مجموعه", "pageHint": "۰" },
+        { "label": "درس سوم : الگو و دتباله", "pageHint": "۱۴" },
+        { "label": "درس جهارم : دنباله‌های حسابی و هندسی", "pageHint": "۳۱" },
+        { "label": "درس اوّل : نسبت‌های مثلثاتی", "pageHint": "۲۵" },
+        { "label": "درس دوم : دایرة مثلئاتی", "pageHint": "۲۳۵" },
+        { "label": "درس ارّل : معادلة درجه دوم و روش‌های مختلف حل آن", "pageHint": "۷۰" },
+        { "label": "درس اوّل : مفهوم تابع و بازنمایی‌های آن", "pageHint": "۹۵" }
+      ],
+      "notes": "Only two of the seven فصل lines appear in OCR (فصل ۳ and فصل ۷); the TOC page is column-interleaved and the missing chapter labels cannot be reconstructed. Because the column order is unreliable, درس lines that do not directly follow a فصل line are kept at book level instead of being attached to a possibly wrong chapter. Page hints are often misread (۰, ۲۳۵)."
+    },
+    {
+      "code": "110212",
+      "title": "ریاضی و آمار (1)",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [],
+      "notes": "toc-index has no entry for this code at all. Raw OCR pages 0004-0005 list topics with page numbers ('معادلةً درچةٌ دوم', 'معادله و مسائل توصییقی', 'کار پا داده‌های آماری', ...) but the فصل/درس labels were lost, so no chapter or lesson line can be quoted. Needs re-OCR of pages 0004-0005."
+    },
+    {
+      "code": "110213",
+      "title": "هندسه (1)",
+      "status": "needs-review",
+      "confidence": "low",
+      "flags": ["ocr-pages-below-8"],
+      "chapters": [
+        {
+          "label": "فصل ۳ : جند ضلعی‌ها",
+          "pageHint": "۵۳",
+          "sections": [
+            { "label": "درس اول : جندضلعی‌ها و ویژگی‌هایی از آنها", "pageHint": "۵۴" },
+            { "label": "درس دوم : مساحت و کاربردهای آن", "pageHint": "۴۵" }
+          ]
+        }
+      ],
+      "sections": [
+        { "label": "درس اول : نسبت و تناسب در هندسه" }
+      ],
+      "notes": "Only فصل ۳ is present; pages 0001-0003 carry no TOC. OCR covers 7 of the 8 planned pages (sources.json ocrPages=7), so an earlier TOC page may be missing. 'جند ضلعی' is an OCR misspelling of چندضلعی; 'درس اول: نسبت و تناسب در هندسه' belongs to an earlier chapter and was left at book level."
+    },
+    {
+      "code": "110214",
+      "title": "فیزیک (1)",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [
+        { "label": "فصل ۱ : فیزیک و اندازه گیری", "pageHint": "۱" },
+        { "label": "فصل ۲ : ویژگی‌های فیزیکی مواد", "pageHint": "۲۳۳" },
+        { "label": "فصل ۳ : کار» انرژی و توان", "pageHint": "۵۳" },
+        { "label": "فصل ۴: دما و گرما", "pageHint": "۸۳" }
+      ],
+      "notes": "Same TOC wording as 110209 up to فصل ۴; فصل ۵ is not in the OCR (page-0005 yielded only the فصل ۴ line, although the TOC may continue in its second column). Page hint ۲۳۳ for فصل ۲ is an OCR error (۲۳). Four of five chapters, hence needs-review."
+    },
+    {
+      "code": "110215",
+      "title": "آمادگی دفاعی",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [
+        { "label": "فصل اول: آموزه‌های دفاعی" },
+        {
+          "label": "فصل سوم: دفاع نظامی",
+          "pageHint": "۵۴",
+          "sections": [
+            { "label": "درس هفتم: آشنایی با نیروهای مسلح و خدمت مقدس سربازی", "pageHint": "۵۵" },
+            { "label": "درس هشتم: نظام جمع و شیوه‌های رزم انفرادی", "pageHint": "۶۴۳" },
+            { "label": "درس نهم: جنگ افزارشناسی و اصول تیراندازی", "pageHint": "۸" },
+            { "label": "درس دهم: شناخت و مقابله با جنگ نرم", "pageHint": "۱۱۸" }
+          ]
+        }
+      ],
+      "sections": [
+        { "label": "درس چهارم: آشنایی با بسیج", "pageHint": "۲۶" },
+        { "label": "درس پنجم: علوم و معارف دفاع مقدس", "pageHint": "۳۲" },
+        { "label": "درس ششم: الگوها و اسوه‌های پایداری و مقاومت", "pageHint": "۴۵" }
+      ],
+      "notes": "فصل دوم has no line in the OCR, so درس چهارم-ششم sit between فصل اول and فصل سوم with no certain parent; they were kept at book level rather than attached to the wrong chapter. Page hints ۶۴۳ and ۸ are OCR damage. The trailing 'م۱' on the فصل اول line was treated as noise."
+    },
+    {
+      "code": "110216",
+      "title": "زیست شناسی (1)",
+      "status": "candidates-found",
+      "confidence": "medium",
+      "chapters": [
+        {
+          "label": "فصل ۱ دنیای زنده",
+          "pageHint": "۱",
+          "sections": [
+            { "label": "گفتار ۲. گسترةٌ حیات", "pageHint": "۷" },
+            { "label": "گفتار ۳. یاخته و بافت در بدن انسان", "pageHint": "۱۱" }
+          ]
+        },
+        {
+          "label": "فصل ۲- گوارش و جذب مواد",
+          "pageHint": "۷",
+          "sections": [
+            { "label": "گفتار ۱. ساختار و عملکرد لولةٌ گوارش", "pageHint": "۱۸" },
+            { "label": "گفتار ۲. جذب مواد و تنظیم فعّالیت دستگاه گوارش", "pageHint": "۳۵" },
+            { "label": "گفتار ۳. تنوع گوارش در جانداران", "pageHint": "۳۰" }
+          ]
+        },
+        {
+          "label": "فصل ۳ تبادلات گازی",
+          "pageHint": "۳۳",
+          "sections": [
+            { "label": "گفتار ۱. سازو کار دستگاه تنفس در انسان", "pageHint": "۳۴" },
+            { "label": "گفتار ۳. تنوع تبادلات گازی", "pageHint": "۴۳۵" }
+          ]
+        },
+        {
+          "label": "فصل ۴- گردش مواد در بدن",
+          "pageHint": "۳۷",
+          "sections": [
+            { "label": "گفتار ۱. قلب", "pageHint": "۴۸" },
+            { "label": "گفتار ۲. رگ‌ها", "pageHint": "۹۵" },
+            { "label": "گفتار ۳. خون", "pageHint": "۶" },
+            { "label": "گفتار ۴. تنوع گردش مواد در جانداران", "pageHint": "۶۵" }
+          ]
+        },
+        {
+          "label": "فصل ۵- تنظیم اسمزی و دفع مواد زائد",
+          "pageHint": "۶۹",
+          "sections": [
+            { "label": "گفتار ۱. هم ایستایی و کلیه‌ها", "pageHint": "۷" },
+            { "label": "گفتار ۲. تشکیل ادرار و تخلیة آن", "pageHint": "۷۳" },
+            { "label": "گفتار ۲.تنوع دفع و تنظیم اسمزی در جانداران", "pageHint": "۷۶" }
+          ]
+        },
+        {
+          "label": "فصل ۶- از یاخته تا گیاه",
+          "pageHint": "۷۹",
+          "sections": [
+            { "label": "گفتار ۱. ویژگی‌های ياختة گیاهی", "pageHint": "۸" },
+            { "label": "گفتار ۲. سامانة بافنی", "pageHint": "۸۶" },
+            { "label": "گفتار ۳. ساختار گیاهان", "pageHint": "۹" }
+          ]
+        },
+        {
+          "label": "فصل ۷ جذب و انتقال مواد در گیاهان",
+          "pageHint": "۹۷۷",
+          "sections": [
+            { "label": "گفتار ۲. جانداران موّثْر در تغذية گیاهی", "pageHint": "۱۲" },
+            { "label": "گفتار ۳. انتقال مواد در گیاهان", "pageHint": "۱۵" }
+          ]
+        }
+      ],
+      "notes": "Cleanest set in the batch: seven فصل lines and 19 گفتار lines, all copied from page-0004. Absent from OCR: گفتار ۱ of فصل ۱, گفتار ۲ of فصل ۳ (only گفتار ۳ appears) and گفتار ۱ of فصل ۷. Page numbers are unreliable (فصل ۲ = ۷ probably ۱۷; فصل ۷ = ۹۷۷) and 'گفتار ۲' is used twice in فصل ۵, so the printed TOC must settle both."
+    },
+    {
+      "code": "110217",
+      "title": "آزمایشگاه علوم تجربی (1)",
+      "status": "candidates-found",
+      "confidence": "medium",
+      "chapters": [
+        { "label": "فصل اوّل: کلّیات", "pageHint": "۹" },
+        { "label": "فصل دوم: آزمایش‌ های مربتی", "pageHint": "۵" },
+        { "label": "فصل سوم: آزمایش های دستورالعملی", "pageHint": "۵۵" },
+        { "label": "فصل چهارم: آزمایش‌های کاوشگری", "pageHint": "۱۷۷" }
+      ],
+      "notes": "The TOC page interleaves chapter lines with individual experiment titles ('۱۶-رسوب شناور', '۸- مولکول‌هاء دست در دست هم', ...); only the four chapter lines are mapped, experiments were left out. 'مربتی' is an OCR error, most likely مقدماتی. Page hints are the numbers ending each chapter line."
+    },
+    {
+      "code": "110218",
+      "title": "جغرافیای ایران",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [
+        { "label": "فصل دوم: جغرافیای طبیعی ایران" },
+        { "label": "فصل سوم: جغرافیای انسانی ایران" }
+      ],
+      "notes": "toc-index has no usable entry; both فصل lines were found on raw OCR page-0003. There is no فصل اول line and no page numbers. page-0005 prose says the book has ۲ فصل و ۱۰ درس and then names a فصل سوم, which contradicts itself; the printed TOC must decide. The single 'درس ۱ هم' fragment on page-0007 is not a TOC line."
+    },
+    {
+      "code": "110219",
+      "title": "تاریخ 1 (ایران و جهان باستان)",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [],
+      "sections": [
+        { "label": "درس ۱ : تاریخ و تاریخ‌نگاری", "pageHint": "۲" },
+        { "label": "درس ۲ : تاریخ؛ زمان و مکان", "pageHint": "۱۲" },
+        { "label": "درس ۳ : باستان‌شناسی؛ در جست وجوی میراث فرهنگی", "pageHint": "۲۰" },
+        { "label": "درس ۴ : پیدایش تمدّن؛ بین‌النهرین و مصر", "pageHint": "۳۰" },
+        { "label": "درس ۶ : بونان و روم", "pageHint": "0۰" },
+        { "label": "درس ۷ : مطالعه و کاوش در گذشته‌های دور", "pageHint": "۶۲" },
+        { "label": "درس ۸ : سپیده‌دم تمدن ایرانی", "pageHint": "۷۰" },
+        { "label": "درس ۹ : از ورود آریایی‌ها تا پایان هخامنشیان", "pageHint": "۸" },
+        { "label": "درس ۱۰ : اشکانیان و ساسانیان", "pageHint": "۹" },
+        { "label": "درس ۱۱ : آیین کشورداری", "pageHint": "۹۹" },
+        { "label": "درس ۱۲ : جامعه و خانواده", "pageHint": "۱:۹" },
+        { "label": "درس ۱۳ : اقتصاد و معیشت", "pageHint": "۱۱۸" },
+        { "label": "درس ۱۴ : دین و اعتقادات", "pageHint": "۱۳۸" },
+        { "label": "درس ۱۵ : زبانعلم و آموزش", "pageHint": "۱۳۶" },
+        { "label": "درس ۱۶ : هنر و معماری", "pageHint": "۱۳۳" }
+      ],
+      "notes": "No فصل line at all: the book's top-level unit is درس, and 15 of the 16 lessons are readable (درس ۵ is missing at the OCR page break). Labels are verbatim, including 'بونان' for یونان and 'زبانعلم'. The درس ۹ number, OCR'd with a reversed RTL digit run, is normalised to ۹. Several page numbers are damaged (0۰, ۸, ۹, '۱:۹'), so treat them as hints only."
+    },
+    {
+      "code": "110220",
+      "title": "جامعه شناسی (1)",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [],
+      "sections": [
+        { "label": "درس سوم: جهان اجتماعی", "pageHint": "۱۹" },
+        { "label": "درس پنجم: جهان‌های اجتماعی", "pageHint": "۱۳۳" },
+        { "label": "درس هفتم: ارزیابی جهان‌های اجتماعی", "pageHint": "0۳" }
+      ],
+      "notes": "Only four درس lines survived OCR on page-0004 and one of them ('درس اوّل: کتش‌های ها') has no readable title, so three are listed. page-0006 prose confirms ۲ فصل و ۱۶ درس, so 11 lessons and both chapter lines are missing from OCR. Needs re-OCR."
+    },
+    {
+      "code": "110221",
+      "title": "اقتصاد",
+      "status": "needs-review",
+      "confidence": "low",
+      "flags": ["ocr-pages-below-8"],
+      "chapters": [
+        {
+          "label": "فصل اوّل / اصول انتخاب در کسب‌و کار",
+          "pageHint": "۱",
+          "sections": [
+            { "label": "درس اول / کسب و کار و کارآفرینی", "pageHint": "۲" },
+            { "label": "درس دوم / انتخاب نوع کسب و کار" },
+            { "label": "درس سوم | اصول انتخاب درست" },
+            { "label": "درس چهارم /مرز امکانات تولید", "pageHint": "۳۴" }
+          ]
+        },
+        {
+          "label": "فصل دوم / بازیگران اصلی در میدان اقتصاد",
+          "pageHint": "۳۳",
+          "sections": [
+            { "label": "درس پنجم / بازار چیست و چگونه عمل می‌کند؟", "pageHint": "۴۴" },
+            { "label": "درس ششم / نقش دولت در اقتصاد چیست؟", "pageHint": "۵۵" },
+            { "label": "درس هفتم / تحارت بین‌الملل", "pageHint": "۶۹" },
+            { "label": "درس هشتم / رکوده بیکاری و فقر" },
+            { "label": "درس نهم / تورم و کاهش قدرت خرید" },
+            { "label": "درس دهم / مقاوم‌سازی اقتصاد" },
+            { "label": "درس یازدهم / رشد و پیشرفت اقتصادی", "pageHint": "۱۱۶" }
+          ]
+        },
+        {
+          "label": "فصل چهارم / اقتصاد در خانواده",
+          "pageHint": "۱۳۹",
+          "sections": [
+            { "label": "درس دوازدهم / بودجه‌بندی", "pageHint": "۱۳۰" },
+            { "label": "درس سیزدهم / تصمیم‌گیری در مخارج", "pageHint": "۱۳۰" },
+            { "label": "درس چهاردهم / پس‌انداز و سرمایه‌گذاری", "pageHint": "۱۵۰" }
+          ]
+        }
+      ],
+      "notes": "فصل سوم has no line in the OCR: the page jumps from فصل دوم to فصل چهارم, while page-0005 prose confirms ۴ فصل و ۱۴ درس. Page hint '۱+۵' (درس دهم) was dropped as damaged; درس هشتم-نهم hints were letter noise ('ند', 'ید') and are omitted. sources.json reports ocrPages=7, so one TOC page may be missing."
+    },
+    {
+      "code": "110222",
+      "title": "هنر",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [],
+      "sections": [
+        { "label": "پودمان ۲: خلاقیت هتری", "pageHint": "۳۵" }
+      ],
+      "notes": "The book is organised in پودمان, not فصل, and toc-index has no entry for this code. Only the پودمان ۲ line was OCR'd (page-0004); page-0005 prose says there are four پودمان, so three lines are missing. 'هتری' is an OCR error. Needs more OCR pages before this can become a chapter list."
+    },
+    {
+      "code": "110223",
+      "title": "منطق",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [],
+      "sections": [
+        { "label": "بخش نخست | منطق و مباعث آن" },
+        { "label": "درس نخست: منطق» ترازوی اندیشه" },
+        { "label": "بخش دوم | روابط میان ذهن, زبان و خارج" },
+        { "label": "درس سوم: مفهوم و مصداق" },
+        { "label": "بخش سوم | تعریف" },
+        { "label": "درس چهاره: اقسام و شرایط تعریف" },
+        { "label": "بخش چهارم | استدلال استقرایی" },
+        { "label": "درس پنجم: اقسام استدلال استقرایی" },
+        { "label": "بخش پنجم | قضیةٌ حملی و قیاس اقترانی" },
+        { "label": "درس ششم: قضيةٌ حملی" },
+        { "label": "درس هفتم: احکام قضایا" },
+        { "label": "درس هشتم: قیاس اقترانی" },
+        { "label": "بخش ششم | قضیةٌ شرطی و قیاس استثنایی" },
+        { "label": "درس نهم: قضيةٌ شرطی و قیاس استثنایی" },
+        { "label": "بخش هفتم | منطق کاربردی" }
+      ],
+      "notes": "No فصل line: the book's top-level unit is بخش, of which all seven are readable; eight درس lines follow them. درس دوم is missing from OCR and 'درس چهاره' is an OCR typo. Because بخش is not فصل, everything is kept in sections pending a human decision on whether بخش becomes a chapter."
+    },
+    {
+      "code": "110224",
+      "title": "کارگاه کارآفرینی و تولید",
+      "status": "candidates-found",
+      "confidence": "low",
+      "chapters": [],
+      "sections": [
+        { "label": "بخش ۲: کار تیمی موفق", "pageHint": "۵" },
+        { "label": "بخش ۴: حل مسئله", "pageHint": "۳" },
+        { "label": "بخش ۵: هدف گذاری و تصمیم‌گیری", "pageHint": "۱۷" },
+        { "label": "بخش ۶: خودشناسی", "pageHint": "۳" },
+        { "label": "بخش ۷: طراحی مسیر شغلی(قسمت اول): کارگاه توسعه شخصی", "pageHint": "۳۷" },
+        { "label": "بخش ۸: طراحی مسیر شغلی (قسمت دوم): شناسایی ارزش‌ها و نیازها", "pageHint": "۳۱" },
+        { "label": "بخش ۹: طراحی مسیر شغلی (قسمت سوم): شناسایی مهارت‌هاء استعدادهاء علایق و جمع‌بندی", "pageHint": "۳۵" },
+        { "label": "بخش ۱۰: تفکر", "pageHint": "۴۳۱" },
+        { "label": "بخش ۱۱: تفکر خلاق (واگرا)", "pageHint": "۴۳۷" },
+        { "label": "بخش ۱۲: توسعة‌خلاقیت فردی", "pageHint": "۵۱" },
+        { "label": "بخش ۱۳: توسعة‌خلاقیت تیمی", "pageHint": "۵۵" },
+        { "label": "بخش ۱۴: تشخیص فرصت. ایده پردازی و ارزیابی ایده", "pageHint": "۵۹" },
+        { "label": "بخش ۱۵: ایده یابی, ساختن ایده و الگوبرداری", "pageHint": "۶۵" },
+        { "label": "بخش ۱۶: نوآوری و تریز", "pageHint": "۶۹" },
+        { "label": "بخش ۱۷: سنجش کارآفرینی", "pageHint": "۷۵" },
+        { "label": "بخش ۱۸: تعیین نوع کسب و کار", "pageHint": "۷۹" },
+        { "label": "بخش ۱۹: مدل کسب و کار(قسمت یکم): مشتری‌شناسی", "pageHint": "۸" },
+        { "label": "بخش ۲۰: مدل کسب و کار(قسمت دوم): طراحی ارزش پیشنهادی", "pageHint": "۸۵" },
+        { "label": "بخش ۲۱: مدل کسب و کار(قسمت سوم): تعیین کانال توزیع", "pageHint": "۸۹" },
+        { "label": "بخش ۲۲: مدل کسب و کار(قسمت چهارم): ارتباط با مشتریان", "pageHint": "۹" },
+        { "label": "بخش ۲۳: مدل کسب و کار(قسمت پنجم): در آمدزایی", "pageHint": "۹۳" },
+        { "label": "بخش ۲۴: مدل کسب و کار(قسمت ششم): منبع‌یابی", "pageHint": "۹۷" },
+        { "label": "بخش ۲۵: مدل کسب و کار(قسمت هفتم): فعالیت‌های کلیدی", "pageHint": "۹۹" },
+        { "label": "بخش ۲۶: مدل کسب و کار(قسمت هشتم): شریک یابی" },
+        { "label": "بخش ۲۷: مدل کسب و کار(قسمت نهم): برآورد هزینه", "pageHint": "۱۹۳" },
+        { "label": "بخش ۲۸: طرح کسب و کار", "pageHint": "۱۵" },
+        { "label": "بخش ۳۹: نگارش طرح (قسمت یکم): معرفی کسب و کارء تهيةٌ برنامة سر و سامان دادن نیروی انسانی", "pageHint": "۱۰۹" },
+        { "label": "بخش ۳۰: نگارش طرح(قسمت دوم): تهية برنامة بازار و بازاریابی", "pageHint": "۱۵" },
+        { "label": "بخش ۳۱: نگارش طرح(قسمت سوم): تهية برنامةٌ تولید(ساخت کالا یا ارائةٌ خدمت)", "pageHint": "۱۹" },
+        { "label": "بخش ۳۲: نگارش طرح(قسمت چهارم): تهية برنامة مالی و زمان‌بندی", "pageHint": "۱۳۳" }
+      ],
+      "notes": "The book is organised in بخش, not فصل; 30 sections are listed from toc-index (بخش ۱ and بخش ۳ are absent, as is بخش ۲۹). 'بخش ۳۹' is almost certainly a misread of بخش ۲۹ and is kept verbatim. Page hints are unreliable throughout (بخش ۱۰ = ۴۳۱, بخش ۲۸ = ۱۵). Two section numbers were OCR'd with a reversed RTL digit run ('بخش ‎:٩‏' and 'بخش ‎:۱٩‏'); they are normalised to بخش ۹ and بخش ۱۹."
+    },
+    {
+      "code": "110225",
+      "title": "تفکر و سواد رسانه ای",
+      "status": "needs-review",
+      "confidence": "low",
+      "chapters": [
+        { "label": "فصل ۲: فنون خلق پیام رسانه‌ای" },
+        {
+          "label": "فصل ۳: نادیده‌های رسانه‌ها",
+          "sections": [
+            { "label": "درس ۱: دروازه‌بانی" }
+          ]
+        },
+        {
+          "label": "فصل ۴: مخاطب شناسی",
+          "sections": [
+            { "label": "درس ۱۵: کلیشةٌ بدن", "pageHint": "۱۵" }
+          ]
+        },
+        { "label": "فصل ۵: رسانه و سبک زندگی", "pageHint": "11" },
+        {
+          "label": "فصل ۶: رژیم مصرف رسانه‌ای",
+          "sections": [
+            { "label": "درس ۳: اخلاق رسانه‌ای", "pageHint": "۶۴" }
+          ]
+        }
+      ],
+      "sections": [
+        { "label": "درس ۱: مسابقةٌ رسانه‌ها با زمان", "pageHint": "۱۳" }
+      ],
+      "notes": "Five فصل lines (۲-۶). The فصل ۱ line exists in raw OCR page-0005 but is unreadable ('فصل‌ا:ماوسانه‌ها اه'), so it is not quoted; the orphan 'درس ۱: مسابقةٌ رسانه‌ها با زمان' probably belongs to it. Lesson numbering is unusable (two 'درس ۱', then 'درس ۱۵', then 'درس ۳'), so درس lines are attached only by their position after a فصل line."
+    },
+    {
+      "code": "110228",
+      "title": "تعلیمات ادیان الهی و اخلاق (1) ـ ویژه اقلیت های دینی",
+      "status": "no-toc-detected",
+      "confidence": "low",
+      "chapters": [],
+      "notes": "No TOC line in OCR pages 0001-0008; page-0003 is the copyright page and pages 0004-0007 are the student/teacher introduction. More OCR pages (or a re-scan of the TOC page) are needed."
+    },
+    {
+      "code": "110230",
+      "title": "انگلیسی (1)",
+      "status": "no-toc-detected",
+      "confidence": "low",
+      "chapters": [],
+      "notes": "No TOC line in OCR pages 0001-0008: pages 0005-0007 are the teacher's introduction and page-0004 is a Persian/English epigraph. The unit/lesson list was not recognised, so nothing is quoted. More OCR pages are needed."
+    },
+    {
+      "code": "110231",
+      "title": "کتاب کار انگلیسی (1)",
+      "status": "no-toc-detected",
+      "confidence": "low",
+      "chapters": [],
+      "notes": "No TOC line in OCR pages 0001-0008; pages 0004-0007 are copied front matter and lesson-1 material with no contents list. More OCR pages are needed."
+    }
+  ]
+}

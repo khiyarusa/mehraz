@@ -64,6 +64,17 @@
     return letters[i] || util.toFa(i + 1);
   }
 
+  /* Pass mark is content-defined; a missing or out-of-range value falls back
+     to the historical 50% so old attempts keep their meaning. */
+  function hasPassPercent(exam) {
+    var value = exam && exam.passPercent;
+    return typeof value === 'number' && isFinite(value) && value >= 0 && value <= 100;
+  }
+
+  function passPercentOf(exam) {
+    return hasPassPercent(exam) ? exam.passPercent : 50;
+  }
+
   /* ---- list ------------------------------------------------------------- */
   views.examList = function () {
     var rows = M.content.exams();
@@ -524,6 +535,8 @@
     var found = M.content.exam(attempt.examId);
     var questions = found ? M.content.questionsFor(found.exam) : [];
     var pct = attempt.total ? (attempt.score / attempt.total) * 100 : 0;
+    var passPercent = passPercentOf(found ? found.exam : null);
+    var passed = pct >= passPercent;
     var detail = attempt.detail || [];
 
     var head =
@@ -537,12 +550,20 @@
       '</h1>' +
       '<div class="row row--wrap" style="margin-top:10px">' +
       '<span class="chip ' +
-      (pct >= 50 ? 'chip--ok' : 'chip--danger') +
+      (passed ? 'chip--ok' : 'chip--danger') +
       '">' +
       util.toFa(attempt.score) +
       ' از ' +
       util.toFa(attempt.total) +
       ' پاسخ درست</span>' +
+      '<span class="chip ' +
+      (passed ? 'chip--ok' : 'chip--danger') +
+      '">' +
+      (passed ? 'قبول' : 'مردود') +
+      '</span>' +
+      (hasPassPercent(found ? found.exam : null)
+        ? '<span class="chip chip--outline">حد قبولی: ' + util.fmtPct(passPercent) + '</span>'
+        : '') +
       '<span class="chip">' +
       esc(M.jalali.formatISO(new Date(attempt.finishedAt).getTime())) +
       '</span>' +

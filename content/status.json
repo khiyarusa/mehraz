@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-11-18T16:54:41Z",
+    "generatedAt":  "2026-11-18T17:27:52Z",
     "academicYear":  "1405-1406",
     "inventory":  {
                       "records":  148,
@@ -48,13 +48,14 @@
     "catalogue":  {
                       "books":  1,
                       "chapters":  1,
-                      "lessons":  1,
-                      "sectionsFilled":  8,
+                      "lessons":  3,
+                      "sectionsFilled":  23,
                       "sectionsEmpty":  0,
-                      "activities":  1,
-                      "lessonQuestions":  4,
-                      "examQuestions":  6,
-                      "draftLessons":  1,
+                      "activities":  5,
+                      "lessonQuestions":  14,
+                      "examQuestions":  18,
+                      "draftLessons":  2,
+                      "reviewedLessons":  1,
                       "verifiedLessons":  0
                   },
     "grade10":  {

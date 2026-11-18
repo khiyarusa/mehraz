@@ -66,8 +66,9 @@
       "description": "Renderer-supported content blocks. Unknown block types are ignored rather than executed.",
       "required": ["type"],
       "properties": {
-        "type": { "type": "string", "enum": ["p", "list", "note", "figure", "table"] },
-        "text": { "type": "string" },
+        "type": { "type": "string", "enum": ["p", "list", "note", "formula", "figure", "table"] },
+        "text": { "type": "string", "description": "Paragraph, note and formula body. Formula text is rendered escaped as plain text; no markup is interpreted." },
+        "note": { "type": "string", "description": "formula only: optional explanatory note rendered under the formula." },
         "items": { "type": "array", "items": { "type": "string" } },
         "tone": { "type": "string", "enum": ["info", "warn"] },
         "src": { "type": "string", "description": "Inline data: URI only. Remote URLs are rejected at render time." },
@@ -173,6 +174,22 @@
         "activities": { "type": "array", "items": { "$ref": "#/$defs/activity" } },
         "questions": { "type": "array", "items": { "$ref": "#/$defs/question" } },
         "animation": { "$ref": "#/$defs/animation" },
+        "instructionalDesign": {
+          "type": "object",
+          "description": "Authoring metadata for lesson design. Optional and never rendered to students; available read-only through MEHRAZ.content.",
+          "properties": {
+            "topicType": { "type": "string" },
+            "prerequisites": { "type": "array", "items": { "type": "string" } },
+            "likelyMisconceptions": { "type": "array", "items": { "type": "string" } },
+            "primaryStrategy": { "type": "string" },
+            "supportingStrategies": { "type": "array", "items": { "type": "string" } },
+            "narrativeTheme": { "type": "string" },
+            "visualStrategy": { "type": "string" },
+            "interactionStrategy": { "type": "string" },
+            "assessmentStrategy": { "type": "string" },
+            "rationale": { "type": "string" }
+          }
+        },
         "verification": {
           "type": "object",
           "properties": {

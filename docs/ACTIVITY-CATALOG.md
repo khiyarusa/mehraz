@@ -1,6 +1,6 @@
 # Activity catalogue
 
-Generated: 2026-11-18T16:54:41Z
+Generated: 2026-11-18T17:27:52Z
 
 ## Registered components
 
@@ -11,7 +11,7 @@ Generated: 2026-11-18T16:54:41Z
 
 ## Activities in content
 
-- Activities declared in the catalogue: **1**
+- Activities declared in the catalogue: **5**
 - Components used: `match`
 
 Activities are plain data in the catalogue (`component` + `config`). No JSON

@@ -1,6 +1,6 @@
 # PROMPT 03 delivery status
 
-Generated: 2026-11-18T16:54:41Z
+Generated: 2026-11-18T17:27:52Z
 
 ## Done
 
@@ -17,8 +17,8 @@ Generated: 2026-11-18T16:54:41Z
   real PDF parser with a page count.
 - Activity registry (`match`, `classify`), lesson exercises, block-level
   source references, and empty-section filtering are implemented and tested.
-- Biology pilot: **1** lesson, **1** activity,
-  **1** practice questions, **6** exam questions,
+- Biology pilot: **3** lesson, **1** activity,
+  **1** practice questions, **18** exam questions,
   one reconstructed SVG diagram.
 
 ## Not done

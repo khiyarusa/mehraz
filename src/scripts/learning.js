@@ -526,6 +526,20 @@
     if (block.type === 'note') {
       return M.ui.banner({ text: block.text, type: block.tone === 'warn' ? 'warn' : 'info', icon: 'info' });
     }
+    // Formulas are plain text: escaped, never parsed as markup or evaluated.
+    if (block.type === 'formula') {
+      var formula = String(block.text || '').trim();
+      if (!formula) return '';
+      return (
+        '<div class="formula">' +
+        '<div class="formula__text">' +
+        esc(formula) +
+        '</div>' +
+        (block.note ? '<p class="formula__note">' + esc(block.note) + '</p>' : '') +
+        blockSource(block) +
+        '</div>'
+      );
+    }
     if (block.type === 'figure') {
       var src = String(block.src || '');
       var safe = /^data:image\//.test(src) || /^blob:/.test(src);

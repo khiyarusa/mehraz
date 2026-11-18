@@ -1,21 +1,21 @@
 # Curriculum coverage
 
-Generated: 2026-11-18T16:54:41Z
+Generated: 2026-11-18T17:27:52Z
 
 ## Inventory vs production
 
 | Book | Grade | Track | Chapters mapped | Lessons written | Status |
 |---|---|---:|---:|---:|---|
-| زیست‌شناسی (۱) | 10 | experimental | 1 | 1 | draft: 1 |
+| زیست‌شناسی (۱) | 10 | experimental | 1 | 3 | draft: 2 |
 
 ## Totals
 
 - Catalogue records: **148**
 - Books with any authored content: **1**
 - Chapters mapped: **1**
-- Lessons written: **1**
+- Lessons written: **3**
 - Lessons verified: **0**
-- Lessons draft: **1**
-- Sections filled / empty (of 10 per lesson): **8 / 0**
+- Lessons draft: **2**
+- Sections filled / empty (of 10 per lesson): **23 / 0**
 
 No percentage of overall curriculum completion is claimed: 147 catalogue books have no content at all.

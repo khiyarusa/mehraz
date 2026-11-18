@@ -218,4 +218,56 @@
     stage.appendChild(pool);
     stage.appendChild(board);
   });
+
+  /* ---- sequence: put the steps in order -------------------------------- */
+  activities.register('sequence', function (stage, config, report) {
+    var source = Array.isArray(config.steps) ? config.steps : [];
+    var steps = [];
+    source.forEach(function (step) {
+      if (step && typeof step.text === 'string' && step.text.replace(/\s+/g, ' ').trim()) {
+        steps.push({ text: step.text, order: steps.length });
+      }
+    });
+    if (steps.length < 2) return;
+
+    var pool = document.createElement('div');
+    pool.className = 'activity__pool';
+    var track = document.createElement('div');
+    track.className = 'activity__sequence';
+
+    var hint = document.createElement('p');
+    hint.className = 'hint';
+    hint.textContent = 'گام‌ها را به ترتیب از این فهرست انتخاب کنید.';
+    track.appendChild(hint);
+
+    var placed = 0;
+
+    shuffle(steps, 13).forEach(function (step) {
+      var b = button(step.text);
+      b.setAttribute('data-step', String(step.order));
+      b.addEventListener('click', function () {
+        if (step.order !== placed) {
+          b.classList.add('is-wrong');
+          window.setTimeout(function () { b.classList.remove('is-wrong'); }, 700);
+          report('این گام در این جایگاه نیست؛ گام ' + util.toFa(placed + 1) + ' را انتخاب کنید.', false);
+          return;
+        }
+        placed += 1;
+        b.classList.add('is-done');
+        b.disabled = true;
+        b.textContent = util.toFa(placed) + '. ' + step.text;
+        if (hint.parentNode) track.removeChild(hint);
+        track.appendChild(b);
+        if (placed === steps.length) {
+          report('همهٔ گام‌ها به ترتیب درست چیده شد.', true);
+        } else {
+          report('درست بود؛ گام بعدی را انتخاب کنید.', true);
+        }
+      });
+      pool.appendChild(b);
+    });
+
+    stage.appendChild(pool);
+    stage.appendChild(track);
+  });
 })(window, document);

@@ -1,6 +1,6 @@
 # Source manifest and transport audit
 
-Generated: 2026-11-18T16:54:41Z
+Generated: 2026-11-18T17:27:52Z
 Machine-readable source: `content/source-manifest.json`
 
 ## Files
