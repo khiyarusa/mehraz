@@ -1,6 +1,6 @@
 # Content QA report
 
-Generated: 2026-11-17T16:34:45Z Â· automated checks only
+Generated: 2026-11-18T16:54:41Z · automated checks only
 
 | Check | Result | Detail |
 |---|---|---|

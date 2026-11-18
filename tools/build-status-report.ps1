@@ -1,4 +1,4 @@
-# MEHRAZ dev tooling (never shipped): derive every status document from the
+﻿# MEHRAZ dev tooling (never shipped): derive every status document from the
 # machine-readable artefacts. Numbers are never typed by hand here.
 #   content/inventory.json, content/source-manifest.json, content/catalog.json
 # Output: content/status.json + docs/*.md status reports.
@@ -22,6 +22,8 @@ function Write-Utf8([string]$rel, [string]$text) {
 $inventory = Read-Json 'content/inventory.json'
 $manifest = Read-Json 'content/source-manifest.json'
 $catalog = Read-Json 'content/catalog.json'
+$g10 = Read-Json 'content/grade10/sources.json'
+$toc10 = Read-Json 'content/grade10/toc-index.json'
 
 $books = @($inventory.books)
 $files = @($manifest.files)
@@ -105,6 +107,15 @@ $status = [ordered]@{
         examQuestions    = $examQuestions
         draftLessons     = $draftLessons
         verifiedLessons  = $verifiedLessons
+    }
+    grade10              = [ordered]@{
+        catalogueRecords = if ($g10) { $g10.total } else { 0 }
+        downloadedVerified = if ($g10) { @($g10.books | Where-Object { $_.downloadStatus -eq 'complete-and-structurally-valid' }).Count } else { 0 }
+        ocrBooks         = if ($g10) { @($g10.books | Where-Object { $_.ocrStatus -eq 'done' }).Count } else { 0 }
+        pdfPages         = if ($g10) { ($g10.books | Where-Object { $_.pages } | Measure-Object pages -Sum).Sum } else { 0 }
+        ocrPages         = if ($g10) { ($g10.books | Measure-Object ocrPages -Sum).Sum } else { 0 }
+        tocBooks         = if ($toc10) { @($toc10.books).Count } else { 0 }
+        note             = 'Downloaded, page-counted and TOC-OCR only. No grade-10 book has complete lesson content.'
     }
     blockers             = @(
         'Source transport: the portal serves a certificate for *.roshd.ir on chap.sch.ir; strict TLS fails. The owner approved a documented HTTP exception on 2026-11-17 (docs/SOURCE-TRANSPORT-EXCEPTION.md). Files stay labelled transport-unverified; no publisher authentication is claimed.',
@@ -355,6 +366,10 @@ Generated: $($status.generatedAt)
 
 - Inventory reconciled to **$($books.Count)** records across six grades; grade 12
   restored through the numeric category nodes.
+- Grade-10 sources: **$($status.grade10.downloadedVerified) / $($status.grade10.catalogueRecords)** official PDFs
+  downloaded and structurally verified, **$($status.grade10.pdfPages)** pages, OCR of the first pages in
+  **$($status.grade10.ocrBooks)** books (**$($status.grade10.ocrPages)** pages), TOC candidates for
+  **$($status.grade10.tocBooks)** books.
 - Source transport audited; the certificate override was removed and HTTPS now
   fails closed. Every file is marked ``unencrypted``.
 - Download pipeline hardened: HTTP 206 required, ``Content-Range`` must match the

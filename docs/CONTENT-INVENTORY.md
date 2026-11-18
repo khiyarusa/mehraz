@@ -1,6 +1,6 @@
-# Official textbook inventory â€” status
+# Official textbook inventory — status
 
-Generated: 2026-11-17T16:34:45Z Â· academic year 1405-1406
+Generated: 2026-11-18T16:54:41Z · academic year 1405-1406
 Source: `content/inventory.json` (built by `tools/build-inventory.ps1`)
 
 ## Records

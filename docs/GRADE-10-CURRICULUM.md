@@ -1,6 +1,6 @@
 # Grade 10 curriculum — inventory and source status
 
-Generated: 2026-11-17T16:34:47Z
+Generated: 2026-11-18T16:52:19Z
 Data: `content/inventory.json` + `content/grade10/sources.json` + OCR page texts.
 
 ## Track distribution
@@ -16,16 +16,16 @@ Data: `content/inventory.json` + `content/grade10/sources.json` + OCR page texts
 
 | Code | Title | Track | Pages | OCR pages | Download |
 |---|---|---|---:|---:|---|
-| 110214 | فیزیک (1) | experimental |  | 0 | not-started |
-| 110216 | زیست شناسی (1) | experimental |  | 0 | not-started |
-| 110203 | علوم و فنون ادبی (1) | humanities |  | 0 | not-started |
-| 110205 | دین و زندگی (1) | humanities |  | 0 | not-started |
-| 110207 | عربی، زبان قرآن (1) | humanities |  | 0 | not-started |
-| 110212 | ریاضی و آمار (1) | humanities |  | 0 | not-started |
-| 110219 | تاریخ 1 (ایران و جهان باستان) | humanities |  | 0 | not-started |
-| 110220 | جامعه شناسی (1) | humanities |  | 0 | not-started |
-| 110221 | اقتصاد | humanities |  | 0 | not-started |
-| 110223 | منطق | humanities |  | 0 | not-started |
+| 110214 | فیزیک (1) | experimental | 136 | 8 | complete-and-structurally-valid |
+| 110216 | زیست شناسی (1) | experimental | 120 | 8 | complete-and-structurally-valid |
+| 110203 | علوم و فنون ادبی (1) | humanities | 112 | 8 | complete-and-structurally-valid |
+| 110205 | دین و زندگی (1) | humanities | 144 | 8 | complete-and-structurally-valid |
+| 110207 | عربی، زبان قرآن (1) | humanities | 132 | 8 | complete-and-structurally-valid |
+| 110212 | ریاضی و آمار (1) | humanities | 120 | 8 | complete-and-structurally-valid |
+| 110219 | تاریخ 1 (ایران و جهان باستان) | humanities | 168 | 8 | complete-and-structurally-valid |
+| 110220 | جامعه شناسی (1) | humanities | 152 | 8 | complete-and-structurally-valid |
+| 110221 | اقتصاد | humanities | 176 | 7 | complete-and-structurally-valid |
+| 110223 | منطق | humanities | 136 | 8 | complete-and-structurally-valid |
 | 110201 | فارسی (1) | math | 168 | 8 | complete-and-structurally-valid |
 | 110202 | نگارش (1) | math | 128 | 8 | complete-and-structurally-valid |
 | 110204 | دین و زندگی (1) | math | 136 | 8 | complete-and-structurally-valid |
@@ -41,12 +41,12 @@ Data: `content/inventory.json` + `content/grade10/sources.json` + OCR page texts
 | 110224 | کارگاه کارآفرینی و تولید | math | 136 | 8 | complete-and-structurally-valid |
 | 110225 | تفکر و سواد رسانه ای | math | 176 | 8 | complete-and-structurally-valid |
 | 110228 | تعلیمات ادیان الهی و اخلاق (1) ـ ویژه اقلیت های دینی | math | 96 | 8 | complete-and-structurally-valid |
-| 110230 | انگلیسی (1) | math |  | 0 | not-started |
-| 110231 | کتاب کار انگلیسی (1) | math |  | 0 | not-started |
+| 110230 | انگلیسی (1) | math | 128 | 8 | complete-and-structurally-valid |
+| 110231 | کتاب کار انگلیسی (1) | math | 80 | 8 | complete-and-structurally-valid |
 
-- Books with a verified download: **15 / 27**
-- Books with OCR of the first pages: **15 / 27**
-- Total PDF pages across grade 10: **2120**
+- Books with a verified download: **27 / 27**
+- Books with OCR of the first pages: **27 / 27**
+- Total PDF pages across grade 10: **3724**
 - Transport for every record: **unencrypted** (owner-approved exception,
   `docs/SOURCE-TRANSPORT-EXCEPTION.md`).
 

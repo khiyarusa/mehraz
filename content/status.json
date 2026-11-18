@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-11-17T16:34:45Z",
+    "generatedAt":  "2026-11-18T16:54:41Z",
     "academicYear":  "1405-1406",
     "inventory":  {
                       "records":  148,
@@ -57,6 +57,15 @@
                       "draftLessons":  1,
                       "verifiedLessons":  0
                   },
+    "grade10":  {
+                    "catalogueRecords":  27,
+                    "downloadedVerified":  27,
+                    "ocrBooks":  27,
+                    "pdfPages":  3724,
+                    "ocrPages":  214,
+                    "tocBooks":  22,
+                    "note":  "Downloaded, page-counted and TOC-OCR only. No grade-10 book has complete lesson content."
+                },
     "blockers":  [
                      "Source transport: the portal serves a certificate for *.roshd.ir on chap.sch.ir; strict TLS fails. The owner approved a documented HTTP exception on 2026-11-17 (docs/SOURCE-TRANSPORT-EXCEPTION.md). Files stay labelled transport-unverified; no publisher authentication is claimed.",
                      "Only 3 of 130 PDFs are downloaded; none is transport-authenticated.",

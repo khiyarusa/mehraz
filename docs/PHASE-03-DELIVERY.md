@@ -1,11 +1,15 @@
 # PROMPT 03 delivery status
 
-Generated: 2026-11-17T16:34:45Z
+Generated: 2026-11-18T16:54:41Z
 
 ## Done
 
 - Inventory reconciled to **148** records across six grades; grade 12
   restored through the numeric category nodes.
+- Grade-10 sources: **27 / 27** official PDFs
+  downloaded and structurally verified, **3724** pages, OCR of the first pages in
+  **27** books (**214** pages), TOC candidates for
+  **22** books.
 - Source transport audited; the certificate override was removed and HTTPS now
   fails closed. Every file is marked `unencrypted`.
 - Download pipeline hardened: HTTP 206 required, `Content-Range` must match the
