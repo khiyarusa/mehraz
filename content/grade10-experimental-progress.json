@@ -1,0 +1,194 @@
+{
+    "generatedAt":  "2026-11-18T17:46:09Z",
+    "scope":  "grade-10 experimental (selected)",
+    "totals":  {
+                   "includedBooks":  10,
+                   "booksWithLessons":  0,
+                   "chaptersDetected":  25,
+                   "lessonsWritten":  0,
+                   "lessonsReviewed":  0,
+                   "lessonsVerified":  0
+               },
+    "books":  [
+                  {
+                      "bookCode":  "110201",
+                      "title":  "فارسی (1)",
+                      "subject":  "persian",
+                      "scope":  "included_priority_2",
+                      "source":  {
+                                     "pages":  168,
+                                     "download":  "complete-and-structurally-valid",
+                                     "sha256":  "1c64f96e57c725f7e63d48e89115b9e620f86fba234d3c34af0c730734c85b66",
+                                     "transport":  "unencrypted"
+                                 },
+                      "chaptersDetected":  7,
+                      "lessonsWritten":  0,
+                      "lessonsReviewed":  0,
+                      "lessonsVerified":  0,
+                      "status":  "source_downloaded",
+                      "updatedAt":  "2026-11-18T17:46:09Z"
+                  },
+                  {
+                      "bookCode":  "110202",
+                      "title":  "نگارش (1)",
+                      "subject":  "writing",
+                      "scope":  "included_priority_2",
+                      "source":  {
+                                     "pages":  128,
+                                     "download":  "complete-and-structurally-valid",
+                                     "sha256":  "c7e8976b2cc7abcc5b8807ac7167f8ed9835f6fa3f7fbe6fcfaf13e0f5841161",
+                                     "transport":  "unencrypted"
+                                 },
+                      "chaptersDetected":  0,
+                      "lessonsWritten":  0,
+                      "lessonsReviewed":  0,
+                      "lessonsVerified":  0,
+                      "status":  "source_downloaded",
+                      "updatedAt":  "2026-11-18T17:46:09Z"
+                  },
+                  {
+                      "bookCode":  "110206",
+                      "title":  "عربی، زبان قرآن (1)",
+                      "subject":  "arabic",
+                      "scope":  "included_priority_2",
+                      "source":  {
+                                     "pages":  128,
+                                     "download":  "complete-and-structurally-valid",
+                                     "sha256":  "471aed808872d044666139cc992e36ff69a290b46e8459e24440802c5a43f85d",
+                                     "transport":  "unencrypted"
+                                 },
+                      "chaptersDetected":  0,
+                      "lessonsWritten":  0,
+                      "lessonsReviewed":  0,
+                      "lessonsVerified":  0,
+                      "status":  "source_downloaded",
+                      "updatedAt":  "2026-11-18T17:46:09Z"
+                  },
+                  {
+                      "bookCode":  "110210",
+                      "title":  "شیمی (1)",
+                      "subject":  "chemistry",
+                      "scope":  "included_priority_1",
+                      "source":  {
+                                     "pages":  136,
+                                     "download":  "complete-and-structurally-valid",
+                                     "sha256":  "ee15155a28806185a3620acbf3f45e4c2825d15e5fb38f57cf14a3bc17ce3e36",
+                                     "transport":  "unencrypted"
+                                 },
+                      "chaptersDetected":  1,
+                      "lessonsWritten":  0,
+                      "lessonsReviewed":  0,
+                      "lessonsVerified":  0,
+                      "status":  "source_downloaded",
+                      "updatedAt":  "2026-11-18T17:46:09Z"
+                  },
+                  {
+                      "bookCode":  "110211",
+                      "title":  "ریاضی (1)",
+                      "subject":  "mathematics",
+                      "scope":  "included_priority_1",
+                      "source":  {
+                                     "pages":  176,
+                                     "download":  "complete-and-structurally-valid",
+                                     "sha256":  "e20ccb8cb88c75dab899ffb9c69801557e5327522044e97c0223840be83da59d",
+                                     "transport":  "unencrypted"
+                                 },
+                      "chaptersDetected":  2,
+                      "lessonsWritten":  0,
+                      "lessonsReviewed":  0,
+                      "lessonsVerified":  0,
+                      "status":  "source_downloaded",
+                      "updatedAt":  "2026-11-18T17:46:09Z"
+                  },
+                  {
+                      "bookCode":  "110217",
+                      "title":  "آزمایشگاه علوم تجربی (1)",
+                      "subject":  "lab",
+                      "scope":  "included_priority_1",
+                      "source":  {
+                                     "pages":  152,
+                                     "download":  "complete-and-structurally-valid",
+                                     "sha256":  "449c781f9d3b3fcb1dca3ebf53dc633ed7d277e86e8f2b4753d01ea34e581ea8",
+                                     "transport":  "unencrypted"
+                                 },
+                      "chaptersDetected":  4,
+                      "lessonsWritten":  0,
+                      "lessonsReviewed":  0,
+                      "lessonsVerified":  0,
+                      "status":  "source_downloaded",
+                      "updatedAt":  "2026-11-18T17:46:09Z"
+                  },
+                  {
+                      "bookCode":  "110230",
+                      "title":  "انگلیسی (1)",
+                      "subject":  "english",
+                      "scope":  "included_priority_2",
+                      "source":  {
+                                     "pages":  128,
+                                     "download":  "complete-and-structurally-valid",
+                                     "sha256":  "c3c79b552efd3fec60c9b209d45ab5c5a1b490a8bd80d33bee9a40906b8b4d56",
+                                     "transport":  "unencrypted"
+                                 },
+                      "chaptersDetected":  0,
+                      "lessonsWritten":  0,
+                      "lessonsReviewed":  0,
+                      "lessonsVerified":  0,
+                      "status":  "source_downloaded",
+                      "updatedAt":  "2026-11-18T17:46:09Z"
+                  },
+                  {
+                      "bookCode":  "110231",
+                      "title":  "کتاب کار انگلیسی (1)",
+                      "subject":  "english",
+                      "scope":  "included_priority_2",
+                      "source":  {
+                                     "pages":  80,
+                                     "download":  "complete-and-structurally-valid",
+                                     "sha256":  "125d4c80402ce045a28beb612bced990adf971b8e2e515a6f041daee235c499a",
+                                     "transport":  "unencrypted"
+                                 },
+                      "chaptersDetected":  0,
+                      "lessonsWritten":  0,
+                      "lessonsReviewed":  0,
+                      "lessonsVerified":  0,
+                      "status":  "source_downloaded",
+                      "updatedAt":  "2026-11-18T17:46:09Z"
+                  },
+                  {
+                      "bookCode":  "110214",
+                      "title":  "فیزیک (1)",
+                      "subject":  "physics",
+                      "scope":  "included_priority_1",
+                      "source":  {
+                                     "pages":  136,
+                                     "download":  "complete-and-structurally-valid",
+                                     "sha256":  "5d8c8f85dc8b79e481694d559404fcf17eacaa1b51f93b746f6a755078a13db9",
+                                     "transport":  "unencrypted"
+                                 },
+                      "chaptersDetected":  4,
+                      "lessonsWritten":  0,
+                      "lessonsReviewed":  0,
+                      "lessonsVerified":  0,
+                      "status":  "source_downloaded",
+                      "updatedAt":  "2026-11-18T17:46:09Z"
+                  },
+                  {
+                      "bookCode":  "110216",
+                      "title":  "زیست شناسی (1)",
+                      "subject":  "biology",
+                      "scope":  "included_priority_1",
+                      "source":  {
+                                     "pages":  120,
+                                     "download":  "complete-and-structurally-valid",
+                                     "sha256":  "58f6685b03e63b07a10eb4243f89aca467264eb9d9f419febd2a25bf47320114",
+                                     "transport":  "unencrypted"
+                                 },
+                      "chaptersDetected":  7,
+                      "lessonsWritten":  0,
+                      "lessonsReviewed":  0,
+                      "lessonsVerified":  0,
+                      "status":  "source_downloaded",
+                      "updatedAt":  "2026-11-18T17:46:09Z"
+                  }
+              ]
+}
